@@ -82,10 +82,10 @@ public class LateralDrive extends SRXSubsystem {
         mLateralDrive.config_kD(Constants.K_LATERAL_DRIVE_PID_LOOP_INDEX, kD, Constants.K_LATERAL_DRIVE_TIMEOUT_MS);
     }*/
 
-    @Override
-    public void initDefaultCommand() {
-        // TODO: Set the default command, if any, for a subsystem here. Example:
-        //    setDefaultCommand(new MySpecialCommand());
-    }
+	@Override
+	public void initDefaultCommand() {
+	    // TODO: Set the default command, if any, for a subsystem here. Example:
+	    //    setDefaultCommand(new MySpecialCommand());
+	}
 }
 
