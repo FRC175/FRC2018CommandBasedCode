@@ -51,14 +51,13 @@ public class Grabber extends Subsystem {
 		}
 	}
 	
-	public void grabManual(Speeds speed) {
-		mGrabRollerL.set(speed.getSpeed());
-		mGrabRollerR.set(speed.getSpeed());
-	}
-	
-	public void grabMaunual(double speed) {
+	public void grabManual(double speed) {
 		mGrabRollerL.set(speed);
 		mGrabRollerR.set(speed);
+	}
+	
+	public void grabManual(Speeds speed) {
+		grabManual(speed.getSpeed());
 	}
 	
 	// TODO: Determine whether or not this is necessary

@@ -83,7 +83,7 @@ public class Elevator extends SRXSubsystem {
     }
     
     public void countsDrive(ElevatorPositions elevatorPosition) {
-    	mElevator.set(ControlMode.Position, elevatorPosition.getHeightInCounts());
+    	countsDrive(elevatorPosition.getHeightInCounts());
     }
     
     // TODO: Determine whether this should be integrated into zeroEncoders()

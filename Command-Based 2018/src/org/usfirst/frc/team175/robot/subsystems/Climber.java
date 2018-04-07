@@ -58,7 +58,7 @@ public class Climber extends Subsystem {
 	}
 	
 	public void setManual(Speeds speed) {
-		mClimbExtend.set(speed.getSpeed());
+		setManual(speed.getSpeed());
 	}
 	
 	public boolean isExtended() {
@@ -95,7 +95,7 @@ public class Climber extends Subsystem {
 	}
 	
 	public void winchManual(Speeds speed) {
-		mWinch.set(speed.getSpeed());
+		winchManual(speed.getSpeed());
 	}
 	
 	public double getWinchSpeed() {
