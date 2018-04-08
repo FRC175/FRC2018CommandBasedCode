@@ -15,26 +15,26 @@ public class Grabber extends Subsystem {
 
 	private Talon mGrabRollerL;
 	private Talon mGrabRollerR;
-	
+
 	private Solenoid mGrabberRetract;
-	
+
 	private DigitalInput mGrabberLimit;
-	
+
 	public enum GrabberState {
 		GRAB, RETRACT, IDLE
 	}
-	
+
 	public Grabber() {
 		/* Instantiations */
 		mGrabRollerL = new Talon(RobotMap.GRAB_ROLLER_L_PORT);
 		mGrabRollerR = new Talon(RobotMap.GRAB_ROLLER_R_PORT);
 		mGrabberRetract = new Solenoid(RobotMap.GRABBER_RETRACT_PORT, RobotMap.GRABBER_RETRACT_CHANNEL);
 		mGrabberLimit = new DigitalInput(RobotMap.GRABBER_LIMIT_PORT);
-		
+
 		// TODO: I am not sure if this should be here or in teleopInit().
 		// mGrabberRetract.set(true);
 	}
-	
+
 	// TODO: Add custom speed options
 	public void grab(GrabberState grabberState) {
 		switch (grabberState) {
@@ -50,28 +50,28 @@ public class Grabber extends Subsystem {
 				mGrabRollerR.set(Speeds.IDLE.getSpeed());
 		}
 	}
-	
+
 	public void grabManual(double speed) {
 		mGrabRollerL.set(speed);
 		mGrabRollerR.set(speed);
 	}
-	
+
 	public void grabManual(Speeds speed) {
 		grabManual(speed.getSpeed());
 	}
-	
+
 	// TODO: Determine whether or not this is necessary
 	public boolean isPowerCubeGrabbed() {
 		return mGrabberLimit.get();
 	}
-	
+
 	public void set(boolean value) {
 		mGrabberRetract.set(value);
 	}
-	
-    public void initDefaultCommand() {
-        // TODO: Set the default command, if any, for a subsystem here. Example:
-        //    setDefaultCommand(new MySpecialCommand());
-    }
+
+	public void initDefaultCommand() {
+		// TODO: Set the default command, if any, for a subsystem here. Example:
+		// setDefaultCommand(new MySpecialCommand());
+	}
 
 }
