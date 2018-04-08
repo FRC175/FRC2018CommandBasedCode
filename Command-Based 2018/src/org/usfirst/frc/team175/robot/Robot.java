@@ -26,7 +26,7 @@ import org.usfirst.frc.team175.robot.subsystems.*;
 public class Robot extends TimedRobot {
 
     // Subsystem Declaration
-    public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+    //public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     /*public static final Drive drive;
     public static final LateralDrive lateralDrive;
     public static final Elevator elevator;
