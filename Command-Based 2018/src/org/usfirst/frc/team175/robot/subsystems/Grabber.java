@@ -9,29 +9,39 @@ import org.usfirst.frc.team175.robot.RobotMap;
 import org.usfirst.frc.team175.robot.Speeds;
 
 /**
- * TODO: Finish programming subsystem.
+ * TODO: Make and set default command.
  */
 public class Grabber extends Subsystem {
 
+	/* Declarations */
+	// Talon SRs
 	private Talon mGrabRollerL;
 	private Talon mGrabRollerR;
 
+	// Solenoid
 	private Solenoid mGrabberRetract;
 
+	// Limit Switch
 	private DigitalInput mGrabberLimit;
 
+	// Enum
 	public enum GrabberState {
 		GRAB, RETRACT, IDLE
 	}
 
 	public Grabber() {
 		/* Instantiations */
+		// Talon(pwmIO : int)
 		mGrabRollerL = new Talon(RobotMap.GRAB_ROLLER_L_PORT);
 		mGrabRollerR = new Talon(RobotMap.GRAB_ROLLER_R_PORT);
+
+		// Solenoid(canID : int, channel : int)
 		mGrabberRetract = new Solenoid(RobotMap.GRABBER_RETRACT_PORT, RobotMap.GRABBER_RETRACT_CHANNEL);
+		
+		// DigitalInput(io : int)
 		mGrabberLimit = new DigitalInput(RobotMap.GRABBER_LIMIT_PORT);
 
-		// TODO: I am not sure if this should be here or in teleopInit().
+		// TODO: I am not sure if this should be here or in teleopInit()
 		// mGrabberRetract.set(true);
 	}
 
@@ -56,17 +66,13 @@ public class Grabber extends Subsystem {
 		mGrabRollerR.set(speed);
 	}
 
-	public void grabManual(Speeds speed) {
-		grabManual(speed.getSpeed());
-	}
-
 	// TODO: Determine whether or not this is necessary
 	public boolean isPowerCubeGrabbed() {
 		return mGrabberLimit.get();
 	}
 
-	public void set(boolean value) {
-		mGrabberRetract.set(value);
+	public void set(boolean retract) {
+		mGrabberRetract.set(retract);
 	}
 
 	public void initDefaultCommand() {

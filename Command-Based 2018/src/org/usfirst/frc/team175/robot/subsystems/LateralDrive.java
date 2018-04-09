@@ -10,23 +10,30 @@ import org.usfirst.frc.team175.robot.Constants;
 
 /**
  * TODO: Make and set default command.
+ * 
+ * @see SRXSubsystem.java
  */
 public class LateralDrive extends SRXSubsystem {
 
+	/* Declarations */
+	// Talon SRX
 	private TalonSRX mLateralDrive;
 
-	// Solenoids
-	// Solenoid(int CAN id of PCM, int channel)
+	// Solenoid
 	private Solenoid mDeploy;
 
 	public LateralDrive(double kF, double kP, double kI, double kD) {
+		/* Construct SRXSubsystem */
 		super(RobotMap.LATERAL_DRIVE_PORT, Constants.LATERAL_DRIVE_CLOSED_LOOP_TYPE,
 				Constants.K_LATERAL_DRIVE_PID_LOOP_INDEX, Constants.K_LATERAL_DRIVE_TIMEOUT_MS, kF, kP, kI, kD);
+		
+		/* Instantiations */
+		// Solenoid(canID : int, channel : int)
 		mDeploy = new Solenoid(RobotMap.LATERAL_DEPLOY_PORT, RobotMap.LATERAL_DEPLOY_CHANNEL);
 	}
 
-	public void set(boolean value) {
-		mDeploy.set(value);
+	public void set(boolean enable) {
+		mDeploy.set(enable);
 	}
 
 	public boolean isEnabled() {

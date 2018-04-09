@@ -15,51 +15,63 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Climber extends Subsystem {
 
+	/* Declarations */
+	// Talon SRs
 	private Talon mClimbExtend;
 	private Talon mWinch;
+	
+	// Double Solenoid
 	private DoubleSolenoid mClimbRotate;
+	
+	// Solenoid
 	private Solenoid mClimbAlign;
+	
+	// Limit Switches
 	private DigitalInput mClimbUpLimit;
 	private DigitalInput mClimbDownLimit;
 
+	// Enums
 	public enum ClimberState {
 		EXTEND, RETRACT, IDLE
 	}
-
 	public enum WinchState {
 		WIND_UP, WIND_OUT, IDLE
 	}
 
 	public Climber() {
+		/* Instantiations */
+		// Talon(pwmIO : int)
 		mClimbExtend = new Talon(RobotMap.CLIMB_EXTEND_PORT);
 		mWinch = new Talon(RobotMap.WINCH_PORT);
+		
+		// DoubleSolenoid(canID : int, forwardChannel : int, reverseChannel : int)
 		mClimbRotate = new DoubleSolenoid(RobotMap.CLIMB_ROTATE_PORT, RobotMap.CLIMB_ROTATE_FORWARD_CHANNEL,
 				RobotMap.CLIMB_ROTATE_REVERSE_CHANNEL);
+		
+		// Solenoid(canID : int, channel : int)
 		mClimbAlign = new Solenoid(RobotMap.CLIMB_ALIGN_PORT, RobotMap.CLIMB_ALIGN_CHANNEL);
+		
+		// DigitalInput(io : int)
 		mClimbUpLimit = new DigitalInput(RobotMap.CLIMB_UP_LIMIT_PORT);
 		mClimbDownLimit = new DigitalInput(RobotMap.CLIMB_DOWN_LIMIT_PORT);
 	}
 
 	public void set(ClimberState climberState) {
 		switch (climberState) {
-		case EXTEND:
-			mClimbExtend.set(Speeds.FORWARD_FAST.getSpeed());
-			break;
-		case RETRACT:
-			mClimbExtend.set(Speeds.REVERSE_FAST.getSpeed());
-			break;
-		case IDLE:
-			mClimbExtend.set(Speeds.IDLE.getSpeed());
-			break;
+			case EXTEND:
+				mClimbExtend.set(Speeds.FORWARD_FAST.getSpeed());
+				break;
+			case RETRACT:
+				mClimbExtend.set(Speeds.REVERSE_FAST.getSpeed());
+				break;
+			case IDLE:
+				mClimbExtend.set(Speeds.IDLE.getSpeed());
+				break;
 		}
 	}
 
 	public void setManual(double speed) {
 		mClimbExtend.set(speed);
-	}
-
-	public void setManual(Speeds speed) {
-		setManual(speed.getSpeed());
 	}
 
 	public boolean isExtended() {
@@ -93,10 +105,6 @@ public class Climber extends Subsystem {
 
 	public void winchManual(double speed) {
 		mWinch.set(speed);
-	}
-
-	public void winchManual(Speeds speed) {
-		winchManual(speed.getSpeed());
 	}
 
 	public double getWinchSpeed() {

@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 public class SRXSubsystem extends Subsystem {
 
 	// Talon SRXs
-	// TalonSRX(int CAN id)
 	private TalonSRX mSRX;
 
 	// Constants
@@ -21,8 +20,11 @@ public class SRXSubsystem extends Subsystem {
 
 	public SRXSubsystem(int srxPort, int closedLoopType, int kPIDLoopIndex, int kTimeoutMs, double kF, double kP,
 			double kI, double kD) {
+		/* Instantiations */
+		// TalonSRX(canID : int)
 		mSRX = new TalonSRX(srxPort);
 
+		/* Definitions */
 		CLOSED_LOOP_TYPE = closedLoopType;
 		K_PID_LOOP_INDEX = kPIDLoopIndex;
 		K_TIMEOUT_MS = kTimeoutMs;
@@ -73,6 +75,7 @@ public class SRXSubsystem extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
+		// Empty
 	}
 
 }

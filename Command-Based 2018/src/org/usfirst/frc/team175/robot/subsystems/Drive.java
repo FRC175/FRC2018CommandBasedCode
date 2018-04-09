@@ -15,29 +15,30 @@ import org.usfirst.frc.team175.robot.RobotMap;
  */
 public class Drive extends Subsystem {
 
+	/* Declarations */
 	// Talon SRXs
-	// WPI_TalonSRX(int CAN id)
 	// No physical difference between WPI_TalonSRX and TalonSRX
 	private WPI_TalonSRX mLeftMaster;
 	private WPI_TalonSRX mRightMaster;
 	private WPI_TalonSRX mLeftFollower;
 	private WPI_TalonSRX mRightFollower;
 
-	// Solenoids
-	// Solenoid(int CAN id of PCM, int channel)
+	// Solenoid
 	private Solenoid mShift;
 
 	public Drive(double leftKF, double leftKP, double leftKI, double leftKD, double rightKF, double rightKP,
 			double rightKI, double rightKD) {
 		/* Instantiations */
+		// WPI_TalonSRX(canID : int)
 		mLeftMaster = new WPI_TalonSRX(RobotMap.LEFT_MASTER_PORT);
 		mRightMaster = new WPI_TalonSRX(RobotMap.RIGHT_MASTER_PORT);
 		mLeftFollower = new WPI_TalonSRX(RobotMap.LEFT_FOLLOWER_PORT);
 		mRightFollower = new WPI_TalonSRX(RobotMap.RIGHT_FOLLOWER_PORT);
 
+		// Solenoid(canID : int, channel : int)
 		mShift = new Solenoid(RobotMap.SHIFT_PORT, RobotMap.SHIFT_CHANNEL);
 
-		/* SRX Configuration */
+		/* General SRX Configuration */
 		mLeftFollower.follow(mLeftMaster);
 		mRightFollower.follow(mRightMaster);
 
@@ -46,7 +47,7 @@ public class Drive extends Subsystem {
 		mLeftFollower.setInverted(false);
 		mRightFollower.setInverted(false);
 
-		/* Left Master PID Configuration */
+		/* Left Master Configuration */
 		mLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.K_DRIVE_PID_LOOP_INDEX,
 				Constants.K_DRIVE_TIMEOUT_MS);
 		mLeftMaster.setSensorPhase(true);
@@ -67,7 +68,7 @@ public class Drive extends Subsystem {
 				Constants.K_DRIVE_TIMEOUT_MS);
 		mLeftMaster.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 
-		/* Right Master PID Configuration */
+		/* Right Master Configuration */
 		mRightMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.K_DRIVE_PID_LOOP_INDEX,
 				Constants.K_DRIVE_TIMEOUT_MS);
 		mRightMaster.setSensorPhase(false);
@@ -90,8 +91,8 @@ public class Drive extends Subsystem {
 		mRightMaster.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 	}
 
-	public void shift(boolean power) {
-		mShift.set(power);
+	public void shift(boolean enable) {
+		mShift.set(enable);
 	}
 
 	public boolean isShift() {

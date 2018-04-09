@@ -25,16 +25,15 @@ import org.usfirst.frc.team175.robot.subsystems.*;
 // If you rename or move this class, update the build.properties file in the project root
 public class Robot extends TimedRobot {
 
-    // Subsystem Declaration
+    // Subsystems
     //public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    /*public static final Drive drive;
-    public static final LateralDrive lateralDrive;
-    public static final Elevator elevator;
-    public static final Grabber grabber;
-    public static final Donker donker;
-    public static final Climber climber;*/
+    public static Drive drive;
+    public static LateralDrive lateralDrive;
+    public static Elevator elevator;
+    public static Grabber grabber;
+    public static Climber climber;
 
-    // OI Declaration
+    // OI
     public static OI oi;
 
     private Command autonomousCommand;
@@ -46,6 +45,12 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+    	/*drive = new Drive();
+    	lateralDrive = new LateralDrive();
+    	elevator = new Elevator();
+    	grabber = new Grabber();
+    	climber = new Climber();*/
+    	
         oi = new OI();
         chooser.addDefault("Default Auto", new ExampleCommand());
         // chooser.addObject("My Auto", new MyAutoCommand());
