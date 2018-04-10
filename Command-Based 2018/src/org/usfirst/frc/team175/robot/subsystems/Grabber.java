@@ -26,7 +26,7 @@ public class Grabber extends Subsystem {
 
 	// Enum
 	public enum GrabberState {
-		GRAB, RETRACT, IDLE
+		GRAB, RETRACT_FAST, RETRACT_SLOW, IDLE
 	}
 
 	public Grabber() {
@@ -52,12 +52,18 @@ public class Grabber extends Subsystem {
 				mGrabRollerL.set(!mGrabberLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
 				mGrabRollerR.set(!mGrabberLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
 				break;
-			case RETRACT:
+			case RETRACT_FAST:
 				mGrabRollerL.set(Speeds.FORWARD_FAST.getSpeed());
 				mGrabRollerR.set(Speeds.FORWARD_FAST.getSpeed());
+				break;
+			case RETRACT_SLOW: 
+				mGrabRollerL.set(Speeds.FORWARD_LOW.getSpeed());
+				mGrabRollerR.set(Speeds.FORWARD_LOW.getSpeed());
 			case IDLE:
-				mGrabRollerL.set(Speeds.IDLE.getSpeed());
-				mGrabRollerR.set(Speeds.IDLE.getSpeed());
+				// Default grabber bias
+				mGrabRollerL.set(-0.15);
+				mGrabRollerR.set(-0.15); 
+				break;
 		}
 	}
 

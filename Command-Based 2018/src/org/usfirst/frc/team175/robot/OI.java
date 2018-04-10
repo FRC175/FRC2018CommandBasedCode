@@ -7,6 +7,14 @@
 
 package org.usfirst.frc.team175.robot;
 
+import org.usfirst.frc.team175.robot.commands.teleop.JoystickDrive;
+import org.usfirst.frc.team175.robot.commands.teleop.JoystickLateralDrive;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -39,4 +47,32 @@ public class OI {
     // Start the command when the button is released and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
+	
+	// Joysticks
+	public static final Joystick DRIVER_STICK = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
+	public static final Joystick OPERATOR_STICK = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
+	
+	// Driver Buttons
+	public static final Trigger TOGGLE_LATERAL_DRIVE = new JoystickButton(DRIVER_STICK, 1); // 1 is the trigger button
+	
+	public OI() {
+		TOGGLE_LATERAL_DRIVE.whileActive(new JoystickLateralDrive());
+		TOGGLE_LATERAL_DRIVE.whenInactive(new JoystickDrive());
+	}
+	
+	public double getDriverStickX() {
+		return DRIVER_STICK.getX();
+	}
+	
+	public double getDriverStickY() {
+		return DRIVER_STICK.getY();
+	}
+	
+	public double getOperatorStickX() {
+		return OPERATOR_STICK.getX();
+	}
+	
+	public double getOperatorStickY() {
+		return OPERATOR_STICK.getY();
+	}
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * TODO: Consider making a Talon speed enum (global).
+ * TODO: Make and set default command.
  */
 public class Climber extends Subsystem {
 
@@ -82,7 +82,7 @@ public class Climber extends Subsystem {
 		return mClimbDownLimit.get();
 	}
 
-	private void winch(WinchState winchState) {
+	public void winch(WinchState winchState) {
 		switch (winchState) {
 		case WIND_UP:
 			mWinch.set(Speeds.FORWARD_FAST.getSpeed());
@@ -95,18 +95,11 @@ public class Climber extends Subsystem {
 		}
 	}
 
-	public void winch(WinchState winchState, double power) {
-		if (winchState == WinchState.WIND_UP) {
-			mClimbExtend.set(power);
-		} else {
-			winch(winchState);
-		}
-	}
-
 	public void winchManual(double speed) {
 		mWinch.set(speed);
 	}
 
+	// TODO: Determine whether this is necessary or not
 	public double getWinchSpeed() {
 		return mWinch.get();
 	}

@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.RobotMap;
@@ -25,6 +26,9 @@ public class Drive extends Subsystem {
 
 	// Solenoid
 	private Solenoid mShift;
+	
+	// Robot Drive
+	private DifferentialDrive mRobotDrive;
 
 	public Drive(double leftKF, double leftKP, double leftKI, double leftKD, double rightKF, double rightKP,
 			double rightKI, double rightKD) {
@@ -37,6 +41,9 @@ public class Drive extends Subsystem {
 
 		// Solenoid(canID : int, channel : int)
 		mShift = new Solenoid(RobotMap.SHIFT_PORT, RobotMap.SHIFT_CHANNEL);
+		
+		// DifferentialDrive(leftMotorController : SpeedController, rightMotorController : SpeedController)  
+		mRobotDrive = new DifferentialDrive(mLeftMaster, mRightMaster);
 
 		/* General SRX Configuration */
 		mLeftFollower.follow(mLeftMaster);
@@ -107,6 +114,10 @@ public class Drive extends Subsystem {
 	public void countsDrive(double leftCounts, double rightCounts) {
 		mLeftMaster.set(ControlMode.Position, leftCounts);
 		mRightMaster.set(ControlMode.Position, rightCounts);
+	}
+	
+	public void arcadeDrive(double xAxis, double yAxis) {
+		mRobotDrive.arcadeDrive(xAxis, yAxis);
 	}
 
 	public double getLeftDrivePosition() {
