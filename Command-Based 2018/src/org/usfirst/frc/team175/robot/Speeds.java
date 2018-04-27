@@ -1,5 +1,8 @@
 package org.usfirst.frc.team175.robot;
 
+/**
+ * @author Arvind
+ */
 public enum Speeds {
 	
 	REVERSE_FAST(-1),

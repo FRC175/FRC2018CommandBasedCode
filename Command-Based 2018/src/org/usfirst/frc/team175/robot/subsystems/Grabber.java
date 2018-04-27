@@ -1,15 +1,18 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.RobotMap;
 import org.usfirst.frc.team175.robot.Speeds;
 
 /**
- * TODO: Make and set default command.
+ * @author Arvind
  */
 public class Grabber extends Subsystem {
 
@@ -23,9 +26,12 @@ public class Grabber extends Subsystem {
 
 	// Limit Switch
 	private DigitalInput mGrabberLimit;
+	
+	// Relay
+	private Relay mPowerCubeGrabbedLight;
 
 	// Enum
-	public enum GrabberState {
+	public enum RollerState {
 		GRAB, RETRACT_FAST, RETRACT_SLOW, IDLE
 	}
 
@@ -40,14 +46,17 @@ public class Grabber extends Subsystem {
 		
 		// DigitalInput(io : int)
 		mGrabberLimit = new DigitalInput(RobotMap.GRABBER_LIMIT_PORT);
+		
+		// Relay(io : int)
+		mPowerCubeGrabbedLight = new Relay(RobotMap.POWER_CUBE_GRABBED_LIGHT_PORT);
 
 		// TODO: I am not sure if this should be here or in teleopInit()
 		// mGrabberRetract.set(true);
 	}
 
 	// TODO: Add custom speed options
-	public void grab(GrabberState grabberState) {
-		switch (grabberState) {
+	public void grab(RollerState rollerState) {
+		switch (rollerState) {
 			case GRAB:
 				mGrabRollerL.set(!mGrabberLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
 				mGrabRollerR.set(!mGrabberLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
@@ -72,13 +81,24 @@ public class Grabber extends Subsystem {
 		mGrabRollerR.set(speed);
 	}
 
-	// TODO: Determine whether or not this is necessary
 	public boolean isPowerCubeGrabbed() {
 		return mGrabberLimit.get();
 	}
 
 	public void set(boolean retract) {
 		mGrabberRetract.set(retract);
+	}
+	
+	public void setPowerCubeGrabbedLight(boolean on) {
+		mPowerCubeGrabbedLight.set(on ? Relay.Value.kForward : Relay.Value.kOff);
+	}
+	
+	public void outputToSmartDashboard() {
+		SmartDashboard.putNumber("Left Roller Percent Power", mGrabRollerL.get());
+		SmartDashboard.putNumber("Right Roller Percent Power", mGrabRollerL.get());
+		
+		SmartDashboard.putBoolean("Grabber State", mGrabberRetract.get());
+		SmartDashboard.putBoolean("Cube?", mGrabberLimit.get());
 	}
 
 	public void initDefaultCommand() {

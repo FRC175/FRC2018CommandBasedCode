@@ -12,6 +12,8 @@ package org.usfirst.frc.team175.robot;
  * to a variable name. This provides flexibility changing wiring, makes checking
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
+ * 
+ * @author Arvind
  */
 public class RobotMap {
 
@@ -32,7 +34,7 @@ public class RobotMap {
     // Limit Switch Ports
     public static final int GRABBER_LIMIT_PORT = 9;
     public static final int CLIMB_UP_LIMIT_PORT = 4;
-    public static final int CLIMB_DOWN_LIMIT_PORT = 3;
+    public static final int CLIMB_DOWN_LIMIT_PORT = 3; // Switch climb up and climb down * Maybe
 
     // Solenoid Ports & Channels
     public static final int SHIFT_PORT = 0;
@@ -52,5 +54,8 @@ public class RobotMap {
     // Joystick Ports
     public static final int LEFT_JOYSTICK_PORT = 0;
     public static final int RIGHT_JOYSTICK_PORT = 1;
+    
+    // Relay Ports
+    public static final int POWER_CUBE_GRABBED_LIGHT_PORT = 0;
 }
 

@@ -7,8 +7,20 @@
 
 package org.usfirst.frc.team175.robot;
 
-import org.usfirst.frc.team175.robot.commands.teleop.JoystickDrive;
+import org.usfirst.frc.team175.robot.commands.teleop.AlignClimber;
 import org.usfirst.frc.team175.robot.commands.teleop.JoystickLateralDrive;
+import org.usfirst.frc.team175.robot.commands.teleop.ManipulateCube;
+import org.usfirst.frc.team175.robot.commands.teleop.ManualElevator;
+import org.usfirst.frc.team175.robot.commands.teleop.PositionClimber;
+import org.usfirst.frc.team175.robot.commands.teleop.PositionElevator;
+import org.usfirst.frc.team175.robot.commands.teleop.PositionWinch;
+import org.usfirst.frc.team175.robot.commands.teleop.Shift;
+import org.usfirst.frc.team175.robot.commands.teleop.ToggleClimber;
+import org.usfirst.frc.team175.robot.commands.teleop.ToggleGrabber;
+import org.usfirst.frc.team175.robot.subsystems.Climber;
+import org.usfirst.frc.team175.robot.subsystems.Elevator;
+import org.usfirst.frc.team175.robot.subsystems.Grabber;
+import org.usfirst.frc.team175.util.TwoButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -18,6 +30,8 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
+ * 
+ * @author Arvind
  */
 public class OI {
     // CREATING BUTTONS
@@ -49,30 +63,98 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	
 	// Joysticks
-	public static final Joystick DRIVER_STICK = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
-	public static final Joystick OPERATOR_STICK = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
+	private static Joystick driverStick;
+	private static Joystick operatorStick;
 	
 	// Driver Buttons
-	public static final Trigger TOGGLE_LATERAL_DRIVE = new JoystickButton(DRIVER_STICK, 1); // 1 is the trigger button
+	public static Trigger lateralDriveToggle; 
+	public static Button windUp;
+	public static Button windOut;
+	public static Button extendClimber;
+	public static Button retractClimber;
+	public static Button shift;
+	public static Button toggleClimber;
+	
+	// Operator Buttons
+	public static Trigger grabCube;
+	public static Button retractCubeSlow;
+	public static Button retractCubeFast;
+	public static Button rotateGrabber;
+	public static Button elevatorCubeGrabbingPosition;
+	public static Button elevatorExchangePosition;
+	public static Button elevatorSwitchPosition;
+	public static Button elevatorLowScalePosition;
+	public static Button elevatorHighScalePosition;
+	public static Button elevatorManual;
+	public static Button toggleGrabber;
 	
 	public OI() {
-		TOGGLE_LATERAL_DRIVE.whileActive(new JoystickLateralDrive());
-		TOGGLE_LATERAL_DRIVE.whenInactive(new JoystickDrive());
+		/* Joystick Instantiation */
+		// Joystick(port : int)
+		driverStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
+		operatorStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
+		
+		/* Button Instantiation */
+		// Driver Stick
+		// JoystickButton(joystick : GenericHID, buttonNumber : int)
+		lateralDriveToggle = new JoystickButton(driverStick, 1); // 1 is the trigger button
+		shift = new JoystickButton(driverStick, 2);
+		extendClimber = new JoystickButton(driverStick, 7);
+		retractClimber = new JoystickButton(driverStick, 8); 
+		toggleClimber = new JoystickButton(driverStick, 9);
+		windUp = new JoystickButton(driverStick, 11);
+		// TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
+		windOut = new TwoButton(driverStick, 3, 4);
+		
+
+		// Operator Stick
+		grabCube = new JoystickButton(operatorStick, 1);
+		retractCubeFast = new JoystickButton(operatorStick, 3);
+		retractCubeSlow = new JoystickButton(operatorStick, 4);
+		elevatorCubeGrabbingPosition = new JoystickButton(operatorStick, 2);
+		elevatorExchangePosition = new JoystickButton(operatorStick, 7);
+		elevatorSwitchPosition = new JoystickButton(operatorStick, 8);
+		elevatorLowScalePosition = new JoystickButton(operatorStick, 9);
+		elevatorHighScalePosition = new JoystickButton(operatorStick, 10);
+		elevatorManual = new JoystickButton(operatorStick, 12);
+		toggleGrabber = new JoystickButton(operatorStick, 5);
+		
+		/* Button Configuration */
+		// Driver Stick
+		lateralDriveToggle.whileActive(new JoystickLateralDrive());
+		shift.whileHeld(new Shift());
+		extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
+		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT)); // Limit switch integration?
+		toggleClimber.toggleWhenPressed(new ToggleClimber());
+		windUp.whileHeld(new PositionWinch(Climber.WinchState.WIND_UP));
+		windOut.whileHeld(new PositionWinch(Climber.WinchState.WIND_OUT));
+		
+		// Operator Stick
+		grabCube.whileActive(new ManipulateCube(Grabber.RollerState.GRAB));
+		retractCubeFast.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_FAST));
+		retractCubeSlow.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_SLOW));
+		elevatorCubeGrabbingPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.POWER_CUBE_PICKUP));
+		elevatorExchangePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.EXCHANGE));
+		elevatorSwitchPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.SWITCH));
+		elevatorLowScalePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.LOW_SCALE));
+		elevatorHighScalePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.HIGH_SCALE));
+		elevatorManual.whileHeld(new ManualElevator());
+		toggleGrabber.toggleWhenPressed(new ToggleGrabber()); // If this doesn't work, use .whenPressed(command : Command)
 	}
 	
 	public double getDriverStickX() {
-		return DRIVER_STICK.getX();
+		return driverStick.getX();
 	}
 	
 	public double getDriverStickY() {
-		return DRIVER_STICK.getY();
+		return driverStick.getY();
 	}
 	
 	public double getOperatorStickX() {
-		return OPERATOR_STICK.getX();
+		return operatorStick.getX();
 	}
 	
 	public double getOperatorStickY() {
-		return OPERATOR_STICK.getY();
+		return operatorStick.getY();
 	}
 }

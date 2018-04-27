@@ -1,34 +1,36 @@
 package org.usfirst.frc.team175.robot.commands.teleop;
 
 import org.usfirst.frc.team175.robot.Robot;
+import org.usfirst.frc.team175.robot.subsystems.Climber;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * @author Arvind
  */
-public class JoystickLateralDrive extends Command {
-
-    public JoystickLateralDrive() {
+public class PositionClimber extends Command {
+	
+	private Climber.ClimberState mClimberState;
+	
+    public PositionClimber(Climber.ClimberState climberState) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.lateralDrive);
+    	requires(Robot.climber);
+    	mClimberState = climberState;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.lateralDrive.set(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lateralDrive.powerDrive(Robot.oi.getDriverStickX());
+    	Robot.climber.set(mClimberState);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	// return !Robot.lateralDrive.isEnabled();
-    	return false;
+        return false;
     }
 
     // Called once after isFinished returns true
@@ -38,7 +40,6 @@ public class JoystickLateralDrive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.lateralDrive.powerDrive(0);
-    	Robot.lateralDrive.set(false);
+    	Robot.climber.set(Climber.ClimberState.IDLE);
     }
 }

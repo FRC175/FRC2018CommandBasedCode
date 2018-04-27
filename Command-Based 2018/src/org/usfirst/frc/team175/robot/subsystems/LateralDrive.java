@@ -6,11 +6,11 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team175.robot.RobotMap;
+import org.usfirst.frc.team175.util.SRXSubsystem;
 import org.usfirst.frc.team175.robot.Constants;
 
 /**
- * TODO: Make and set default command.
- * 
+ * @author Arvind
  * @see SRXSubsystem.java
  */
 public class LateralDrive extends SRXSubsystem {
@@ -24,7 +24,7 @@ public class LateralDrive extends SRXSubsystem {
 
 	public LateralDrive(double kF, double kP, double kI, double kD) {
 		/* Construct SRXSubsystem */
-		super(RobotMap.LATERAL_DRIVE_PORT, Constants.LATERAL_DRIVE_CLOSED_LOOP_TYPE,
+		super("Lateral Drive", RobotMap.LATERAL_DRIVE_PORT, Constants.LATERAL_DRIVE_CLOSED_LOOP_TYPE,
 				Constants.K_LATERAL_DRIVE_PID_LOOP_INDEX, Constants.K_LATERAL_DRIVE_TIMEOUT_MS, kF, kP, kI, kD);
 		
 		/* Instantiations */

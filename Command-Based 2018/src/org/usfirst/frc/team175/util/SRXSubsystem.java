@@ -1,6 +1,7 @@
-package org.usfirst.frc.team175.robot.subsystems;
+package org.usfirst.frc.team175.util;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team175.robot.Constants;
 
@@ -12,13 +13,14 @@ public class SRXSubsystem extends Subsystem {
 
 	// Talon SRXs
 	private TalonSRX mSRX;
-
+	
 	// Constants
 	private final int K_PID_LOOP_INDEX;
 	private final int K_TIMEOUT_MS;
 	private final int CLOSED_LOOP_TYPE;
+	private final String SUBSYSTEM_NAME;
 
-	public SRXSubsystem(int srxPort, int closedLoopType, int kPIDLoopIndex, int kTimeoutMs, double kF, double kP,
+	public SRXSubsystem(String subsystemName, int srxPort, int closedLoopType, int kPIDLoopIndex, int kTimeoutMs, double kF, double kP,
 			double kI, double kD) {
 		/* Instantiations */
 		// TalonSRX(canID : int)
@@ -28,6 +30,7 @@ public class SRXSubsystem extends Subsystem {
 		CLOSED_LOOP_TYPE = closedLoopType;
 		K_PID_LOOP_INDEX = kPIDLoopIndex;
 		K_TIMEOUT_MS = kTimeoutMs;
+		SUBSYSTEM_NAME = subsystemName;
 
 		/* SRX Configuration */
 		mSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, K_PID_LOOP_INDEX, K_TIMEOUT_MS);
@@ -72,7 +75,14 @@ public class SRXSubsystem extends Subsystem {
 	public void zeroEncoder() {
 		mSRX.setSelectedSensorPosition(0, K_PID_LOOP_INDEX, K_TIMEOUT_MS);
 	}
-
+	
+	public void outputToSmartDashboard() {
+		SmartDashboard.putNumber(SUBSYSTEM_NAME + " Encoder Counts", mSRX.getSelectedSensorPosition(CLOSED_LOOP_TYPE));
+		SmartDashboard.putNumber(SUBSYSTEM_NAME + " Voltage", mSRX.getMotorOutputVoltage());
+		SmartDashboard.putNumber(SUBSYSTEM_NAME + " Current", mSRX.getOutputCurrent());
+		SmartDashboard.putNumber(SUBSYSTEM_NAME + " Percent Power", mSRX.getMotorOutputPercent());
+	}
+	
 	@Override
 	protected void initDefaultCommand() {
 		// Empty

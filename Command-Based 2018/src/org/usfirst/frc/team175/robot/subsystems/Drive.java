@@ -4,15 +4,18 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.RobotMap;
+import org.usfirst.frc.team175.robot.commands.teleop.JoystickDrive;
 
 /**
- * TODO: Make and set default command.
+ * @author Arvind
  */
 public class Drive extends Subsystem {
 
@@ -26,6 +29,9 @@ public class Drive extends Subsystem {
 
 	// Solenoid
 	private Solenoid mShift;
+	
+	// Gyro
+    ADXRS450_Gyro mGyro;
 	
 	// Robot Drive
 	private DifferentialDrive mRobotDrive;
@@ -41,6 +47,8 @@ public class Drive extends Subsystem {
 
 		// Solenoid(canID : int, channel : int)
 		mShift = new Solenoid(RobotMap.SHIFT_PORT, RobotMap.SHIFT_CHANNEL);
+		
+		mGyro = new ADXRS450_Gyro();
 		
 		// DifferentialDrive(leftMotorController : SpeedController, rightMotorController : SpeedController)  
 		mRobotDrive = new DifferentialDrive(mLeftMaster, mRightMaster);
@@ -127,6 +135,10 @@ public class Drive extends Subsystem {
 	public double getRightDrivePosition() {
 		return mRightMaster.getSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE);
 	}
+	
+	public double getGyroAngle() {
+		return mGyro.getAngle();
+	}
 
 	public void setLeftPID(double kF, double kP, double kI, double kD) {
 		mLeftMaster.config_kF(Constants.K_DRIVE_PID_LOOP_INDEX, kF, Constants.K_DRIVE_TIMEOUT_MS);
@@ -146,10 +158,31 @@ public class Drive extends Subsystem {
 		mLeftMaster.setSelectedSensorPosition(0, Constants.K_DRIVE_PID_LOOP_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
 		mRightMaster.setSelectedSensorPosition(0, Constants.K_DRIVE_PID_LOOP_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
 	}
+	
+	public void resetGyro() {
+		mGyro.reset();
+	}
+	
+	public void outputToSmartDashboard() {
+		SmartDashboard.putNumber("Left Master Encoder Counts", mLeftMaster.getSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE));
+		SmartDashboard.putNumber("Left Master Voltage", mLeftMaster.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Left Master Current", mLeftMaster.getOutputCurrent());
+		SmartDashboard.putNumber("Left Master Percent Power", mLeftMaster.getMotorOutputPercent());
+		
+		SmartDashboard.putNumber("Right Master Encoder Counts", mRightMaster.getSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE));
+		SmartDashboard.putNumber("Right Master Voltage", mRightMaster.getMotorOutputVoltage());
+		SmartDashboard.putNumber("Right Master Current", mRightMaster.getOutputCurrent());
+		SmartDashboard.putNumber("Right Master Percent Power", mRightMaster.getMotorOutputPercent());
+		
+		SmartDashboard.putNumber("Gyro Angle", mGyro.getAngle());
+		
+		SmartDashboard.putBoolean("High Gear?", mShift.get());
+	}
 
 	public void initDefaultCommand() {
 		// TODO: Set the default command, if any, for a subsystem here. Example:
 		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new JoystickDrive());
 	}
 
 }

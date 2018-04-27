@@ -9,9 +9,10 @@ import org.usfirst.frc.team175.robot.Speeds;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * TODO: Make and set default command.
+ * @author Arvind
  */
 public class Climber extends Subsystem {
 
@@ -54,6 +55,9 @@ public class Climber extends Subsystem {
 		// DigitalInput(io : int)
 		mClimbUpLimit = new DigitalInput(RobotMap.CLIMB_UP_LIMIT_PORT);
 		mClimbDownLimit = new DigitalInput(RobotMap.CLIMB_DOWN_LIMIT_PORT);
+		
+		// Set climber outwards
+		mClimbAlign.set(true);
 	}
 
 	public void set(ClimberState climberState) {
@@ -84,14 +88,15 @@ public class Climber extends Subsystem {
 
 	public void winch(WinchState winchState) {
 		switch (winchState) {
-		case WIND_UP:
-			mWinch.set(Speeds.FORWARD_FAST.getSpeed());
-			break;
-		case WIND_OUT:
-			mWinch.set(Speeds.REVERSE_FAST.getSpeed());
-			break;
-		case IDLE:
-			mWinch.set(Speeds.IDLE.getSpeed());
+			case WIND_UP:
+				mWinch.set(Speeds.FORWARD_FAST.getSpeed());
+				break;
+			case WIND_OUT:
+				mWinch.set(Speeds.REVERSE_FAST.getSpeed());
+				break;
+			case IDLE:
+				mWinch.set(Speeds.IDLE.getSpeed());
+				break;
 		}
 	}
 
@@ -104,14 +109,24 @@ public class Climber extends Subsystem {
 		return mWinch.get();
 	}
 
-	public void rotate(boolean rotate) {
-		mClimbRotate.set(rotate ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+	public void align(boolean align) {
+		mClimbAlign.set(align);
+	}
+	
+	public boolean isAligned() {
+		return mClimbAlign.get();
 	}
 
-	public void align() {
-		mClimbAlign.set(mWinch.get() == 0);
+	public void outputToSmartDashboard() {
+		SmartDashboard.putNumber("Climber Percent Power", mClimbExtend.get());
+		SmartDashboard.putNumber("Winch Percent Power", mWinch.get());
+		
+		SmartDashboard.putBoolean("Climber State", mClimbAlign.get());
+		SmartDashboard.putBoolean("Extended all the way?", mClimbUpLimit.get());
+		SmartDashboard.putBoolean("Retracted all the way?", mClimbDownLimit.get());
 	}
 
+	
 	public void initDefaultCommand() {
 		// TODO: Set the default command, if any, for a subsystem here. Example:
 		// setDefaultCommand(new MySpecialCommand());

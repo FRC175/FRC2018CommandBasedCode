@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team175.robot.commands.ExampleCommand;
+import org.usfirst.frc.team175.robot.commands.automodes.CheesyPoofsSpin;
+import org.usfirst.frc.team175.robot.commands.automodes.DriveStraight;
 import org.usfirst.frc.team175.robot.subsystems.*;
 
 /**
@@ -21,6 +23,8 @@ import org.usfirst.frc.team175.robot.subsystems.*;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the build.properties file in the
  * project.
+ * 
+ * @author Arvind
  */
 // If you rename or move this class, update the build.properties file in the project root
 public class Robot extends TimedRobot {
@@ -33,9 +37,13 @@ public class Robot extends TimedRobot {
     public static Grabber grabber;
     public static Climber climber;
 
-    // OI
+    // Operator Interface
     public static OI oi;
+    
+    // FMS Data
+    public static String gameData;
 
+    // Other
     private Command autonomousCommand;
     private SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -45,16 +53,17 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
-    	/*drive = new Drive();
-    	lateralDrive = new LateralDrive();
-    	elevator = new Elevator();
+    	drive = new Drive(0, 0.12, 0, 0.0012, 0, 0.08, 0, 0); // Left & Right PID Values
+    	lateralDrive = new LateralDrive(0, 10, 0, 2); // PID Values
+    	elevator = new Elevator(0, 1, 0, 0); // PID Values
     	grabber = new Grabber();
-    	climber = new Climber();*/
+    	climber = new Climber();
     	
         oi = new OI();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-        // chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+        
+        chooser.addDefault("Cross The Line", new DriveStraight());
+        chooser.addObject("Cheesy Poofs Spin", new CheesyPoofsSpin());
+        SmartDashboard.putData("Auto Modes", chooser);
     }
 
     /**
@@ -70,6 +79,7 @@ public class Robot extends TimedRobot {
     @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
+        smartDashboardData();
     }
 
     /**
@@ -86,7 +96,6 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         autonomousCommand = chooser.getSelected();
-
 
         String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
         /*switch (autoSelected) {
@@ -112,6 +121,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        smartDashboardData();
     }
 
     @Override
@@ -131,6 +141,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        smartDashboardData();
     }
 
     /**
@@ -138,6 +149,14 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
-
+    	smartDashboardData();
+    }
+    
+    public void smartDashboardData() {
+    	drive.outputToSmartDashboard();
+    	lateralDrive.outputToSmartDashboard();
+    	elevator.outputToSmartDashboard();
+    	grabber.outputToSmartDashboard();
+    	climber.outputToSmartDashboard();
     }
 }

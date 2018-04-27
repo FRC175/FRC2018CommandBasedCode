@@ -7,28 +7,27 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Arvind
  */
-public class JoystickLateralDrive extends Command {
+public class ManualElevator extends Command {
 
-    public JoystickLateralDrive() {
+    public ManualElevator() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.lateralDrive);
+    	requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.lateralDrive.set(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lateralDrive.powerDrive(Robot.oi.getDriverStickX());
+    	Robot.elevator.countsDrive((Robot.oi.getOperatorStickY() <= 0) ? Robot.oi.getOperatorStickY() 
+    			: (Robot.oi.getOperatorStickY() * 0.6));
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	// return !Robot.lateralDrive.isEnabled();
-    	return false;
+        return false;
     }
 
     // Called once after isFinished returns true
@@ -38,7 +37,5 @@ public class JoystickLateralDrive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.lateralDrive.powerDrive(0);
-    	Robot.lateralDrive.set(false);
     }
 }
