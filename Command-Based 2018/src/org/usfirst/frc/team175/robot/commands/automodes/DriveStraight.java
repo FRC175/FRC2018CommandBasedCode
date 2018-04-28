@@ -7,6 +7,8 @@ import org.usfirst.frc.team175.robot.commands.auto.TurnToAngle;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
+ * Drive straight and cross the auto line.
+ * 
  * @author Arvind
  */
 public class DriveStraight extends CommandGroup {

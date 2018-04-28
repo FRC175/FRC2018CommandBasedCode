@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team175.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -30,7 +31,6 @@ import org.usfirst.frc.team175.robot.subsystems.*;
 public class Robot extends TimedRobot {
 
     // Subsystems
-    //public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     public static Drive drive;
     public static LateralDrive lateralDrive;
     public static Elevator elevator;
@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         autonomousCommand = chooser.getSelected();
+        gameData = DriverStation.getInstance().getGameSpecificMessage();
 
         String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
         /*switch (autoSelected) {
@@ -109,7 +110,7 @@ public class Robot extends TimedRobot {
         }*/
 
 
-        // schedule the autonomous command (example)
+        // Schedule the autonomous command (example)
         if (autonomousCommand != null) {
             autonomousCommand.start();
         }
