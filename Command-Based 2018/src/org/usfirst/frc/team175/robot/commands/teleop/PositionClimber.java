@@ -6,6 +6,8 @@ import org.usfirst.frc.team175.robot.subsystems.Climber;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * TODO: Maybe add limit switch integration.
+ * 
  * @author Arvind
  */
 public class PositionClimber extends Command {

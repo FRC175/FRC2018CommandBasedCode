@@ -13,7 +13,7 @@ public enum Speeds {
 	FORWARD_LOW(0.25),
 	FORWARD_MEDIUM(0.5),
 	FORWARD_MEDIUM_FAST(0.75),
-	FORWARD_FAST(0);
+	FORWARD_FAST(1);
 	
 	private final double M_SPEED;
 	

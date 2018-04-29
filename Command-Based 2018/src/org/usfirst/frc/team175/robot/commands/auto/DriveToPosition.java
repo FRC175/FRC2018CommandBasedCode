@@ -2,10 +2,13 @@ package org.usfirst.frc.team175.robot.commands.auto;
 
 import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.Robot;
+import org.usfirst.frc.team175.robot.Speeds;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
+ * TODO: Maybe add option for setting manual speed.
+ * 
  * @author Arvind
  */
 public class DriveToPosition extends Command {
@@ -26,7 +29,7 @@ public class DriveToPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.powerDrive(0.75, -0.75); // Replace with Speed Enum
+    	Robot.drive.powerDrive(Speeds.FORWARD_MEDIUM_FAST.getSpeed(), Speeds.REVESRSE_MEDIUM_FAST.getSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -41,7 +44,7 @@ public class DriveToPosition extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drive.zeroEncoders();
-    	Robot.drive.powerDrive(0, 0);
+    	Robot.drive.powerDrive(Speeds.IDLE.getSpeed(), Speeds.IDLE.getSpeed()); // Am I to use this or arcadeDrive()?
     }
 
     // Called when another command which requires one or more of the same

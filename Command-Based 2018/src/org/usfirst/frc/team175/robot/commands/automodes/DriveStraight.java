@@ -1,6 +1,7 @@
 package org.usfirst.frc.team175.robot.commands.automodes;
 
 import org.usfirst.frc.team175.robot.Constants;
+import org.usfirst.frc.team175.robot.Speeds;
 import org.usfirst.frc.team175.robot.commands.auto.DriveToPosition;
 import org.usfirst.frc.team175.robot.commands.auto.TurnToAngle;
 
@@ -30,7 +31,7 @@ public class DriveStraight extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new TurnToAngle(0, 5, 0.75));
+    	addParallel(new TurnToAngle(0, 5, Speeds.FORWARD_MEDIUM_FAST.getSpeed()));
     	addSequential(new DriveToPosition(100 * Constants.DRIVE_IN_INCHES));
     }
     
