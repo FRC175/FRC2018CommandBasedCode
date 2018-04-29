@@ -26,7 +26,7 @@ public class Grabber extends Subsystem {
 
 	// Limit Switch
 	private DigitalInput mGrabberLimit;
-	
+
 	// Relay
 	private Relay mPowerCubeGrabbedLight;
 
@@ -43,15 +43,12 @@ public class Grabber extends Subsystem {
 
 		// Solenoid(canID : int, channel : int)
 		mGrabberRetract = new Solenoid(RobotMap.GRABBER_RETRACT_PORT, RobotMap.GRABBER_RETRACT_CHANNEL);
-		
+
 		// DigitalInput(io : int)
 		mGrabberLimit = new DigitalInput(RobotMap.GRABBER_LIMIT_PORT);
-		
+
 		// Relay(io : int)
 		mPowerCubeGrabbedLight = new Relay(RobotMap.POWER_CUBE_GRABBED_LIGHT_PORT);
-
-		// TODO: I am not sure if this should be here or in teleopInit()
-		// mGrabberRetract.set(true);
 	}
 
 	// TODO: Add custom speed options
@@ -65,13 +62,13 @@ public class Grabber extends Subsystem {
 				mGrabRollerL.set(Speeds.FORWARD_FAST.getSpeed());
 				mGrabRollerR.set(Speeds.FORWARD_FAST.getSpeed());
 				break;
-			case RETRACT_SLOW: 
+			case RETRACT_SLOW:
 				mGrabRollerL.set(Speeds.FORWARD_LOW.getSpeed());
 				mGrabRollerR.set(Speeds.FORWARD_LOW.getSpeed());
 			case IDLE:
 				// Default grabber bias
 				mGrabRollerL.set(-0.15);
-				mGrabRollerR.set(-0.15); 
+				mGrabRollerR.set(-0.15);
 				break;
 		}
 	}
@@ -88,15 +85,15 @@ public class Grabber extends Subsystem {
 	public void set(boolean retract) {
 		mGrabberRetract.set(retract);
 	}
-	
+
 	public void setPowerCubeGrabbedLight(boolean on) {
 		mPowerCubeGrabbedLight.set(on ? Relay.Value.kForward : Relay.Value.kOff);
 	}
-	
+
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Left Roller Percent Power", mGrabRollerL.get());
 		SmartDashboard.putNumber("Right Roller Percent Power", mGrabRollerL.get());
-		
+
 		SmartDashboard.putBoolean("Grabber State", mGrabberRetract.get());
 		SmartDashboard.putBoolean("Cube?", mGrabberLimit.get());
 	}

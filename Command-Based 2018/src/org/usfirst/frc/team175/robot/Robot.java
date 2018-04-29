@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team175.robot.commands.ExampleCommand;
+
 import org.usfirst.frc.team175.robot.commands.automodes.CheesyPoofsSpin;
 import org.usfirst.frc.team175.robot.commands.automodes.DriveStraight;
 import org.usfirst.frc.team175.robot.subsystems.*;
@@ -100,14 +100,14 @@ public class Robot extends TimedRobot {
 
         String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
         /*switch (autoSelected) {
-            case "My Auto":
-                autonomousCommand = new MyAutoCommand();
-                break;
-            case "Default Auto":
-            default:
-                autonomousCommand = new ExampleCommand();
-                break;
-        }*/
+	        case "My Auto":
+	            autonomousCommand = new MyAutoCommand();
+	            break;
+	        case "Default Auto":
+	        default:
+	            autonomousCommand = new ExampleCommand();
+	            break;
+    	}*/
 
 
         // Schedule the autonomous command (example)

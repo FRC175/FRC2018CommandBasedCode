@@ -29,10 +29,10 @@ public class Drive extends Subsystem {
 
 	// Solenoid
 	private Solenoid mShift;
-	
+
 	// Gyro
-    ADXRS450_Gyro mGyro;
-	
+	ADXRS450_Gyro mGyro;
+
 	// Robot Drive
 	private DifferentialDrive mRobotDrive;
 
@@ -47,10 +47,11 @@ public class Drive extends Subsystem {
 
 		// Solenoid(canID : int, channel : int)
 		mShift = new Solenoid(RobotMap.SHIFT_PORT, RobotMap.SHIFT_CHANNEL);
-		
+
 		mGyro = new ADXRS450_Gyro();
-		
-		// DifferentialDrive(leftMotorController : SpeedController, rightMotorController : SpeedController)  
+
+		// DifferentialDrive(leftMotorController : SpeedController, rightMotorController
+		// : SpeedController)
 		mRobotDrive = new DifferentialDrive(mLeftMaster, mRightMaster);
 
 		/* General SRX Configuration */
@@ -72,14 +73,14 @@ public class Drive extends Subsystem {
 		mLeftMaster.configPeakOutputForward(1, Constants.K_DRIVE_TIMEOUT_MS);
 		mLeftMaster.configPeakOutputReverse(-1, Constants.K_DRIVE_TIMEOUT_MS);
 
-		mLeftMaster.configAllowableClosedloopError(0, Constants.K_DRIVE_PID_LOOP_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
+		mLeftMaster.configAllowableClosedloopError(0, Constants.K_DRIVE_SLOT_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
 
-		mLeftMaster.config_kF(Constants.K_DRIVE_PID_LOOP_INDEX, leftKF, Constants.K_DRIVE_TIMEOUT_MS); // 0
-		mLeftMaster.config_kP(Constants.K_DRIVE_PID_LOOP_INDEX, leftKP, Constants.K_DRIVE_TIMEOUT_MS); // 0.12
-		mLeftMaster.config_kI(Constants.K_DRIVE_PID_LOOP_INDEX, leftKI, Constants.K_DRIVE_TIMEOUT_MS); // 0
-		mLeftMaster.config_kD(Constants.K_DRIVE_PID_LOOP_INDEX, leftKD, Constants.K_DRIVE_TIMEOUT_MS); // 0.0012
+		mLeftMaster.config_kF(Constants.K_DRIVE_SLOT_INDEX, leftKF, Constants.K_DRIVE_TIMEOUT_MS); // 0
+		mLeftMaster.config_kP(Constants.K_DRIVE_SLOT_INDEX, leftKP, Constants.K_DRIVE_TIMEOUT_MS); // 0.12
+		mLeftMaster.config_kI(Constants.K_DRIVE_SLOT_INDEX, leftKI, Constants.K_DRIVE_TIMEOUT_MS); // 0
+		mLeftMaster.config_kD(Constants.K_DRIVE_SLOT_INDEX, leftKD, Constants.K_DRIVE_TIMEOUT_MS); // 0.0012
 
-		mLeftMaster.setSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE, Constants.K_DRIVE_PID_LOOP_INDEX,
+		mLeftMaster.setSelectedSensorPosition(Constants.DRIVE_POSITION, Constants.K_DRIVE_PID_LOOP_INDEX,
 				Constants.K_DRIVE_TIMEOUT_MS);
 		mLeftMaster.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
 
@@ -93,14 +94,14 @@ public class Drive extends Subsystem {
 		mRightMaster.configPeakOutputForward(1, Constants.K_DRIVE_TIMEOUT_MS);
 		mRightMaster.configPeakOutputReverse(-1, Constants.K_DRIVE_TIMEOUT_MS);
 
-		mRightMaster.configAllowableClosedloopError(0, Constants.K_DRIVE_PID_LOOP_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
+		mRightMaster.configAllowableClosedloopError(0, Constants.K_DRIVE_SLOT_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
 
-		mRightMaster.config_kF(Constants.K_DRIVE_PID_LOOP_INDEX, rightKF, Constants.K_DRIVE_TIMEOUT_MS); // 0
-		mRightMaster.config_kP(Constants.K_DRIVE_PID_LOOP_INDEX, rightKP, Constants.K_DRIVE_TIMEOUT_MS); // 0.08
-		mRightMaster.config_kI(Constants.K_DRIVE_PID_LOOP_INDEX, rightKI, Constants.K_DRIVE_TIMEOUT_MS); // 0
-		mRightMaster.config_kD(Constants.K_DRIVE_PID_LOOP_INDEX, rightKD, Constants.K_DRIVE_TIMEOUT_MS); // 0
+		mRightMaster.config_kF(Constants.K_DRIVE_SLOT_INDEX, rightKF, Constants.K_DRIVE_TIMEOUT_MS); // 0
+		mRightMaster.config_kP(Constants.K_DRIVE_SLOT_INDEX, rightKP, Constants.K_DRIVE_TIMEOUT_MS); // 0.08
+		mRightMaster.config_kI(Constants.K_DRIVE_SLOT_INDEX, rightKI, Constants.K_DRIVE_TIMEOUT_MS); // 0
+		mRightMaster.config_kD(Constants.K_DRIVE_SLOT_INDEX, rightKD, Constants.K_DRIVE_TIMEOUT_MS); // 0
 
-		mRightMaster.setSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE, Constants.K_DRIVE_PID_LOOP_INDEX,
+		mRightMaster.setSelectedSensorPosition(Constants.DRIVE_POSITION, Constants.K_DRIVE_PID_LOOP_INDEX,
 				Constants.K_DRIVE_TIMEOUT_MS);
 
 		mRightMaster.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
@@ -123,59 +124,61 @@ public class Drive extends Subsystem {
 		mLeftMaster.set(ControlMode.Position, leftCounts);
 		mRightMaster.set(ControlMode.Position, rightCounts);
 	}
-	
+
 	public void arcadeDrive(double xAxis, double yAxis) {
 		mRobotDrive.arcadeDrive(xAxis, yAxis);
 	}
 
 	public double getLeftDrivePosition() {
-		return mLeftMaster.getSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE);
+		return mLeftMaster.getSelectedSensorPosition(Constants.DRIVE_POSITION);
 	}
 
 	public double getRightDrivePosition() {
-		return mRightMaster.getSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE);
+		return mRightMaster.getSelectedSensorPosition(Constants.DRIVE_POSITION);
 	}
-	
+
 	public double getGyroAngle() {
 		return mGyro.getAngle();
 	}
 
 	public void setLeftPID(double kF, double kP, double kI, double kD) {
-		mLeftMaster.config_kF(Constants.K_DRIVE_PID_LOOP_INDEX, kF, Constants.K_DRIVE_TIMEOUT_MS);
-		mLeftMaster.config_kP(Constants.K_DRIVE_PID_LOOP_INDEX, kP, Constants.K_DRIVE_TIMEOUT_MS);
-		mLeftMaster.config_kI(Constants.K_DRIVE_PID_LOOP_INDEX, kI, Constants.K_DRIVE_TIMEOUT_MS);
-		mLeftMaster.config_kD(Constants.K_DRIVE_PID_LOOP_INDEX, kD, Constants.K_DRIVE_TIMEOUT_MS);
+		mLeftMaster.config_kF(Constants.K_DRIVE_SLOT_INDEX, kF, Constants.K_DRIVE_TIMEOUT_MS);
+		mLeftMaster.config_kP(Constants.K_DRIVE_SLOT_INDEX, kP, Constants.K_DRIVE_TIMEOUT_MS);
+		mLeftMaster.config_kI(Constants.K_DRIVE_SLOT_INDEX, kI, Constants.K_DRIVE_TIMEOUT_MS);
+		mLeftMaster.config_kD(Constants.K_DRIVE_SLOT_INDEX, kD, Constants.K_DRIVE_TIMEOUT_MS);
 	}
 
 	public void setRightPID(double kF, double kP, double kI, double kD) {
-		mRightMaster.config_kF(Constants.K_DRIVE_PID_LOOP_INDEX, kF, Constants.K_DRIVE_TIMEOUT_MS);
-		mRightMaster.config_kP(Constants.K_DRIVE_PID_LOOP_INDEX, kP, Constants.K_DRIVE_TIMEOUT_MS);
-		mRightMaster.config_kI(Constants.K_DRIVE_PID_LOOP_INDEX, kI, Constants.K_DRIVE_TIMEOUT_MS);
-		mRightMaster.config_kD(Constants.K_DRIVE_PID_LOOP_INDEX, kD, Constants.K_DRIVE_TIMEOUT_MS);
+		mRightMaster.config_kF(Constants.K_DRIVE_SLOT_INDEX, kF, Constants.K_DRIVE_TIMEOUT_MS);
+		mRightMaster.config_kP(Constants.K_DRIVE_SLOT_INDEX, kP, Constants.K_DRIVE_TIMEOUT_MS);
+		mRightMaster.config_kI(Constants.K_DRIVE_SLOT_INDEX, kI, Constants.K_DRIVE_TIMEOUT_MS);
+		mRightMaster.config_kD(Constants.K_DRIVE_SLOT_INDEX, kD, Constants.K_DRIVE_TIMEOUT_MS);
 	}
 
 	public void zeroEncoders() {
 		mLeftMaster.setSelectedSensorPosition(0, Constants.K_DRIVE_PID_LOOP_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
 		mRightMaster.setSelectedSensorPosition(0, Constants.K_DRIVE_PID_LOOP_INDEX, Constants.K_DRIVE_TIMEOUT_MS);
 	}
-	
+
 	public void resetGyro() {
 		mGyro.reset();
 	}
-	
+
 	public void outputToSmartDashboard() {
-		SmartDashboard.putNumber("Left Master Encoder Counts", mLeftMaster.getSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE));
+		SmartDashboard.putNumber("Left Master Encoder Counts",
+				mLeftMaster.getSelectedSensorPosition(Constants.DRIVE_POSITION));
 		SmartDashboard.putNumber("Left Master Voltage", mLeftMaster.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Left Master Current", mLeftMaster.getOutputCurrent());
 		SmartDashboard.putNumber("Left Master Percent Power", mLeftMaster.getMotorOutputPercent());
-		
-		SmartDashboard.putNumber("Right Master Encoder Counts", mRightMaster.getSelectedSensorPosition(Constants.DRIVE_CLOSED_LOOP_TYPE));
+
+		SmartDashboard.putNumber("Right Master Encoder Counts",
+				mRightMaster.getSelectedSensorPosition(Constants.DRIVE_POSITION));
 		SmartDashboard.putNumber("Right Master Voltage", mRightMaster.getMotorOutputVoltage());
 		SmartDashboard.putNumber("Right Master Current", mRightMaster.getOutputCurrent());
 		SmartDashboard.putNumber("Right Master Percent Power", mRightMaster.getMotorOutputPercent());
-		
+
 		SmartDashboard.putNumber("Gyro Angle", mGyro.getAngle());
-		
+
 		SmartDashboard.putBoolean("High Gear?", mShift.get());
 	}
 

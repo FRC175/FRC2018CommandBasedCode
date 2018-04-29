@@ -22,11 +22,11 @@ public class Elevator extends SRXSubsystem {
 
 	// Enum
 	public enum ElevatorPositions {
-		POWER_CUBE_PICKUP(-225), 
+		POWER_CUBE_PICKUP(-225),
 		POWER_CUBE_LIFT(-600),
-		EXCHANGE(-1926), 
-		SWITCH(-12000), 
-		LOW_SCALE(-25555), 
+		EXCHANGE(-1926),
+		SWITCH(-12000),
+		LOW_SCALE(-25555),
 		HIGH_SCALE(-33050);
 
 		private final double M_COUNTS;
@@ -42,13 +42,13 @@ public class Elevator extends SRXSubsystem {
 
 	public Elevator(double kF, double kP, double kI, double kD) {
 		/* Construct SRXSubsystem */
-		super("Elevator", RobotMap.ELEVATOR_PORT, Constants.ELEVATOR_CLOSED_LOOP_TYPE, Constants.K_ELEVATOR_PID_LOOP_INDEX,
-				Constants.K_ELEVATOR_TIMEOUT_MS, kF, kP, kI, kD);
+		super("Elevator", RobotMap.ELEVATOR_PORT, Constants.ELEVATOR_POSITION, Constants.K_ELEVATOR_SLOT_INDEX,
+				Constants.K_ELEVATOR_PID_LOOP_INDEX, Constants.K_ELEVATOR_TIMEOUT_MS, kF, kP, kI, kD);
 
 		/* SRX Configuration */
 		// Current limiting
-		mElevator.configContinuousCurrentLimit(19, 0); // Set current
-		mElevator.configPeakCurrentLimit(25, 0); // Current limit
+		mElevator.configContinuousCurrentLimit(20, 0); // Set current
+		mElevator.configPeakCurrentLimit(30, 0); // Current limit
 		mElevator.configPeakCurrentDuration(100, 0); // How long you can pass the limit before pushed to default
 		mElevator.enableCurrentLimit(true); // On
 

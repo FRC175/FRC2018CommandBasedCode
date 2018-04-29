@@ -20,13 +20,13 @@ public class Climber extends Subsystem {
 	// Talon SRs
 	private Talon mClimbExtend;
 	private Talon mWinch;
-	
+
 	// Double Solenoid
 	private DoubleSolenoid mClimbRotate;
-	
+
 	// Solenoid
 	private Solenoid mClimbAlign;
-	
+
 	// Limit Switches
 	private DigitalInput mClimbUpLimit;
 	private DigitalInput mClimbDownLimit;
@@ -35,6 +35,7 @@ public class Climber extends Subsystem {
 	public enum ClimberState {
 		EXTEND, RETRACT, IDLE
 	}
+
 	public enum WinchState {
 		WIND_UP, WIND_OUT, IDLE
 	}
@@ -44,18 +45,18 @@ public class Climber extends Subsystem {
 		// Talon(pwmIO : int)
 		mClimbExtend = new Talon(RobotMap.CLIMB_EXTEND_PORT);
 		mWinch = new Talon(RobotMap.WINCH_PORT);
-		
+
 		// DoubleSolenoid(canID : int, forwardChannel : int, reverseChannel : int)
 		mClimbRotate = new DoubleSolenoid(RobotMap.CLIMB_ROTATE_PORT, RobotMap.CLIMB_ROTATE_FORWARD_CHANNEL,
 				RobotMap.CLIMB_ROTATE_REVERSE_CHANNEL);
-		
+
 		// Solenoid(canID : int, channel : int)
 		mClimbAlign = new Solenoid(RobotMap.CLIMB_ALIGN_PORT, RobotMap.CLIMB_ALIGN_CHANNEL);
-		
+
 		// DigitalInput(io : int)
 		mClimbUpLimit = new DigitalInput(RobotMap.CLIMB_UP_LIMIT_PORT);
 		mClimbDownLimit = new DigitalInput(RobotMap.CLIMB_DOWN_LIMIT_PORT);
-		
+
 		// Set climber outwards
 		mClimbAlign.set(true);
 	}
@@ -112,7 +113,7 @@ public class Climber extends Subsystem {
 	public void align(boolean align) {
 		mClimbAlign.set(align);
 	}
-	
+
 	public boolean isAligned() {
 		return mClimbAlign.get();
 	}
@@ -120,13 +121,12 @@ public class Climber extends Subsystem {
 	public void outputToSmartDashboard() {
 		SmartDashboard.putNumber("Climber Percent Power", mClimbExtend.get());
 		SmartDashboard.putNumber("Winch Percent Power", mWinch.get());
-		
+
 		SmartDashboard.putBoolean("Climber State", mClimbAlign.get());
 		SmartDashboard.putBoolean("Extended all the way?", mClimbUpLimit.get());
 		SmartDashboard.putBoolean("Retracted all the way?", mClimbDownLimit.get());
 	}
 
-	
 	public void initDefaultCommand() {
 		// TODO: Set the default command, if any, for a subsystem here. Example:
 		// setDefaultCommand(new MySpecialCommand());
