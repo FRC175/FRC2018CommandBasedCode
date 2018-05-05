@@ -21,7 +21,7 @@ public class Shift extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.shift(false); // True = High Speed; False = Low Speed
+    	Robot.drive.shift(true); // True = High Speed; False = Low Speed
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,7 +36,7 @@ public class Shift extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.drive.shift(true);
+    	Robot.drive.shift(false);
     }
 
 }

@@ -25,6 +25,9 @@ import org.usfirst.frc.team175.robot.subsystems.*;
  * creating this project, you must also update the build.properties file in the
  * project.
  * 
+ * TODO: LeftMaster feed forward is 1550 (on shift)
+ * TODO: RightMaster feed forward is 1510 (on shift)
+ * 
  * @author Arvind
  */
 // If you rename or move this class, update the build.properties file in the project root

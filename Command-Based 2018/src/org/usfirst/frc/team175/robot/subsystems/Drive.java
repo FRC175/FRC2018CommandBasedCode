@@ -58,10 +58,10 @@ public class Drive extends Subsystem {
 		mLeftFollower.follow(mLeftMaster);
 		mRightFollower.follow(mRightMaster);
 
-		mLeftFollower.setInverted(false);
-		mRightFollower.setInverted(false);
-		mLeftFollower.setInverted(false);
-		mRightFollower.setInverted(false);
+		mLeftMaster.setInverted(true);
+		mRightMaster.setInverted(true);
+		/*mLeftFollower.setInverted(true);
+		mRightFollower.setInverted(true);*/
 
 		/* Left Master Configuration */
 		mLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.K_DRIVE_PID_LOOP_INDEX,
@@ -130,11 +130,11 @@ public class Drive extends Subsystem {
 	}
 
 	public double getLeftDrivePosition() {
-		return mLeftMaster.getSelectedSensorPosition(Constants.DRIVE_POSITION);
+		return mLeftMaster.getSelectedSensorPosition(Constants.K_DRIVE_PID_LOOP_INDEX);
 	}
 
 	public double getRightDrivePosition() {
-		return mRightMaster.getSelectedSensorPosition(Constants.DRIVE_POSITION);
+		return mRightMaster.getSelectedSensorPosition(Constants.K_DRIVE_PID_LOOP_INDEX);
 	}
 
 	public double getGyroAngle() {

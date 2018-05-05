@@ -35,7 +35,7 @@ public class SRXSubsystem extends Subsystem {
 	 * @param srxPort
 	 *            The port that the SRX is plugged into
 	 * @param sensorPosition
-	 * 
+	 *            Default position to set SRX to.
 	 * @param kSlotIndex
 	 *            The slot constant
 	 * @param kPIDLoopIndex
@@ -50,9 +50,12 @@ public class SRXSubsystem extends Subsystem {
 	 *            Integral coefficient
 	 * @param kD
 	 *            Derivative coefficient
+	 * @param inverted
+	 *            Whether or not encoder counts are inverted (if forward is negative
+	 *            and reverse is positive)
 	 */
 	public SRXSubsystem(String subsystemName, int srxPort, int sensorPosition, int kSlotIndex, int kPIDLoopIndex,
-			int kTimeoutMs, double kF, double kP, double kI, double kD) {
+			int kTimeoutMs, double kF, double kP, double kI, double kD, boolean inverted) {
 		/* Instantiations */
 		// TalonSRX(canID : int)
 		mSRX = new TalonSRX(srxPort);
@@ -83,6 +86,8 @@ public class SRXSubsystem extends Subsystem {
 		mSRX.setSelectedSensorPosition(SENSOR_POSITION, K_PID_LOOP_INDEX, K_TIMEOUT_MS);
 
 		mSRX.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+
+		mSRX.setInverted(inverted);
 	}
 
 	/**
@@ -91,7 +96,7 @@ public class SRXSubsystem extends Subsystem {
 	 * @return The current encoder count on the SRX
 	 */
 	public double getPosition() {
-		return mSRX.getSelectedSensorPosition(SENSOR_POSITION);
+		return mSRX.getSelectedSensorPosition(K_PID_LOOP_INDEX);
 	}
 
 	/**
@@ -138,6 +143,34 @@ public class SRXSubsystem extends Subsystem {
 	 */
 	public void zeroEncoder() {
 		mSRX.setSelectedSensorPosition(0, K_PID_LOOP_INDEX, K_TIMEOUT_MS);
+	}
+
+	/**
+	 * Configures a way to limit motor current output.
+	 * 
+	 * @param current
+	 *            Default amperes
+	 * @param currentLimit
+	 *            Amperes to limit
+	 * @param currentDuration
+	 *            How long you can pass the limit before pushed to default (in ms)
+	 * @param enable
+	 *            State of current limit
+	 */
+	public void configCurrentLimiting(int current, int currentLimit, int currentDuration, boolean enable) {
+		mSRX.configContinuousCurrentLimit(current, K_TIMEOUT_MS);
+		mSRX.configPeakCurrentLimit(currentLimit, K_TIMEOUT_MS);
+		mSRX.configPeakCurrentDuration(currentDuration, K_TIMEOUT_MS);
+		mSRX.enableCurrentLimit(enable);
+	}
+
+	/**
+	 * Returns SRX object for child class use.
+	 * 
+	 * @return The Talon SRX
+	 */
+	public TalonSRX getSRX() {
+		return mSRX;
 	}
 
 	/**

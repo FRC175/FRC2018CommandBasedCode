@@ -33,8 +33,8 @@ public class RobotMap {
     
     // Limit Switch Ports
     public static final int GRABBER_LIMIT_PORT = 9;
-    public static final int CLIMB_UP_LIMIT_PORT = 4;
-    public static final int CLIMB_DOWN_LIMIT_PORT = 3; // Switch climb up and climb down * Maybe
+    public static final int CLIMB_UP_LIMIT_PORT = 3;
+    public static final int CLIMB_DOWN_LIMIT_PORT = 4; // Switched climb up and climb down limits
 
     // Solenoid Ports & Channels
     public static final int SHIFT_PORT = 0;

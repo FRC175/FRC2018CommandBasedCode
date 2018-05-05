@@ -17,6 +17,7 @@ import org.usfirst.frc.team175.robot.commands.teleop.PositionWinch;
 import org.usfirst.frc.team175.robot.commands.teleop.Shift;
 import org.usfirst.frc.team175.robot.commands.teleop.ToggleClimber;
 import org.usfirst.frc.team175.robot.commands.teleop.ToggleGrabber;
+import org.usfirst.frc.team175.robot.commands.teleop.JoystickDrive;
 import org.usfirst.frc.team175.robot.subsystems.Climber;
 import org.usfirst.frc.team175.robot.subsystems.Elevator;
 import org.usfirst.frc.team175.robot.subsystems.Grabber;
@@ -77,8 +78,8 @@ public class OI {
 	
 	// Operator Buttons
 	public static Trigger grabCube;
-	public static Button retractCubeSlow;
-	public static Button retractCubeFast;
+	public static Button shootCubeSlow;
+	public static Button shootCubeFast;
 	public static Button rotateGrabber;
 	public static Button elevatorCubeGrabbingPosition;
 	public static Button elevatorExchangePosition;
@@ -105,12 +106,11 @@ public class OI {
 		windUp = new JoystickButton(driverStick, 11);
 		// TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
 		windOut = new TwoButton(driverStick, 3, 4);
-		
 
 		// Operator Stick
 		grabCube = new JoystickButton(operatorStick, 1);
-		retractCubeFast = new JoystickButton(operatorStick, 3);
-		retractCubeSlow = new JoystickButton(operatorStick, 4);
+		shootCubeFast = new JoystickButton(operatorStick, 3);
+		shootCubeSlow = new JoystickButton(operatorStick, 4);
 		elevatorCubeGrabbingPosition = new JoystickButton(operatorStick, 2);
 		elevatorExchangePosition = new JoystickButton(operatorStick, 7);
 		elevatorSwitchPosition = new JoystickButton(operatorStick, 8);
@@ -122,17 +122,18 @@ public class OI {
 		/* Button Configuration */
 		// Driver Stick
 		lateralDriveToggle.whileActive(new JoystickLateralDrive());
+		lateralDriveToggle.whenInactive(new JoystickDrive());
 		shift.whileHeld(new Shift());
 		extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
 		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT)); // Limit switch integration?
-		toggleClimber.toggleWhenPressed(new ToggleClimber());
+		toggleClimber.whenPressed(new ToggleClimber());
 		windUp.whileHeld(new PositionWinch(Climber.WinchState.WIND_UP));
 		windOut.whileHeld(new PositionWinch(Climber.WinchState.WIND_OUT));
 		
 		// Operator Stick
 		grabCube.whileActive(new ManipulateCube(Grabber.RollerState.GRAB));
-		retractCubeFast.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_FAST));
-		retractCubeSlow.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_SLOW));
+		shootCubeFast.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_FAST));
+		shootCubeSlow.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_SLOW));
 		elevatorCubeGrabbingPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.POWER_CUBE_PICKUP));
 		elevatorExchangePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.EXCHANGE));
 		elevatorSwitchPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.SWITCH));

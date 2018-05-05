@@ -57,17 +57,17 @@ public class Climber extends Subsystem {
 		mClimbUpLimit = new DigitalInput(RobotMap.CLIMB_UP_LIMIT_PORT);
 		mClimbDownLimit = new DigitalInput(RobotMap.CLIMB_DOWN_LIMIT_PORT);
 
-		// Set climber outwards
-		mClimbAlign.set(true);
+		// Set climber inwards
+		mClimbAlign.set(false);
 	}
 
 	public void set(ClimberState climberState) {
 		switch (climberState) {
 			case EXTEND:
-				mClimbExtend.set(Speeds.FORWARD_FAST.getSpeed());
+				mClimbExtend.set(mClimbUpLimit.get() ? Speeds.IDLE.getSpeed() : Speeds.FORWARD_FAST.getSpeed());
 				break;
 			case RETRACT:
-				mClimbExtend.set(Speeds.REVERSE_FAST.getSpeed());
+				mClimbExtend.set(mClimbDownLimit.get() ? Speeds.IDLE.getSpeed() : Speeds.REVERSE_FAST.getSpeed());
 				break;
 			case IDLE:
 				mClimbExtend.set(Speeds.IDLE.getSpeed());
@@ -111,7 +111,7 @@ public class Climber extends Subsystem {
 	}
 
 	public void align(boolean align) {
-		mClimbAlign.set(align);
+		mClimbAlign.set((mWinch.get() == 0) ? align : false);
 	}
 
 	public boolean isAligned() {

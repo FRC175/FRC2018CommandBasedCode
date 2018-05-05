@@ -16,18 +16,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Elevator extends SRXSubsystem {
 
-	/* Declarations */
-	// Talon SRX
-	private TalonSRX mElevator;
-
+	/* Declaration */
 	// Enum
 	public enum ElevatorPositions {
-		POWER_CUBE_PICKUP(-225),
-		POWER_CUBE_LIFT(-600),
-		EXCHANGE(-1926),
-		SWITCH(-12000),
-		LOW_SCALE(-25555),
-		HIGH_SCALE(-33050);
+		POWER_CUBE_PICKUP(225),
+		POWER_CUBE_LIFT(600),
+		EXCHANGE(1926),
+		SWITCH(12000),
+		LOW_SCALE(25555),
+		HIGH_SCALE(33050);
 
 		private final double M_COUNTS;
 
@@ -43,35 +40,32 @@ public class Elevator extends SRXSubsystem {
 	public Elevator(double kF, double kP, double kI, double kD) {
 		/* Construct SRXSubsystem */
 		super("Elevator", RobotMap.ELEVATOR_PORT, Constants.ELEVATOR_POSITION, Constants.K_ELEVATOR_SLOT_INDEX,
-				Constants.K_ELEVATOR_PID_LOOP_INDEX, Constants.K_ELEVATOR_TIMEOUT_MS, kF, kP, kI, kD);
+				Constants.K_ELEVATOR_PID_LOOP_INDEX, Constants.K_ELEVATOR_TIMEOUT_MS, kF, kP, kI, kD, true);
 
-		/* SRX Configuration */
 		// Current limiting
-		mElevator.configContinuousCurrentLimit(20, 0); // Set current
-		mElevator.configPeakCurrentLimit(30, 0); // Current limit
-		mElevator.configPeakCurrentDuration(100, 0); // How long you can pass the limit before pushed to default
-		mElevator.enableCurrentLimit(true); // On
-
+		configCurrentLimiting(20, 30, 100, true);
+		
 		// Soft limit restricting elevator positioning
-		mElevator.configForwardSoftLimitThreshold(0, 0);
-		mElevator.configReverseSoftLimitThreshold(-30000, 0);
-		mElevator.configForwardSoftLimitEnable(false, 0); // Off
-		mElevator.configReverseSoftLimitEnable(false, 0); // Off
+		getSRX().configForwardSoftLimitThreshold((int) ElevatorPositions.HIGH_SCALE.getHeightInCounts(),
+				0); // Limit at high scale position
+		getSRX().configForwardSoftLimitEnable(false, 0); // Off
+		getSRX().configReverseSoftLimitThreshold(0, 0); // Limit at zero position
+		getSRX().configReverseSoftLimitEnable(false, 0); // Off
 	}
 
-	// TODO: Determine if upper limit if forward limit switch and vice versa
+	// TODO: Determine if upper limit is forward limit switch and vice versa
 	public boolean isUpperLimitHit() {
-		return mElevator.getSensorCollection().isFwdLimitSwitchClosed();
+		return getSRX().getSensorCollection().isFwdLimitSwitchClosed();
 	}
 
 	public boolean isLowerLimitHit() {
-		return mElevator.getSensorCollection().isRevLimitSwitchClosed();
+		return getSRX().getSensorCollection().isRevLimitSwitchClosed();
 	}
 
 	// TODO: Determine whether this should be integrated into zeroEncoders()
 	public void zeroLimitSwitches() {
-		mElevator.configSetParameter(ParamEnum.eClearPositionOnLimitF, 1, 0, 0, 10);
-		mElevator.configSetParameter(ParamEnum.eClearPositionOnLimitR, 0, 0, 0, 10);
+		getSRX().configSetParameter(ParamEnum.eClearPositionOnLimitF, 1, 0, 0, 10);
+		getSRX().configSetParameter(ParamEnum.eClearPositionOnLimitR, 0, 0, 0, 10);
 	}
 
 	public void initDefaultCommand() {
