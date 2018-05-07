@@ -42,6 +42,7 @@ public class Elevator extends SRXSubsystem {
 		super("Elevator", RobotMap.ELEVATOR_PORT, Constants.ELEVATOR_POSITION, Constants.K_ELEVATOR_SLOT_INDEX,
 				Constants.K_ELEVATOR_PID_LOOP_INDEX, Constants.K_ELEVATOR_TIMEOUT_MS, kF, kP, kI, kD, true);
 
+		/* SRX Configuration */
 		// Current limiting
 		configCurrentLimiting(20, 30, 100, true);
 		

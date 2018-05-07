@@ -74,12 +74,12 @@ public class OI {
 	public static Button extendClimber;
 	public static Button retractClimber;
 	public static Button shift;
-	public static Button toggleClimber;
+	public static Button toggleClimberAlign;
 	
 	// Operator Buttons
-	public static Trigger grabCube;
-	public static Button shootCubeSlow;
-	public static Button shootCubeFast;
+	public static Trigger grabCube; // succ cube
+	public static Button shootCubeSlow; // un-succ cube fast
+	public static Button shootCubeFast; // un-succ cube slow
 	public static Button rotateGrabber;
 	public static Button elevatorCubeGrabbingPosition;
 	public static Button elevatorExchangePosition;
@@ -102,7 +102,6 @@ public class OI {
 		shift = new JoystickButton(driverStick, 2);
 		extendClimber = new JoystickButton(driverStick, 7);
 		retractClimber = new JoystickButton(driverStick, 8); 
-		toggleClimber = new JoystickButton(driverStick, 9);
 		windUp = new JoystickButton(driverStick, 11);
 		// TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
 		windOut = new TwoButton(driverStick, 3, 4);
@@ -126,7 +125,7 @@ public class OI {
 		shift.whileHeld(new Shift());
 		extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
 		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT)); // Limit switch integration?
-		toggleClimber.whenPressed(new ToggleClimber());
+		toggleClimberAlign.whenPressed(new ToggleClimber());
 		windUp.whileHeld(new PositionWinch(Climber.WinchState.WIND_UP));
 		windOut.whileHeld(new PositionWinch(Climber.WinchState.WIND_OUT));
 		

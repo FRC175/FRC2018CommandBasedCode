@@ -50,8 +50,7 @@ public class Drive extends Subsystem {
 
 		mGyro = new ADXRS450_Gyro();
 
-		// DifferentialDrive(leftMotorController : SpeedController, rightMotorController
-		// : SpeedController)
+		// DifferentialDrive(leftMotorController : SpeedController, rightMotorController : SpeedController)
 		mRobotDrive = new DifferentialDrive(mLeftMaster, mRightMaster);
 
 		/* General SRX Configuration */

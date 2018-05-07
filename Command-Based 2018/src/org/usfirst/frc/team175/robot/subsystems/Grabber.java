@@ -51,7 +51,6 @@ public class Grabber extends Subsystem {
 		mPowerCubeGrabbedLight = new Relay(RobotMap.POWER_CUBE_GRABBED_LIGHT_PORT);
 	}
 
-	// TODO: Add custom speed options
 	public void grab(RollerState rollerState) {
 		switch (rollerState) {
 			case GRAB:
@@ -73,7 +72,8 @@ public class Grabber extends Subsystem {
 		}
 	}
 
-	public void grabManual(double speed) {
+	// TODO: Determine if this necessary
+	public void grab(double speed) {
 		mGrabRollerL.set(speed);
 		mGrabRollerR.set(speed);
 	}

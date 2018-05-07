@@ -28,6 +28,8 @@ import org.usfirst.frc.team175.robot.subsystems.*;
  * TODO: LeftMaster feed forward is 1550 (on shift)
  * TODO: RightMaster feed forward is 1510 (on shift)
  * 
+ * TODO: Check motor output on right and left SRXs and calculate f-gain
+ * 
  * @author Arvind
  */
 // If you rename or move this class, update the build.properties file in the project root
@@ -118,7 +120,7 @@ public class Robot extends TimedRobot {
             autonomousCommand.start();
         }
     }
-
+    
     /**
      * This function is called periodically during autonomous.
      */

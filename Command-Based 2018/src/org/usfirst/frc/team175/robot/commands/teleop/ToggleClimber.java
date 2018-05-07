@@ -12,8 +12,6 @@ public class ToggleClimber extends InstantCommand {
 	private boolean mAlign;
 	
     public ToggleClimber() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
     	requires(Robot.climber);
     	requires(Robot.grabber);
     	mAlign = true;
