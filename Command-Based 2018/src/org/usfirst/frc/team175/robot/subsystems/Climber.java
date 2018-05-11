@@ -64,10 +64,10 @@ public class Climber extends Subsystem {
 	public void set(ClimberState climberState) {
 		switch (climberState) {
 			case EXTEND:
-				mClimbExtend.set(mClimbUpLimit.get() ? Speeds.IDLE.getSpeed() : Speeds.FORWARD_FAST.getSpeed());
+				mClimbExtend.set(mClimbDownLimit.get() ? Speeds.FORWARD_FAST.getSpeed() : Speeds.IDLE.getSpeed());
 				break;
 			case RETRACT:
-				mClimbExtend.set(mClimbDownLimit.get() ? Speeds.IDLE.getSpeed() : Speeds.REVERSE_FAST.getSpeed());
+				mClimbExtend.set(mClimbUpLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
 				break;
 			case IDLE:
 				mClimbExtend.set(Speeds.IDLE.getSpeed());

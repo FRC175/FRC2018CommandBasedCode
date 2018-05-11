@@ -18,12 +18,12 @@ package org.usfirst.frc.team175.robot;
 public class RobotMap {
 
     // TalonSRX Ports
-    public static final int LEFT_MASTER_PORT = 0;
-    public static final int RIGHT_MASTER_PORT = 1;
-    public static final int LEFT_FOLLOWER_PORT = 2;
-    public static final int RIGHT_FOLLOWER_PORT = 3;
-    public static final int LATERAL_DRIVE_PORT = 4;
-    public static final int ELEVATOR_PORT = 5;
+    public static final int LEFT_MASTER_PORT = 2;
+    public static final int RIGHT_MASTER_PORT = 0;
+    public static final int LEFT_FOLLOWER_PORT = 3;
+    public static final int RIGHT_FOLLOWER_PORT = 1;
+    public static final int LATERAL_DRIVE_PORT = 5;
+    public static final int ELEVATOR_PORT = 4;
     
     // TalonSR Ports
     public static final int GRAB_ROLLER_L_PORT = 1;
@@ -33,8 +33,8 @@ public class RobotMap {
     
     // Limit Switch Ports
     public static final int GRABBER_LIMIT_PORT = 9;
-    public static final int CLIMB_UP_LIMIT_PORT = 3;
-    public static final int CLIMB_DOWN_LIMIT_PORT = 4; // Switched climb up and climb down limits
+    public static final int CLIMB_UP_LIMIT_PORT = 4;
+    public static final int CLIMB_DOWN_LIMIT_PORT = 3;
 
     // Solenoid Ports & Channels
     public static final int SHIFT_PORT = 0;
@@ -57,5 +57,6 @@ public class RobotMap {
     
     // Relay Ports
     public static final int POWER_CUBE_GRABBED_LIGHT_PORT = 0;
+
 }
 

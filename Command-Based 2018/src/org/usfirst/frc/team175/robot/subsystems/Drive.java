@@ -50,8 +50,8 @@ public class Drive extends Subsystem {
 
 		mGyro = new ADXRS450_Gyro();
 
-		// DifferentialDrive(leftMotorController : SpeedController, rightMotorController : SpeedController)
-		mRobotDrive = new DifferentialDrive(mLeftMaster, mRightMaster);
+		// DifferentialDrive(rightMotorController : SpeedController, leftMotorController : SpeedController)
+		mRobotDrive = new DifferentialDrive(mRightMaster, mLeftMaster);
 
 		/* General SRX Configuration */
 		mLeftFollower.follow(mLeftMaster);
@@ -134,6 +134,13 @@ public class Drive extends Subsystem {
 
 	public double getRightDrivePosition() {
 		return mRightMaster.getSelectedSensorPosition(Constants.K_DRIVE_PID_LOOP_INDEX);
+	}
+
+	public void setBrakeMode(boolean on) {
+		mLeftMaster.setNeutralMode(on ? com.ctre.phoenix.motorcontrol.NeutralMode.Brake 
+				: com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+		mRightMaster.setNeutralMode(on ? com.ctre.phoenix.motorcontrol.NeutralMode.Brake 
+				: com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
 	}
 
 	public double getGyroAngle() {
