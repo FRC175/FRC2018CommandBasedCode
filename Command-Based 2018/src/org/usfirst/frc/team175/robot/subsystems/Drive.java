@@ -124,8 +124,8 @@ public class Drive extends Subsystem {
 		mRightMaster.set(ControlMode.Position, rightCounts);
 	}
 
-	public void arcadeDrive(double xAxis, double yAxis) {
-		mRobotDrive.arcadeDrive(xAxis, yAxis);
+	public void arcadeDrive(double yAxis, double xAxis) {
+		mRobotDrive.arcadeDrive(yAxis, xAxis);
 	}
 
 	public double getLeftDrivePosition() {
