@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team175.robot.commands.automodes.CheesyPoofsSpin;
 import org.usfirst.frc.team175.robot.commands.automodes.DriveStraight;
+import org.usfirst.frc.team175.robot.commands.teleop.PositionElevator;
 import org.usfirst.frc.team175.robot.subsystems.*;
 
 /**
@@ -78,13 +79,13 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-
+    	
     }
 
     @Override
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
-        smartDashboardData();
+        updateSmartDasboard();
     }
 
     /**
@@ -116,9 +117,8 @@ public class Robot extends TimedRobot {
 
 
         // Schedule the autonomous command (example)
-        if (autonomousCommand != null) {
+        if (autonomousCommand != null)
             autonomousCommand.start();
-        }
     }
     
     /**
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        smartDashboardData();
+        updateSmartDasboard();
     }
 
     @Override
@@ -139,6 +139,12 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
+        
+        // Teleop Config
+        drive.setBrakeMode(false);
+        elevator.countsDrive(0);
+        grabber.set(true);
+        climber.align(false);
     }
 
     /**
@@ -147,7 +153,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        smartDashboardData();
+        updateSmartDasboard();
     }
 
     /**
@@ -155,10 +161,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
-    	smartDashboardData();
+    	updateSmartDasboard();
     }
     
-    public void smartDashboardData() {
+    public void updateSmartDasboard() {
     	drive.outputToSmartDashboard();
     	lateralDrive.outputToSmartDashboard();
     	elevator.outputToSmartDashboard();

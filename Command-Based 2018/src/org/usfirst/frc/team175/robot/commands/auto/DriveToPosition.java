@@ -29,7 +29,7 @@ public class DriveToPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.powerDrive(Speeds.FORWARD_MEDIUM_FAST.getSpeed(), Speeds.REVESRSE_MEDIUM_FAST.getSpeed());
+    	Robot.drive.powerDrive(Speeds.FORWARD_MEDIUM_FAST.getSpeed(), -Speeds.REVESRSE_MEDIUM_FAST.getSpeed());
     }
 
     // Make this return true when this Command no longer needs to run execute()

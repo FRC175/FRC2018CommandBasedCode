@@ -47,7 +47,8 @@ public class Drive extends Subsystem {
 
 		// Solenoid(canID : int, channel : int)
 		mShift = new Solenoid(RobotMap.SHIFT_PORT, RobotMap.SHIFT_CHANNEL);
-
+		
+		// Gyro
 		mGyro = new ADXRS450_Gyro();
 
 		// DifferentialDrive(rightMotorController : SpeedController, leftMotorController : SpeedController)

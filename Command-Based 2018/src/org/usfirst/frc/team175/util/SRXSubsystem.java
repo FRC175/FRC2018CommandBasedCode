@@ -15,7 +15,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  * 
  * @author Arvind
  */
-public class SRXSubsystem extends Subsystem {
+public abstract class SRXSubsystem extends Subsystem {
 
 	// Talon SRXs
 	private TalonSRX mSRX;
@@ -184,8 +184,6 @@ public class SRXSubsystem extends Subsystem {
 		SmartDashboard.putNumber(SUBSYSTEM_NAME + " Percent Power", mSRX.getMotorOutputPercent());
 	}
 
-	@Override
-	protected void initDefaultCommand() {
-	}
+	protected abstract void initDefaultCommand();
 
 }

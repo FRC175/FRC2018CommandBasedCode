@@ -2,6 +2,7 @@ package org.usfirst.frc.team175.robot.commands.auto;
 
 import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.Robot;
+import org.usfirst.frc.team175.robot.Speeds;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -27,7 +28,7 @@ public class LateralDriveToPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lateralDrive.powerDrive(0.75); // Replace with Speed Enum
+    	Robot.lateralDrive.powerDrive(Speeds.FORWARD_MEDIUM_FAST.getSpeed()); // Replace with Speed Enum
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,7 +43,7 @@ public class LateralDriveToPosition extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.lateralDrive.zeroEncoder();
-    	Robot.lateralDrive.powerDrive(0);
+    	Robot.lateralDrive.powerDrive(Speeds.IDLE.getSpeed());
     	Robot.lateralDrive.set(false);
     }
 
