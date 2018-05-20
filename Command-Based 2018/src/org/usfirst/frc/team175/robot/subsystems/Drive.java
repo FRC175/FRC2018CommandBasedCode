@@ -60,8 +60,8 @@ public class Drive extends Subsystem {
 
 		mLeftMaster.setInverted(true);
 		mRightMaster.setInverted(true);
-		/*mLeftFollower.setInverted(true);
-		mRightFollower.setInverted(true);*/
+		mLeftFollower.setInverted(true);
+		mRightFollower.setInverted(true);
 
 		/* Left Master Configuration */
 		mLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.K_DRIVE_PID_LOOP_INDEX,

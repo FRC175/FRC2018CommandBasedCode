@@ -45,11 +45,6 @@ public class RobotMap {
     public static final int GRABBER_RETRACT_CHANNEL = 5;
     public static final int CLIMB_ALIGN_PORT = 0;
     public static final int CLIMB_ALIGN_CHANNEL = 4;
-    
-    // DoubleSolenoid Ports, Forward Channels, & Reverse Channels
-    public static final int CLIMB_ROTATE_PORT = 0;
-    public static final int CLIMB_ROTATE_FORWARD_CHANNEL = 0;
-    public static final int CLIMB_ROTATE_REVERSE_CHANNEL = 1;
 
     // Joystick Ports
     public static final int LEFT_JOYSTICK_PORT = 0;

@@ -1,6 +1,5 @@
 package org.usfirst.frc.team175.robot.commands.auto;
 
-import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.Robot;
 import org.usfirst.frc.team175.robot.Speeds;
 
@@ -26,23 +25,16 @@ public class ElevatorToPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.powerDrive(Speeds.FORWARD_FAST.getSpeed()); // Replace with Speed Enum
+    	Robot.elevator.countsDrive(mValue); // Replace with Speed Enum
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (mValue > 0) {
-    		return Robot.lateralDrive.getPosition() >= mValue; // Left
-    	} else {
-    		return Robot.lateralDrive.getPosition() <= mValue; // Right
-    	}
+    	return Robot.elevator.getPosition() <= (mValue + 10) && Robot.elevator.getPosition() >= (mValue - 10);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.lateralDrive.zeroEncoder();
-    	Robot.lateralDrive.powerDrive(Speeds.IDLE.getSpeed());
-    	Robot.lateralDrive.set(false);
     }
 
     // Called when another command which requires one or more of the same

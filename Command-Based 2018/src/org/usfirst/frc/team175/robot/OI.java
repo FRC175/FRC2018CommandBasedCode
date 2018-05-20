@@ -35,51 +35,51 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
  * @author Arvind
  */
 public class OI {
-    // CREATING BUTTONS
-    // One type of button is a joystick button which is any button on a
-    // joystick.
-    // You create one by telling it which joystick it's on and which button
-    // number it is.
-    // Joystick stick = new Joystick(port);
-    // Button button = new JoystickButton(stick, buttonNumber);
+	// CREATING BUTTONS
+	// One type of button is a joystick button which is any button on a
+	// joystick.
+	// You create one by telling it which joystick it's on and which button
+	// number it is.
+	// Joystick stick = new Joystick(port);
+	// Button button = new JoystickButton(stick, buttonNumber);
 
-    // There are a few additional built in buttons you can use. Additionally,
-    // by subclassing Button you can create custom triggers and bind those to
-    // commands the same as any other Button.
+	// There are a few additional built in buttons you can use. Additionally,
+	// by subclassing Button you can create custom triggers and bind those to
+	// commands the same as any other Button.
 
-    //// TRIGGERING COMMANDS WITH BUTTONS
-    // Once you have a button, it's trivial to bind it to a button in one of
-    // three ways:
+	//// TRIGGERING COMMANDS WITH BUTTONS
+	// Once you have a button, it's trivial to bind it to a button in one of
+	// three ways:
 
-    // Start the command when the button is pressed and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenPressed(new ExampleCommand());
+	// Start the command when the button is pressed and let it run the command
+	// until it is finished as determined by it's isFinished method.
+	// button.whenPressed(new ExampleCommand());
 
-    // Run the command while the button is being held down and interrupt it once
-    // the button is released.
-    // button.whileHeld(new ExampleCommand());
+	// Run the command while the button is being held down and interrupt it once
+	// the button is released.
+	// button.whileHeld(new ExampleCommand());
 
-    // Start the command when the button is released and let it run the command
-    // until it is finished as determined by it's isFinished method.
-    // button.whenReleased(new ExampleCommand());
-	
+	// Start the command when the button is released and let it run the command
+	// until it is finished as determined by it's isFinished method.
+	// button.whenReleased(new ExampleCommand());
+
 	// Joysticks
 	private static Joystick driverStick;
 	private static Joystick operatorStick;
-	
+
 	// Driver Buttons
-	public static Trigger lateralDriveToggle; 
+	public static Trigger lateralDriveToggle;
 	public static Button windUp;
 	public static Button windOut;
 	public static Button extendClimber;
 	public static Button retractClimber;
 	public static Button shift;
 	public static Button toggleClimberAlign;
-	
+
 	// Operator Buttons
 	public static Trigger grabCube; // succ cube
-	public static Button shootCubeSlow; // un-succ cube fast
-	public static Button shootCubeFast; // un-succ cube slow
+	public static Button shootCubeFast; // un-succ cube fast
+	public static Button shootCubeSlow; // un-succ cube slow
 	public static Button rotateGrabber;
 	public static Button elevatorCubeGrabbingPosition;
 	public static Button elevatorExchangePosition;
@@ -88,20 +88,20 @@ public class OI {
 	public static Button elevatorHighScalePosition;
 	public static Button elevatorManual;
 	public static Button toggleGrabber;
-	
+
 	public OI() {
 		/* Joystick Instantiation */
 		// Joystick(port : int)
 		driverStick = new Joystick(RobotMap.LEFT_JOYSTICK_PORT);
 		operatorStick = new Joystick(RobotMap.RIGHT_JOYSTICK_PORT);
-		
+
 		/* Button Instantiation */
 		// Driver Stick
 		// JoystickButton(joystick : GenericHID, buttonNumber : int)
 		lateralDriveToggle = new JoystickButton(driverStick, 1); // 1 is the trigger button
 		shift = new JoystickButton(driverStick, 2);
 		extendClimber = new JoystickButton(driverStick, 7);
-		retractClimber = new JoystickButton(driverStick, 8); 
+		retractClimber = new JoystickButton(driverStick, 8);
 		windUp = new JoystickButton(driverStick, 11);
 		// TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
 		windOut = new TwoButton(driverStick, 3, 4);
@@ -117,18 +117,18 @@ public class OI {
 		elevatorHighScalePosition = new JoystickButton(operatorStick, 10);
 		elevatorManual = new JoystickButton(operatorStick, 12);
 		toggleGrabber = new JoystickButton(operatorStick, 5);
-		
+
 		/* Button Configuration */
 		// Driver Stick
 		lateralDriveToggle.whileActive(new JoystickLateralDrive());
-		lateralDriveToggle.whenInactive(new JoystickDrive());
+		// lateralDriveToggle.whenInactive(new JoystickDrive());
 		shift.whileHeld(new Shift());
 		extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
 		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT)); // Limit switch integration?
-		toggleClimberAlign.whenPressed(new ToggleClimber());
+		toggleClimberAlign.toggleWhenPressed(new ToggleClimber());
 		windUp.whileHeld(new PositionWinch(Climber.WinchState.WIND_UP));
 		windOut.whileHeld(new PositionWinch(Climber.WinchState.WIND_OUT));
-		
+
 		// Operator Stick
 		grabCube.whileActive(new ManipulateCube(Grabber.RollerState.GRAB));
 		shootCubeFast.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_FAST));
@@ -139,21 +139,27 @@ public class OI {
 		elevatorLowScalePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.LOW_SCALE));
 		elevatorHighScalePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.HIGH_SCALE));
 		elevatorManual.whileHeld(new ManualElevator());
-		toggleGrabber.toggleWhenPressed(new ToggleGrabber()); // If this doesn't work, use .whenPressed(command : Command)
+		toggleGrabber.toggleWhenPressed(new ToggleGrabber()); // If this doesn't work, use .whenPressed(command :
+																// Command)
+
+		// Retain elevator position when elevator control buttons aren't pressed
+		if (!elevatorManual.get() || !elevatorCubeGrabbingPosition.get() || !elevatorExchangePosition.get()
+				|| !elevatorSwitchPosition.get() || !elevatorLowScalePosition.get() || !elevatorHighScalePosition.get())
+			Robot.elevator.countsDrive(Robot.elevator.getPosition());
 	}
-	
+
 	public double getDriverStickX() {
 		return driverStick.getX();
 	}
-	
+
 	public double getDriverStickY() {
 		return driverStick.getY();
 	}
-	
+
 	public double getOperatorStickX() {
 		return operatorStick.getX();
 	}
-	
+
 	public double getOperatorStickY() {
 		return operatorStick.getY();
 	}

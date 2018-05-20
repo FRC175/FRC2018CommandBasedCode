@@ -21,7 +21,13 @@ public class PositionClimber extends Command {
     }
 
     protected void execute() {
-    	Robot.climber.set(mClimberState);
+    	if (Robot.climber.isRetracted() && mClimberState == Climber.ClimberState.EXTEND)
+    		Robot.climber.set(mClimberState);
+    	else
+    		Robot.climber.set(mClimberState);
+    	
+    	// Robot.climber.set(mClimberState);
+    	
     }
 
     protected boolean isFinished() {

@@ -20,10 +20,7 @@ public class Climber extends Subsystem {
 	// Talon SRs
 	private Talon mClimbExtend;
 	private Talon mWinch;
-
-	// Double Solenoid
-	private DoubleSolenoid mClimbRotate;
-
+	
 	// Solenoid
 	private Solenoid mClimbAlign;
 
@@ -46,10 +43,6 @@ public class Climber extends Subsystem {
 		mClimbExtend = new Talon(RobotMap.CLIMB_EXTEND_PORT);
 		mWinch = new Talon(RobotMap.WINCH_PORT);
 
-		// DoubleSolenoid(canID : int, forwardChannel : int, reverseChannel : int)
-		mClimbRotate = new DoubleSolenoid(RobotMap.CLIMB_ROTATE_PORT, RobotMap.CLIMB_ROTATE_FORWARD_CHANNEL,
-				RobotMap.CLIMB_ROTATE_REVERSE_CHANNEL);
-
 		// Solenoid(canID : int, channel : int)
 		mClimbAlign = new Solenoid(RobotMap.CLIMB_ALIGN_PORT, RobotMap.CLIMB_ALIGN_CHANNEL);
 
@@ -64,10 +57,12 @@ public class Climber extends Subsystem {
 	public void set(ClimberState climberState) {
 		switch (climberState) {
 			case EXTEND:
-				mClimbExtend.set(mClimbDownLimit.get() ? Speeds.FORWARD_FAST.getSpeed() : Speeds.IDLE.getSpeed());
+				// mClimbExtend.set(mClimbDownLimit.get() ? Speeds.FORWARD_FAST.getSpeed() : Speeds.IDLE.getSpeed());
+				mClimbExtend.set(Speeds.FORWARD_FAST.getSpeed());
 				break;
 			case RETRACT:
-				mClimbExtend.set(mClimbUpLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
+				// mClimbExtend.set(mClimbUpLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
+				mClimbExtend.set(Speeds.REVERSE_FAST.getSpeed());
 				break;
 			case IDLE:
 				mClimbExtend.set(Speeds.IDLE.getSpeed());
