@@ -1,10 +1,8 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 
 import org.usfirst.frc.team175.robot.RobotMap;
-import org.usfirst.frc.team175.robot.Speeds;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
@@ -54,18 +52,20 @@ public class Climber extends Subsystem {
 		mClimbAlign.set(false);
 	}
 
-	public void set(ClimberState climberState) {
+	public void setPosition(ClimberState climberState) {
 		switch (climberState) {
 			case EXTEND:
-				// mClimbExtend.set(mClimbDownLimit.get() ? Speeds.FORWARD_FAST.getSpeed() : Speeds.IDLE.getSpeed());
-				mClimbExtend.set(Speeds.FORWARD_FAST.getSpeed());
+				mClimbExtend.set(!mClimbUpLimit.get() ? 1 : 0);
+				// mClimbExtend.set(mClimbDownLimit.get() ? 1 : 0);
+				// mClimbExtend.set(1);
 				break;
 			case RETRACT:
-				// mClimbExtend.set(mClimbUpLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
-				mClimbExtend.set(Speeds.REVERSE_FAST.getSpeed());
+				mClimbExtend.set(!mClimbDownLimit.get() ? -1 : 0);
+				// mClimbExtend.set(mClimbUpLimit.get() ? -1 : 0);
+				// mClimbExtend.set(-1);
 				break;
 			case IDLE:
-				mClimbExtend.set(Speeds.IDLE.getSpeed());
+				mClimbExtend.set(0);
 				break;
 		}
 	}
@@ -85,13 +85,13 @@ public class Climber extends Subsystem {
 	public void winch(WinchState winchState) {
 		switch (winchState) {
 			case WIND_UP:
-				mWinch.set(Speeds.FORWARD_FAST.getSpeed());
+				mWinch.set(1);
 				break;
 			case WIND_OUT:
-				mWinch.set(Speeds.REVERSE_FAST.getSpeed());
+				mWinch.set(-1);
 				break;
 			case IDLE:
-				mWinch.set(Speeds.IDLE.getSpeed());
+				mWinch.set(0);
 				break;
 		}
 	}

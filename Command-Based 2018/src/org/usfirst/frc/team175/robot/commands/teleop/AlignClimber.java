@@ -22,7 +22,7 @@ public class AlignClimber extends InstantCommand {
     protected void initialize() {
     	if (!mAlign) {
     		Robot.grabber.set(false);
-    		Robot.elevator.countsDrive(0);
+    		Robot.elevator.setPosition(0);
     		Robot.climber.align((Robot.climber.getWinchSpeed() == 0) ? mAlign : false);
     		mAlign = !mAlign;
     	}

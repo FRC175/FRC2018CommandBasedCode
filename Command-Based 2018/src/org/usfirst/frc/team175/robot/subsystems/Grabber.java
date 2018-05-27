@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.RobotMap;
-import org.usfirst.frc.team175.robot.Speeds;
 
 /**
  * @author Arvind
@@ -54,16 +53,17 @@ public class Grabber extends Subsystem {
 	public void grab(RollerState rollerState) {
 		switch (rollerState) {
 			case GRAB:
-				mGrabRollerL.set(!mGrabberLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
-				mGrabRollerR.set(!mGrabberLimit.get() ? Speeds.REVERSE_FAST.getSpeed() : Speeds.IDLE.getSpeed());
+				mGrabRollerL.set(!mGrabberLimit.get() ? -1 : 0);
+				mGrabRollerR.set(!mGrabberLimit.get() ? -1 : 0);
 				break;
 			case RETRACT_FAST:
-				mGrabRollerL.set(Speeds.FORWARD_FAST.getSpeed());
-				mGrabRollerR.set(Speeds.FORWARD_FAST.getSpeed());
+				mGrabRollerL.set(1);
+				mGrabRollerR.set(1);
 				break;
 			case RETRACT_SLOW:
-				mGrabRollerL.set(Speeds.FORWARD_LOW.getSpeed());
-				mGrabRollerR.set(Speeds.FORWARD_LOW.getSpeed());
+				mGrabRollerL.set(0.3);
+				mGrabRollerR.set(0.3);
+				break;
 			case IDLE:
 				// Default grabber bias
 				mGrabRollerL.set(-0.15);

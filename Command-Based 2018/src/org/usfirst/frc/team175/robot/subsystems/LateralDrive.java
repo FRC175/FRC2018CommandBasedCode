@@ -26,7 +26,7 @@ public class LateralDrive extends SRXSubsystem {
 		/* Construct SRXSubsystem */
 		super("Lateral Drive", RobotMap.LATERAL_DRIVE_PORT, Constants.LATERAL_DRIVE_POSITION,
 				Constants.K_LATERAL_DRIVE_SLOT_INDEX, Constants.K_LATERAL_DRIVE_PID_LOOP_INDEX,
-				Constants.K_LATERAL_DRIVE_TIMEOUT_MS, kF, kP, kI, kD, false);
+				Constants.K_LATERAL_DRIVE_TIMEOUT_MS, kF, kP, kI, kD, false, true);
 
 		/* Instantiations */
 		// Solenoid(canID : int, channel : int)

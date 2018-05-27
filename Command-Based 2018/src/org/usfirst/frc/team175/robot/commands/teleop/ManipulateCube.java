@@ -30,14 +30,14 @@ public class ManipulateCube extends Command {
     	Robot.grabber.grab(mRollerState);
     	Robot.grabber.setPowerCubeGrabbedLight(Robot.grabber.isPowerCubeGrabbed());
     	
-    	if (!Robot.grabber.isPowerCubeGrabbed()) {
+    	if (!Robot.grabber.isPowerCubeGrabbed())
     		mCanElevatorBeRaised = true;
-    	}
     	
-    	if (Robot.grabber.isPowerCubeGrabbed() && mCanElevatorBeRaised) {
+    	// TODO: Fix elevator counts before un-commenting this
+    	/*if (Robot.grabber.isPowerCubeGrabbed() && mCanElevatorBeRaised) {
     		mCanElevatorBeRaised = false;
             Robot.elevator.countsDrive(Elevator.ElevatorPositions.POWER_CUBE_LIFT.getHeightInCounts());
-    	}
+    	}*/
     }
 
     protected boolean isFinished() {

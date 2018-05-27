@@ -21,12 +21,12 @@ public class PositionClimber extends Command {
     }
 
     protected void execute() {
-    	if (Robot.climber.isRetracted() && mClimberState == Climber.ClimberState.EXTEND)
+    	/*if (Robot.climber.isRetracted() && mClimberState == Climber.ClimberState.EXTEND)
     		Robot.climber.set(mClimberState);
     	else
-    		Robot.climber.set(mClimberState);
+    		Robot.climber.set(mClimberState);*/
     	
-    	// Robot.climber.set(mClimberState);
+    	Robot.climber.setPosition(mClimberState);
     	
     }
 
@@ -38,6 +38,6 @@ public class PositionClimber extends Command {
     }
 
     protected void interrupted() {
-    	Robot.climber.set(Climber.ClimberState.IDLE);
+    	Robot.climber.setPosition(Climber.ClimberState.IDLE);
     }
 }

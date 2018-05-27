@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team175.robot;
 
-import org.usfirst.frc.team175.robot.commands.teleop.AlignClimber;
 import org.usfirst.frc.team175.robot.commands.teleop.JoystickLateralDrive;
 import org.usfirst.frc.team175.robot.commands.teleop.ManipulateCube;
 import org.usfirst.frc.team175.robot.commands.teleop.ManualElevator;
@@ -64,11 +63,11 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 
 	// Joysticks
-	private static Joystick driverStick;
-	private static Joystick operatorStick;
+	public static Joystick driverStick;
+	public static Joystick operatorStick;
 
 	// Driver Buttons
-	public static Trigger lateralDriveToggle;
+	public static Trigger toggleLateralDrive;
 	public static Button windUp;
 	public static Button windOut;
 	public static Button extendClimber;
@@ -77,17 +76,16 @@ public class OI {
 	public static Button toggleClimberAlign;
 
 	// Operator Buttons
-	public static Trigger grabCube; // succ cube
-	public static Button shootCubeFast; // un-succ cube fast
-	public static Button shootCubeSlow; // un-succ cube slow
-	public static Button rotateGrabber;
-	public static Button elevatorCubeGrabbingPosition;
-	public static Button elevatorExchangePosition;
-	public static Button elevatorSwitchPosition;
-	public static Button elevatorLowScalePosition;
-	public static Button elevatorHighScalePosition;
-	public static Button elevatorManual;
+	public static Trigger grabCube;
+	public static Button shootCubeFast;
+	public static Button shootCubeSlow;
 	public static Button toggleGrabber;
+	public static Button cubeGrabbingElevatorPosition;
+	public static Button exchangeElevatorPosition;
+	public static Button switchElevatorPosition;
+	public static Button lowScaleElevatorPosition;
+	public static Button highScaleElevatorPosition;
+	public static Button manualElevator;
 
 	public OI() {
 		/* Joystick Instantiation */
@@ -98,11 +96,12 @@ public class OI {
 		/* Button Instantiation */
 		// Driver Stick
 		// JoystickButton(joystick : GenericHID, buttonNumber : int)
-		lateralDriveToggle = new JoystickButton(driverStick, 1); // 1 is the trigger button
-		shift = new JoystickButton(driverStick, 2);
+		toggleLateralDrive = new JoystickButton(driverStick, 1); // 1 is the trigger button
+		windUp = new JoystickButton(driverStick, 11);
 		extendClimber = new JoystickButton(driverStick, 7);
 		retractClimber = new JoystickButton(driverStick, 8);
-		windUp = new JoystickButton(driverStick, 11);
+		shift = new JoystickButton(driverStick, 2);
+		toggleClimberAlign = new JoystickButton(driverStick, 9);
 		// TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
 		windOut = new TwoButton(driverStick, 3, 4);
 
@@ -110,42 +109,41 @@ public class OI {
 		grabCube = new JoystickButton(operatorStick, 1);
 		shootCubeFast = new JoystickButton(operatorStick, 3);
 		shootCubeSlow = new JoystickButton(operatorStick, 4);
-		elevatorCubeGrabbingPosition = new JoystickButton(operatorStick, 2);
-		elevatorExchangePosition = new JoystickButton(operatorStick, 7);
-		elevatorSwitchPosition = new JoystickButton(operatorStick, 8);
-		elevatorLowScalePosition = new JoystickButton(operatorStick, 9);
-		elevatorHighScalePosition = new JoystickButton(operatorStick, 10);
-		elevatorManual = new JoystickButton(operatorStick, 12);
 		toggleGrabber = new JoystickButton(operatorStick, 5);
+		cubeGrabbingElevatorPosition = new JoystickButton(operatorStick, 2);
+		exchangeElevatorPosition = new JoystickButton(operatorStick, 7);
+		switchElevatorPosition = new JoystickButton(operatorStick, 8);
+		lowScaleElevatorPosition = new JoystickButton(operatorStick, 9);
+		highScaleElevatorPosition = new JoystickButton(operatorStick, 10);
+		manualElevator = new JoystickButton(operatorStick, 12);
 
 		/* Button Configuration */
 		// Driver Stick
-		lateralDriveToggle.whileActive(new JoystickLateralDrive());
-		// lateralDriveToggle.whenInactive(new JoystickDrive());
-		shift.whileHeld(new Shift());
-		extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
-		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT)); // Limit switch integration?
-		toggleClimberAlign.toggleWhenPressed(new ToggleClimber());
+		toggleLateralDrive.whileActive(new JoystickLateralDrive());
+		// toggleLateralDrive.whenInactive(new JoystickDrive());
 		windUp.whileHeld(new PositionWinch(Climber.WinchState.WIND_UP));
 		windOut.whileHeld(new PositionWinch(Climber.WinchState.WIND_OUT));
+		/*extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
+		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT));*/
+		shift.whileHeld(new Shift());
+		toggleClimberAlign.toggleWhenPressed(new ToggleClimber());
 
 		// Operator Stick
 		grabCube.whileActive(new ManipulateCube(Grabber.RollerState.GRAB));
 		shootCubeFast.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_FAST));
 		shootCubeSlow.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_SLOW));
-		elevatorCubeGrabbingPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.POWER_CUBE_PICKUP));
-		elevatorExchangePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.EXCHANGE));
-		elevatorSwitchPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.SWITCH));
-		elevatorLowScalePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.LOW_SCALE));
-		elevatorHighScalePosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.HIGH_SCALE));
-		elevatorManual.whileHeld(new ManualElevator());
-		toggleGrabber.toggleWhenPressed(new ToggleGrabber()); // If this doesn't work, use .whenPressed(command :
-																// Command)
+		toggleGrabber.toggleWhenPressed(new ToggleGrabber());
+		/*cubeGrabbingElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.POWER_CUBE_PICKUP));
+		exchangeElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.EXCHANGE));
+		switchElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.SWITCH));
+		lowScaleElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.LOW_SCALE));
+		highScaleElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.HIGH_SCALE));*/
+		manualElevator.whileHeld(new ManualElevator());
 
 		// Retain elevator position when elevator control buttons aren't pressed
-		if (!elevatorManual.get() || !elevatorCubeGrabbingPosition.get() || !elevatorExchangePosition.get()
-				|| !elevatorSwitchPosition.get() || !elevatorLowScalePosition.get() || !elevatorHighScalePosition.get())
-			Robot.elevator.countsDrive(Robot.elevator.getPosition());
+		/*if (!manualElevator.get() || !cubeGrabbingElevatorPosition.get() || !exchangeElevatorPosition.get()
+				|| !switchElevatorPosition.get() || !lowScaleElevatorPosition.get() || !highScaleElevatorPosition.get())
+			Robot.elevator.setPosition(Robot.elevator.getWantedPosition());*/
 	}
 
 	public double getDriverStickX() {
@@ -163,4 +161,5 @@ public class OI {
 	public double getOperatorStickY() {
 		return operatorStick.getY();
 	}
+	
 }

@@ -22,9 +22,9 @@ public class PositionElevator extends Command {
     }
 
     protected void execute() {
-    	if (!Robot.climber.isAligned()) {
-    		Robot.elevator.countsDrive(mElevatorPosition.getHeightInCounts());
-    	}
+    	/*if (!Robot.climber.isAligned())
+    		Robot.elevator.setPosition(mElevatorPosition.getHeightInCounts());*/
+    	Robot.elevator.setWantedPosition(mElevatorPosition.getHeightInCounts());
     }
 
     protected boolean isFinished() {

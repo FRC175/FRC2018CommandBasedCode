@@ -15,22 +15,23 @@ public class JoystickLateralDrive extends Command {
 
     protected void initialize() {
     	Robot.lateralDrive.set(true);
+    	Robot.drive.setPower(0, 0);
     }
 
     protected void execute() {
-    	Robot.lateralDrive.powerDrive(Robot.oi.getDriverStickX());
+    	Robot.lateralDrive.setPower(Robot.oi.getDriverStickX());
     }
 
     protected boolean isFinished() {
-    	// return !Robot.lateralDrive.isEnabled();
     	return false;
     }
 
     protected void end() {
+    	Robot.lateralDrive.setPower(0);
+    	Robot.lateralDrive.set(false);
     }
 
     protected void interrupted() {
-    	Robot.lateralDrive.powerDrive(0);
-    	Robot.lateralDrive.set(false);
+    	end();
     }
 }

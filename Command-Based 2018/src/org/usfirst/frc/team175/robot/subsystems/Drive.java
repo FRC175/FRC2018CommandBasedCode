@@ -2,6 +2,7 @@ package org.usfirst.frc.team175.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -58,10 +59,10 @@ public class Drive extends Subsystem {
 		mLeftFollower.follow(mLeftMaster);
 		mRightFollower.follow(mRightMaster);
 
-		mLeftMaster.setInverted(true);
-		mRightMaster.setInverted(true);
-		mLeftFollower.setInverted(true);
-		mRightFollower.setInverted(true);
+		mLeftMaster.setInverted(false);
+		mRightMaster.setInverted(false);
+		mLeftFollower.setInverted(false);
+		mRightFollower.setInverted(false);
 
 		/* Left Master Configuration */
 		mLeftMaster.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.K_DRIVE_PID_LOOP_INDEX,
@@ -115,33 +116,31 @@ public class Drive extends Subsystem {
 		return !mShift.get();
 	}
 
-	public void powerDrive(double leftPower, double rightPower) {
+	public void setPower(double leftPower, double rightPower) {
 		mLeftMaster.set(ControlMode.PercentOutput, leftPower);
 		mRightMaster.set(ControlMode.PercentOutput, rightPower);
 	}
 
-	public void countsDrive(double leftCounts, double rightCounts) {
-		mLeftMaster.set(ControlMode.Position, leftCounts);
-		mRightMaster.set(ControlMode.Position, rightCounts);
+	public void setPosition(double leftPosition, double rightPosition) {
+		mLeftMaster.set(ControlMode.Position, leftPosition);
+		mRightMaster.set(ControlMode.Position, rightPosition);
 	}
 
 	public void arcadeDrive(double yAxis, double xAxis) {
 		mRobotDrive.arcadeDrive(yAxis, xAxis);
 	}
 
-	public double getLeftDrivePosition() {
+	public double getLeftPosition() {
 		return mLeftMaster.getSelectedSensorPosition(Constants.K_DRIVE_PID_LOOP_INDEX);
 	}
 
-	public double getRightDrivePosition() {
+	public double getRightPosition() {
 		return mRightMaster.getSelectedSensorPosition(Constants.K_DRIVE_PID_LOOP_INDEX);
 	}
 
 	public void setBrakeMode(boolean on) {
-		mLeftMaster.setNeutralMode(on ? com.ctre.phoenix.motorcontrol.NeutralMode.Brake 
-				: com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
-		mRightMaster.setNeutralMode(on ? com.ctre.phoenix.motorcontrol.NeutralMode.Brake 
-				: com.ctre.phoenix.motorcontrol.NeutralMode.Coast);
+		mLeftMaster.setNeutralMode(on ? NeutralMode.Brake : NeutralMode.Coast);
+		mRightMaster.setNeutralMode(on ? NeutralMode.Brake : NeutralMode.Coast);
 	}
 
 	public double getGyroAngle() {

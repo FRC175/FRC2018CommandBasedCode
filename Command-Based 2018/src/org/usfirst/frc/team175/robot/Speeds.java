@@ -3,6 +3,7 @@ package org.usfirst.frc.team175.robot;
 /**
  * @author Arvind
  */
+@Deprecated
 public enum Speeds {
 	
 	REVERSE_FAST(-1),

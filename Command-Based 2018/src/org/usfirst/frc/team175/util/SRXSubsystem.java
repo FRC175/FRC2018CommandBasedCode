@@ -7,6 +7,7 @@ import org.usfirst.frc.team175.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
@@ -53,9 +54,12 @@ public abstract class SRXSubsystem extends Subsystem {
 	 * @param inverted
 	 *            Whether or not encoder counts are inverted (if forward is negative
 	 *            and reverse is positive)
+	 * @param sensorPhase
+	 *            Whether to invert the phase of the sensor
+	 * 
 	 */
 	public SRXSubsystem(String subsystemName, int srxPort, int sensorPosition, int kSlotIndex, int kPIDLoopIndex,
-			int kTimeoutMs, double kF, double kP, double kI, double kD, boolean inverted) {
+			int kTimeoutMs, double kF, double kP, double kI, double kD, boolean inverted, boolean sensorPhase) {
 		/* Instantiations */
 		// TalonSRX(canID : int)
 		mSRX = new TalonSRX(srxPort);
@@ -68,8 +72,9 @@ public abstract class SRXSubsystem extends Subsystem {
 		SUBSYSTEM_NAME = subsystemName;
 
 		/* SRX Configuration */
+		mSRX.setInverted(inverted);
 		mSRX.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, K_PID_LOOP_INDEX, K_TIMEOUT_MS);
-		mSRX.setSensorPhase(true);
+		mSRX.setSensorPhase(sensorPhase);
 
 		mSRX.configNominalOutputForward(0, K_TIMEOUT_MS);
 		mSRX.configNominalOutputReverse(0, K_TIMEOUT_MS);
@@ -85,9 +90,7 @@ public abstract class SRXSubsystem extends Subsystem {
 
 		mSRX.setSelectedSensorPosition(SENSOR_POSITION, K_PID_LOOP_INDEX, K_TIMEOUT_MS);
 
-		mSRX.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
-
-		mSRX.setInverted(inverted);
+		mSRX.setNeutralMode(NeutralMode.Brake);
 	}
 
 	/**
@@ -105,7 +108,7 @@ public abstract class SRXSubsystem extends Subsystem {
 	 * @param power
 	 *            The motor power
 	 */
-	public void powerDrive(double power) {
+	public void setPower(double power) {
 		mSRX.set(ControlMode.PercentOutput, power);
 	}
 
@@ -115,7 +118,7 @@ public abstract class SRXSubsystem extends Subsystem {
 	 * @param counts
 	 *            Position for the SRX to reach
 	 */
-	public void countsDrive(double counts) {
+	public void setPosition(double counts) {
 		mSRX.set(ControlMode.Position, counts);
 	}
 
@@ -146,6 +149,16 @@ public abstract class SRXSubsystem extends Subsystem {
 	}
 
 	/**
+	 * Enables or disables brake mode.
+	 * 
+	 * @param on
+	 *            Whether or not to enable brake mode
+	 */
+	public void setBrakeMode(boolean on) {
+		mSRX.setNeutralMode(on ? NeutralMode.Brake : NeutralMode.Coast);
+	}
+
+	/**
 	 * Configures a way to limit motor current output.
 	 * 
 	 * @param current
@@ -158,9 +171,9 @@ public abstract class SRXSubsystem extends Subsystem {
 	 *            State of current limit
 	 */
 	public void configCurrentLimiting(int current, int currentLimit, int currentDuration, boolean enable) {
-		mSRX.configContinuousCurrentLimit(current, K_TIMEOUT_MS);
-		mSRX.configPeakCurrentLimit(currentLimit, K_TIMEOUT_MS);
-		mSRX.configPeakCurrentDuration(currentDuration, K_TIMEOUT_MS);
+		mSRX.configContinuousCurrentLimit(current, 0);
+		mSRX.configPeakCurrentLimit(currentLimit, 0);
+		mSRX.configPeakCurrentDuration(currentDuration, 0);
 		mSRX.enableCurrentLimit(enable);
 	}
 
@@ -169,7 +182,7 @@ public abstract class SRXSubsystem extends Subsystem {
 	 * 
 	 * @return The Talon SRX
 	 */
-	public TalonSRX getSRX() {
+	protected TalonSRX getSRX() {
 		return mSRX;
 	}
 

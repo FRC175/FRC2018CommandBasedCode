@@ -31,9 +31,9 @@ public class TurnToAngle extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (Robot.drive.getGyroAngle() > mGoal) {
-    		Robot.drive.powerDrive(mPower, mPower);
+    		Robot.drive.setPower(mPower, mPower);
     	} else {
-    		Robot.drive.powerDrive(-mPower, -mPower);
+    		Robot.drive.setPower(-mPower, -mPower);
     	}
     }
 
@@ -44,7 +44,7 @@ public class TurnToAngle extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.powerDrive(0, 0);
+    	Robot.drive.setPower(0, 0);
     }
 
     // Called when another command which requires one or more of the same

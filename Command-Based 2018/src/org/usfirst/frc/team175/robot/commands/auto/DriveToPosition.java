@@ -1,13 +1,11 @@
 package org.usfirst.frc.team175.robot.commands.auto;
 
-import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.Robot;
-import org.usfirst.frc.team175.robot.Speeds;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * TODO: Maybe add option for setting manual speed.
+ * TODO: Check if encoder counts have to negated.
  * 
  * @author Arvind
  */
@@ -25,26 +23,27 @@ public class DriveToPosition extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.zeroEncoders();
+    	Robot.drive.setBrakeMode(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.powerDrive(Speeds.FORWARD_MEDIUM_FAST.getSpeed(), -Speeds.REVESRSE_MEDIUM_FAST.getSpeed());
+    	Robot.drive.setPower(0.75, -0.75);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if (mValue > 0) {
-	        return Robot.drive.getLeftDrivePosition() <= mValue && Robot.drive.getRightDrivePosition() <= mValue; // Straight
+	        return Robot.drive.getLeftPosition() <= mValue && Robot.drive.getRightPosition() <= mValue; // Straight
     	} else {
-    		return Robot.drive.getLeftDrivePosition() >= mValue && Robot.drive.getRightDrivePosition() >= mValue; // Reverse
+    		return Robot.drive.getLeftPosition() >= mValue && Robot.drive.getRightPosition() >= mValue; // Reverse
     	}
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.drive.zeroEncoders();
-    	Robot.drive.powerDrive(Speeds.IDLE.getSpeed(), Speeds.IDLE.getSpeed()); // Am I to use this or arcadeDrive()?
+    	Robot.drive.setPower(0, 0); // Am I to use this or arcadeDrive()?
     }
 
     // Called when another command which requires one or more of the same

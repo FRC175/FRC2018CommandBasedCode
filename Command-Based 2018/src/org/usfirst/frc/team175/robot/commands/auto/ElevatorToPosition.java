@@ -1,7 +1,6 @@
 package org.usfirst.frc.team175.robot.commands.auto;
 
 import org.usfirst.frc.team175.robot.Robot;
-import org.usfirst.frc.team175.robot.Speeds;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -25,7 +24,7 @@ public class ElevatorToPosition extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.countsDrive(mValue); // Replace with Speed Enum
+    	Robot.elevator.setPosition(mValue);
     }
 
     // Make this return true when this Command no longer needs to run execute()

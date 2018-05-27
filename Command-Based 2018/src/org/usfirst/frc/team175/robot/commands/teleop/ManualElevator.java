@@ -17,8 +17,9 @@ public class ManualElevator extends Command {
     }
     
     protected void execute() {
-    	Robot.elevator.countsDrive((Robot.oi.getOperatorStickY() <= 0) ? -Robot.oi.getOperatorStickY() 
-    			: (-Robot.oi.getOperatorStickY() * 0.6));
+    	// Robot.elevator.setPower((Robot.oi.getOperatorStickY() > 0) ? Robot.oi.getOperatorStickY() : (Robot.oi.getOperatorStickY() * 0.6));
+    	Robot.elevator.setPower(Robot.oi.getOperatorStickY());
+    	Robot.elevator.setWantedPosition(Robot.elevator.getPosition());
     }
 
     protected boolean isFinished() {
