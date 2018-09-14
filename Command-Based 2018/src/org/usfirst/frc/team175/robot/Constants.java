@@ -23,6 +23,6 @@ public class Constants {
 	public static final int K_ELEVATOR_SLOT_INDEX = 0;
 	public static final int K_ELEVATOR_PID_LOOP_INDEX = 0;
 	public static final int K_ELEVATOR_TIMEOUT_MS = 10;
-	public static final int ELEVATOR_POSITION = (int) Robot.elevator.getAltPositon() & 128;
+	public static final int ELEVATOR_POSITION = 0;
 
 }

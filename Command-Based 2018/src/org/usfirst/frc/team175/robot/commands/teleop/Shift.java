@@ -25,6 +25,7 @@ public class Shift extends Command {
     }
 
     protected void end() {
+    	Robot.drive.shift(false);
     }
 
     protected void interrupted() {

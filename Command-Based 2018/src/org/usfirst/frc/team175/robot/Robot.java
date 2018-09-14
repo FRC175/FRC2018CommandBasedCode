@@ -25,19 +25,34 @@ import org.usfirst.frc.team175.robot.subsystems.*;
  * creating this project, you must also update the build.properties file in the
  * project.
  * 
- * TODO: LeftMaster feed forward is 1550 (on shift)
- * TODO: RightMaster feed forward is 1510 (on shift)
+ * REMINDERS:
+ * - LeftMaster feed forward is 1550 (on low gear)
+ * - RightMaster feed forward is 1510 (on low gear)
  * 
- * TODO: Check motor output on right and left SRXs and calculate f-gain
+ * WHAT WORKS:
+ * - Grabber (Some Issues with Raising Elevator after Grabbing Cube)
+ * - Elevator Automated Positions
+ * - Climber
+ * - Drive (Might be Inverted)
+ * - Lateral Drive
+ * 
+ * WHAT DOESN'T WORK:
+ * - Elevator Manual Control (Specifically Retaining its Position)
+ * - Shifting Gears
+ * 
+ * ACTUAL TO-DOs:
+ * 1.) TODO: Fix manual elevator control not retaining position. 
+ * 2.) TODO: Test grabber moving after picking up cube and grabber light on robot.
+ * 3.) TODO: Make sure applying positive power on elevator and drive increases encoders.
+ * 4.) TODO: Make sure elevator and drive SRXs are green when positive power is applied.
+ * 5.) TODO: Recalculate PIDF values for drive, elevator, and lateral Drive.
+ * 6.) TODO: Implement motion profiling into autonomous modes.
+ * 7.) TODO: Implement motion magic in elevator.
  * 
  * @author Arvind
  */
 // If you rename or move this class, update the build.properties file in the project root
 public class Robot extends TimedRobot {
-
-	// TODO: Check if elevator encoder counts increase when motor output increases.
-	// TODO: Make sure elevator SRX is green is when positive power is given.
-	// TODO: Make sure applying positive power on drive increases encoders.
 	
     // Subsystems
     public static Drive drive;
@@ -149,6 +164,7 @@ public class Robot extends TimedRobot {
             autonomousCommand.cancel();
         }
         
+        // TODO: Perform more tests before un-commenting this
         // Teleop Config
 	    /*drive.setBrakeMode(false);
 	    elevator.setPosition(0);
@@ -179,7 +195,7 @@ public class Robot extends TimedRobot {
     public void updateSmartDasboard() {
     	drive.outputToSmartDashboard();
     	lateralDrive.outputToSmartDashboard();
-    	// elevator.outputToSmartDashboard();
+    	elevator.outputToSmartDashboard();
     	grabber.outputToSmartDashboard();
     	climber.outputToSmartDashboard();
     }

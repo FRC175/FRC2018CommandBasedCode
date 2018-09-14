@@ -20,7 +20,7 @@ import org.usfirst.frc.team175.robot.commands.teleop.JoystickDrive;
 import org.usfirst.frc.team175.robot.subsystems.Climber;
 import org.usfirst.frc.team175.robot.subsystems.Elevator;
 import org.usfirst.frc.team175.robot.subsystems.Grabber;
-import org.usfirst.frc.team175.util.TwoButton;
+import org.usfirst.frc.team175.robot.util.TwoButton;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -123,8 +123,8 @@ public class OI {
 		// toggleLateralDrive.whenInactive(new JoystickDrive());
 		windUp.whileHeld(new PositionWinch(Climber.WinchState.WIND_UP));
 		windOut.whileHeld(new PositionWinch(Climber.WinchState.WIND_OUT));
-		/*extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
-		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT));*/
+		extendClimber.whileHeld(new PositionClimber(Climber.ClimberState.EXTEND));
+		retractClimber.whileHeld(new PositionClimber(Climber.ClimberState.RETRACT));
 		shift.whileHeld(new Shift());
 		toggleClimberAlign.toggleWhenPressed(new ToggleClimber());
 
@@ -133,17 +133,12 @@ public class OI {
 		shootCubeFast.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_FAST));
 		shootCubeSlow.whileHeld(new ManipulateCube(Grabber.RollerState.RETRACT_SLOW));
 		toggleGrabber.toggleWhenPressed(new ToggleGrabber());
-		/*cubeGrabbingElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.POWER_CUBE_PICKUP));
+		cubeGrabbingElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.POWER_CUBE_PICKUP));
 		exchangeElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.EXCHANGE));
 		switchElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.SWITCH));
 		lowScaleElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.LOW_SCALE));
-		highScaleElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.HIGH_SCALE));*/
+		highScaleElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPositions.HIGH_SCALE));
 		manualElevator.whileHeld(new ManualElevator());
-
-		// Retain elevator position when elevator control buttons aren't pressed
-		/*if (!manualElevator.get() || !cubeGrabbingElevatorPosition.get() || !exchangeElevatorPosition.get()
-				|| !switchElevatorPosition.get() || !lowScaleElevatorPosition.get() || !highScaleElevatorPosition.get())
-			Robot.elevator.setPosition(Robot.elevator.getWantedPosition());*/
 	}
 
 	public double getDriverStickX() {

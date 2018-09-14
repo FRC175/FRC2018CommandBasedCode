@@ -2,7 +2,8 @@ package org.usfirst.frc.team175.robot.subsystems;
 
 import org.usfirst.frc.team175.robot.Constants;
 import org.usfirst.frc.team175.robot.RobotMap;
-import org.usfirst.frc.team175.util.SRXSubsystem;
+import org.usfirst.frc.team175.robot.commands.teleop.ManualElevator;
+import org.usfirst.frc.team175.robot.util.SRXSubsystem;
 
 import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -12,7 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * @author Arvind
- * @see SRXSubsystem.java
+ * @see SRXSubsystem
  */
 public class Elevator extends SRXSubsystem {
 
@@ -42,7 +43,7 @@ public class Elevator extends SRXSubsystem {
 
 	public Elevator(double kF, double kP, double kI, double kD) {
 		/* Construct SRXSubsystem */
-		super("Elevator", 100, Constants.ELEVATOR_POSITION, Constants.K_ELEVATOR_SLOT_INDEX,
+		super("Elevator", RobotMap.ELEVATOR_PORT, Constants.ELEVATOR_POSITION, Constants.K_ELEVATOR_SLOT_INDEX,
 				Constants.K_ELEVATOR_PID_LOOP_INDEX, Constants.K_ELEVATOR_TIMEOUT_MS, kF, kP, kI, kD, false, false);
 		
 		/* SRX Configuration */
@@ -78,15 +79,6 @@ public class Elevator extends SRXSubsystem {
 	
 	public void setWantedPosition(double position) {
 		wantedPosition = position;
-	}
-	
-	@Override
-	public double getPosition() {
-		return getSRX().getSelectedSensorPosition(Constants.ELEVATOR_POSITION);
-	}
-	
-	public double getAltPositon() {
-		return super.getPosition();
 	}
 
 	public void initDefaultCommand() {

@@ -17,8 +17,9 @@ public class ManualElevator extends Command {
     }
     
     protected void execute() {
+    	// TODO: Perform further testing with elevator staying at position before un-commenting
     	// Robot.elevator.setPower((Robot.oi.getOperatorStickY() > 0) ? Robot.oi.getOperatorStickY() : (Robot.oi.getOperatorStickY() * 0.6));
-    	Robot.elevator.setPower(Robot.oi.getOperatorStickY());
+		Robot.elevator.setPower(Robot.oi.getOperatorStickY());
     	Robot.elevator.setWantedPosition(Robot.elevator.getPosition());
     }
 
@@ -27,8 +28,10 @@ public class ManualElevator extends Command {
     }
 
     protected void end() {
+    	Robot.elevator.setPosition(Robot.elevator.getWantedPosition());
     }
 
     protected void interrupted() {
+    	Robot.elevator.setPosition(Robot.elevator.getWantedPosition());
     }
 }
