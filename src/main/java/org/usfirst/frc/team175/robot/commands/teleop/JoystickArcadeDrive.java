@@ -2,6 +2,7 @@ package org.usfirst.frc.team175.robot.commands.teleop;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team175.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team175.robot.subsystems.LateralDrive;
 import org.usfirst.frc.team175.robot.util.OI;
 
 /**
@@ -20,21 +21,22 @@ public class JoystickArcadeDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        /*mLateralDrivetrain.setPower(0);
-        mLateralDrivetrain.set(false);*/
+        LateralDrive.getInstance().setPower(0);
+        LateralDrive.getInstance().set(false);
+        
         Drivetrain.getInstance().setBrakeMode(false);
         Drivetrain.getInstance().setHighGear(mShiftHigh);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        // if (!mLateralDrivetrain.isEnabled())
-        Drivetrain.getInstance().arcadeDrive(OI.getInstance().getDriverStickY(), OI.getInstance().getDriverStickX());
+        if (!LateralDrive.getInstance().isEnabled())
+            Drivetrain.getInstance().arcadeDrive(OI.getInstance().getDriverStickY(), OI.getInstance().getDriverStickX());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        // return mLateralDrivetrain.isEnabled();
+        // return LateralDrive.getInstance().isEnabled();
         return false;
     }
 

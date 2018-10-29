@@ -38,14 +38,15 @@ public class TalonSRXController {
         return srx.getSelectedSensorPosition(Constants.PID_LOOP_INDEX);
     }
 
-    public boolean isForwardLimitHit(TalonSRX srx) {
+    public static boolean isForwardLimitHit(TalonSRX srx) {
         return srx.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
-    public boolean isReverseLimitHit(TalonSRX srx) {
+    public static boolean isReverseLimitHit(TalonSRX srx) {
         return srx.getSensorCollection().isRevLimitSwitchClosed();
     }
 
+    // TODO: Possibly rename upper and lower to forward and reverse
     public static void resetLimits(TalonSRX srx, int upperValue, int lowerValue) {
         srx.configSetParameter(ParamEnum.eClearPositionOnLimitF, upperValue, 0, 0, 10);
         srx.configSetParameter(ParamEnum.eClearPositionOnLimitR, lowerValue, 0, 0, 10);
@@ -55,20 +56,19 @@ public class TalonSRXController {
         srx.setSelectedSensorPosition(0, Constants.PID_LOOP_INDEX, Constants.TIMEOUT_MS);
     }
 
-    public void configCurrentLimiting(TalonSRX srx, int current, int currentLimit, int currentDuration,
-                                      boolean enable) {
+    public static void configCurrentLimiting(TalonSRX srx, int current, int currentLimit, int currentDuration, boolean enable) {
         srx.configContinuousCurrentLimit(current, 0);
         srx.configPeakCurrentLimit(currentLimit, 0);
         srx.configPeakCurrentDuration(currentDuration, 0);
         srx.enableCurrentLimit(enable);
     }
 
-    public void configForwardSoftLimit(TalonSRX srx, int limitPosition, boolean enable) {
+    public static void configForwardSoftLimit(TalonSRX srx, int limitPosition, boolean enable) {
         srx.configForwardSoftLimitThreshold(limitPosition, Constants.TIMEOUT_MS);
         srx.configForwardSoftLimitEnable(false, Constants.TIMEOUT_MS);
     }
 
-    public void configReverseSoftLimit(TalonSRX srx, int limitPosition, boolean enable) {
+    public static void configReverseSoftLimit(TalonSRX srx, int limitPosition, boolean enable) {
         srx.configReverseSoftLimitThreshold(limitPosition, Constants.TIMEOUT_MS);
         srx.configReverseSoftLimitEnable(false, Constants.TIMEOUT_MS);
     }

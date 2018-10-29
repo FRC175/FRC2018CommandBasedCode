@@ -38,8 +38,10 @@ public class Grabber extends Subsystem implements Diagnosable {
         IDLE
     }
 
+    // Singleton Instance
     private static Grabber sInstance;
 
+    // Singleton Static Factory Method
     public static Grabber getInstance() {
         if (sInstance == null) {
             try {

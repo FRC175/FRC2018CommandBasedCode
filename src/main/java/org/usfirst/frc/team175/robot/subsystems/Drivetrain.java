@@ -1,6 +1,5 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import org.usfirst.frc.team175.robot.commands.teleop.JoystickArcadeDrive;
 import org.usfirst.frc.team175.robot.util.*;
 
@@ -16,6 +15,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * @author Arvind
@@ -36,9 +36,12 @@ public class Drivetrain extends Subsystem implements Diagnosable {
 
     // Other
     private DifferentialDrive mRobotDrive;
+
+    // Singleton Instance
     private static Drivetrain sInstance;
 
     // Singleton Static Factory Method
+    // TODO: Does reportError() need '+ e' after String
     public static Drivetrain getInstance() {
         if (sInstance == null) {
             try {
@@ -53,7 +56,7 @@ public class Drivetrain extends Subsystem implements Diagnosable {
 
     private Drivetrain() {
         /* Instantiation */
-        // TalonSRXFactory.getSRX(portNum : int, type : String)
+        // TalonSRXFactory.getSRX(portNum : int, type : TalonSRXType)
         mLeftMaster = TalonSRXFactory.getSRX(Constants.LEFT_MASTER_PORT, TalonSRXType.WORCESTER);
         mRightMaster = TalonSRXFactory.getSRX(Constants.RIGHT_MASTER_PORT, TalonSRXType.WORCESTER);
         mLeftFollower = TalonSRXFactory.getSRX(Constants.LEFT_FOLLOWER_PORT, TalonSRXType.WORCESTER);

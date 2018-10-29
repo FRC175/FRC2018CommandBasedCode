@@ -41,9 +41,10 @@ public class Climber extends Subsystem implements Diagnosable {
         IDLE
     }
 
-    // Object Instance
+    // Singleton Instance
     private static Climber sInstance;
 
+    // Singleton Static Factory Method
     public static Climber getInstance() {
         if (sInstance == null) {
             try {

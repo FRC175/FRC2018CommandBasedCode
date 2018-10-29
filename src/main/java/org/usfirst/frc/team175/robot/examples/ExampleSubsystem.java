@@ -9,21 +9,21 @@ import org.usfirst.frc.team175.robot.util.TalonSRXType;
 /**
  * The following java class contains example code that can help you understand
  * how to create a subsystem.
- * <p>
+ * 
  * ROBOT CODE CONVENTIONS:
  * - When dealing with private instance variables, there must be a prefix of m.
- * EX: private int mInteger;
+ *      EX: private int mInteger;
  * - When dealing with private static variables, there must be a prefix of s.
- * EX: private static int sInteger;
+ *      EX: private static int sInteger;
  * - When dealing with all final variables, all letters must be capitalized.
- * EX: private final int INTEGER;
+ *      EX: private final int INTEGER;
  * - When dealing with all other variables, there is nothing special.
- * EX: public int integer;
- * <p>
+ *      EX: public int integer;
+ * 
  * STEPS TO MAKE A SUBSYSTEM:
- * 1.) Create a constructor to configure all variables..
+ * 1.) Create a constructor to configure all variables.
  * 2.) Override initDefaultCommand() method.
- * 3.) Create
+ * 3.) Create custom methods.
  *
  * @author Arvind
  * @see Subsystem
@@ -46,7 +46,7 @@ public class ExampleSubsystem extends Subsystem {
     // Limit Switch
     private DigitalInput mExampleLimitSwitch;
 
-    // Subsystem Instance (Used in Singleton Design Pattern, Optional)
+    // Subsystem Instance (Used in Singleton Design Pattern; Optional)
     private static ExampleSubsystem sInstance;
 
     // The variables below are usually located in the Constants.java file. However, for convenience sakes and easy
@@ -60,7 +60,7 @@ public class ExampleSubsystem extends Subsystem {
 
     /**
      * OPTIONAL STEP
-     * <p>
+     * 
      * DESCRIPTION:
      * A method used to return the one and only instance of the Example Subsystem. This is used in to comply with the
      * Singleton design pattern.
@@ -79,10 +79,10 @@ public class ExampleSubsystem extends Subsystem {
 
     /**
      * STEP 1:
-     * <p>
+     * 
      * DESCRIPTION:
      * A method used to instantiate data fields and objects in the subsystem when created in the Robot.java file.
-     * <p>
+     * 
      * NOTE:
      * Constructor can be set to private if Singleton design pattern is used.
      */
@@ -94,9 +94,9 @@ public class ExampleSubsystem extends Subsystem {
         // Below, the electronic and pneumatic objects in this subsystem are instantiated just like how this subsystem
         // will be instantiated in Robot.java.
 
-        // TalonSRXFactory.getSRX(portNum : int, type : String)
-        // Note: The 'type' String has two options, 'CTRE' or 'WORCESTER', each referring to two implementations of a
-        //       TalonSRX.
+        // TalonSRXFactory.getSRX(portNum : int, type : TalonSRXType)
+        // Note: The 'type' enum has two options, 'CROSS_THE_ROAD' or 'WORCESTER', each referring to two implementations 
+        //       of a TalonSRX.
         mExampleTalonSRX = TalonSRXFactory.getSRX(EXAMPLE_TALON_SRX_PORT, TalonSRXType.CROSS_THE_ROAD);
 
         // Talon(pwmIO : int)
@@ -116,7 +116,7 @@ public class ExampleSubsystem extends Subsystem {
 
     /**
      * STEP 2:
-     * <p>
+     * 
      * DESCRIPTION:
      * A method that sets the default command for the SRX subsystem.
      */
