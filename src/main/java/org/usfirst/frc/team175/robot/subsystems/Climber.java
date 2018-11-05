@@ -29,13 +29,13 @@ public class Climber extends Subsystem implements Diagnosable {
     private DigitalInput mClimbDownLimit;
 
     // Enums
-    public enum State {
+    public enum ClimberPosition {
         EXTEND,
         RETRACT,
         IDLE
     }
 
-    public enum WinchState {
+    public enum WinchPosition {
         WIND_UP,
         WIND_OUT,
         IDLE
@@ -74,7 +74,7 @@ public class Climber extends Subsystem implements Diagnosable {
         mClimbAlign.set(false);
     }
 
-    public void setPosition(Climber.State climberState) {
+    public void setPosition(Climber.ClimberPosition climberState) {
         switch (climberState) {
             case EXTEND:
                 mClimbExtend.set(!mClimbUpLimit.get() ? 1 : 0);
@@ -92,7 +92,7 @@ public class Climber extends Subsystem implements Diagnosable {
         }
     }
 
-    public void setManual(double speed) {
+    public void setPower(double speed) {
         mClimbExtend.set(speed);
     }
 
@@ -104,7 +104,7 @@ public class Climber extends Subsystem implements Diagnosable {
         return mClimbDownLimit.get();
     }
 
-    public void winch(Climber.WinchState winchState) {
+    public void winch(Climber.WinchPosition winchState) {
         switch (winchState) {
             case WIND_UP:
                 mWinch.set(1);

@@ -24,7 +24,7 @@ public class Elevator extends Subsystem implements Diagnosable {
     private double mWantedPositon;
 
     // Enum
-    public enum ElevatorPositions {
+    public enum ElevatorPosition {
         POWER_CUBE_PICKUP(-225),
         POWER_CUBE_LIFT(-600),
         EXCHANGE(-1926),
@@ -34,11 +34,11 @@ public class Elevator extends Subsystem implements Diagnosable {
     
         private final double COUNTS;
     
-        private ElevatorPositions(double counts) {
+        private ElevatorPosition(double counts) {
             COUNTS = counts;
         }
     
-        public double getHeightInCounts() {
+        public double toCounts() {
             return COUNTS;
         }
     }
@@ -65,13 +65,17 @@ public class Elevator extends Subsystem implements Diagnosable {
         
         /* SRX Configuration */
         TalonSRXController.configCurrentLimiting(mElevator, 20, 30, 100, true);
-        TalonSRXController.configForwardSoftLimit(mElevator, (int) ElevatorPositions.HIGH_SCALE.getHeightInCounts(), 
+        TalonSRXController.configForwardSoftLimit(mElevator, (int) ElevatorPosition.HIGH_SCALE.toCounts(), 
                                                   false); // Set limit at high scale
         TalonSRXController.configReverseSoftLimit(mElevator, 0, false); // Set limit at zero positon
     }
 
     public void setPower(double power) {
         TalonSRXController.setPower(mElevator, power);
+    }
+
+    public void setPosition(ElevatorPosition position) {
+        TalonSRXController.setPosition(mElevator, position.toCounts());
     }
 
     public void setPosition(double position) {
@@ -114,6 +118,10 @@ public class Elevator extends Subsystem implements Diagnosable {
 	
 	public void setWantedPosition(double position) {
 		mWantedPositon = position;
+    }
+
+    public void setWantedPosition(ElevatorPosition position) {
+        mWantedPositon = position.toCounts();
     }
 
     @Override
