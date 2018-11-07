@@ -18,15 +18,15 @@ public class Climber extends Subsystem implements Diagnosable {
 
     /* Declarations */
     // Talon SRs
-    private Talon mClimbExtend;
+    private Talon mClimberExtend;
     private Talon mWinch;
 
     // Solenoid
-    private Solenoid mClimbAlign;
+    private Solenoid mClimberAlign;
 
     // Limit Switches
-    private DigitalInput mClimbUpLimit;
-    private DigitalInput mClimbDownLimit;
+    private DigitalInput mClimberUpLimit;
+    private DigitalInput mClimberDownLimit;
 
     // Enums
     public enum ClimberPosition {
@@ -60,48 +60,49 @@ public class Climber extends Subsystem implements Diagnosable {
     private Climber() {
         /* Instantiations */
         // Talon(pwmIO : int)
-        mClimbExtend = new Talon(Constants.CLIMB_EXTEND_PORT);
+        mClimberExtend = new Talon(Constants.CLIMB_EXTEND_PORT);
         mWinch = new Talon(Constants.WINCH_PORT);
 
         // Solenoid(canID : int, channel : int)
-        mClimbAlign = new Solenoid(Constants.CLIMB_ALIGN_PORT, Constants.CLIMB_ALIGN_CHANNEL);
+        mClimberAlign = new Solenoid(Constants.CLIMB_ALIGN_PORT, Constants.CLIMB_ALIGN_CHANNEL);
 
         // DigitalInput(io : int)
-        mClimbUpLimit = new DigitalInput(Constants.CLIMB_UP_LIMIT_PORT);
-        mClimbDownLimit = new DigitalInput(Constants.CLIMB_DOWN_LIMIT_PORT);
+        mClimberUpLimit = new DigitalInput(Constants.CLIMB_UP_LIMIT_PORT);
+        mClimberDownLimit = new DigitalInput(Constants.CLIMB_DOWN_LIMIT_PORT);
 
         // Set climber inwards
-        mClimbAlign.set(false);
+        mClimberAlign.set(false);
     }
 
     public void setPosition(Climber.ClimberPosition climberState) {
         switch (climberState) {
             case EXTEND:
-                mClimbExtend.set(!mClimbUpLimit.get() ? 1 : 0);
-                // mClimbExtend.set(mClimbDownLimit.get() ? 1 : 0);
-                // mClimbExtend.set(1);
+                mClimberExtend.set(!mClimberUpLimit.get() ? 1 : 0);
+                // mClimberExtend.set(mClimberDownLimit.get() ? 1 : 0);
+                // mClimberExtend.set(1);
                 break;
             case RETRACT:
-                mClimbExtend.set(!mClimbDownLimit.get() ? -1 : 0);
-                // mClimbExtend.set(mClimbUpLimit.get() ? -1 : 0);
-                // mClimbExtend.set(-1);
+                mClimberExtend.set(!mClimberDownLimit.get() ? -1 : 0);
+                // mClimberExtend.set(mClimberUpLimit.get() ? -1 : 0);
+                // mClimberExtend.set(-1);
                 break;
             case IDLE:
-                mClimbExtend.set(0);
+                mClimberExtend.set(0);
                 break;
         }
     }
 
+    @Deprecated
     public void setPower(double speed) {
-        mClimbExtend.set(speed);
+        mClimberExtend.set(speed);
     }
 
     public boolean isExtended() {
-        return mClimbUpLimit.get();
+        return mClimberUpLimit.get();
     }
 
     public boolean isRetracted() {
-        return mClimbDownLimit.get();
+        return mClimberDownLimit.get();
     }
 
     public void winch(Climber.WinchPosition winchState) {
@@ -128,11 +129,11 @@ public class Climber extends Subsystem implements Diagnosable {
     }
 
     public void align(boolean align) {
-        mClimbAlign.set((mWinch.get() == 0) ? align : false);
+        mClimberAlign.set((mWinch.get() == 0) ? align : false);
     }
 
     public boolean isAligned() {
-        return mClimbAlign.get();
+        return mClimberAlign.get();
     }
 
     @Override
@@ -141,12 +142,12 @@ public class Climber extends Subsystem implements Diagnosable {
 
     @Override
     public void outputToSmartDashboard() {
-        SmartDashboard.putNumber("Climber Power", mClimbExtend.get());
+        SmartDashboard.putNumber("Climber Power", mClimberExtend.get());
         SmartDashboard.putNumber("Winch Power", mWinch.get());
 
-        SmartDashboard.putBoolean("Climber aligned?", mClimbAlign.get());
-        SmartDashboard.putBoolean("Extended all the way?", mClimbUpLimit.get());
-        SmartDashboard.putBoolean("Retracted all the way?", mClimbDownLimit.get());
+        SmartDashboard.putBoolean("Climber aligned?", mClimberAlign.get());
+        SmartDashboard.putBoolean("Extended all the way?", mClimberUpLimit.get());
+        SmartDashboard.putBoolean("Retracted all the way?", mClimberDownLimit.get());
     }
 
     @Override

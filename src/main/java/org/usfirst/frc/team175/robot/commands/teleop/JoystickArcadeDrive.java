@@ -11,7 +11,7 @@ import org.usfirst.frc.team175.robot.util.OI;
 public class JoystickArcadeDrive extends Command {
 
     private boolean mShiftHigh;
-    
+
     public JoystickArcadeDrive(boolean shiftHigh) {
         mShiftHigh = shiftHigh;
         // Use requires() here to declare subsystem dependencies
@@ -25,7 +25,7 @@ public class JoystickArcadeDrive extends Command {
     protected void initialize() {
         LateralDrive.getInstance().setPower(0);
         LateralDrive.getInstance().set(false);
-        
+
         Drivetrain.getInstance().setBrakeMode(false);
         Drivetrain.getInstance().setHighGear(mShiftHigh);
     }

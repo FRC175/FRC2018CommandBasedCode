@@ -31,13 +31,13 @@ public class Elevator extends Subsystem implements Diagnosable {
         SWITCH(-12000),
         LOW_SCALE(-25555),
         HIGH_SCALE(-33050);
-    
+
         private final double COUNTS;
-    
+
         private ElevatorPosition(double counts) {
             COUNTS = counts;
         }
-    
+
         public double toCounts() {
             return COUNTS;
         }
@@ -62,11 +62,11 @@ public class Elevator extends Subsystem implements Diagnosable {
     private Elevator() {
         /* Instantiation */
         mElevator = TalonSRXFactory.getSRX(Constants.ELEVATOR_PORT, TalonSRXType.CROSS_THE_ROAD);
-        
+
         /* SRX Configuration */
         TalonSRXController.configCurrentLimiting(mElevator, 20, 30, 100, true);
-        TalonSRXController.configForwardSoftLimit(mElevator, (int) ElevatorPosition.HIGH_SCALE.toCounts(), 
-                                                  false); // Set limit at high scale
+        // Set limit at high scale
+        TalonSRXController.configForwardSoftLimit(mElevator, (int) ElevatorPosition.HIGH_SCALE.toCounts(), false);
         TalonSRXController.configReverseSoftLimit(mElevator, 0, false); // Set limit at zero positon
     }
 
@@ -86,8 +86,8 @@ public class Elevator extends Subsystem implements Diagnosable {
         return TalonSRXController.getPosition(mElevator);
     }
 
-    public void setBrakeMode(boolean on) {
-        TalonSRXController.setBrakeMode(mElevator, on);
+    public void setBrakeMode(boolean enable) {
+        TalonSRXController.setBrakeMode(mElevator, enable);
     }
 
     public void setPIDF(double kF, double kP, double kI, double kD) {
@@ -99,25 +99,25 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     // TODO: Determine if upper limit is forward limit switch and vice versa
-	public boolean isUpperLimitHit() {
-		return TalonSRXController.isForwardLimitHit(mElevator);
-	}
+    public boolean isUpperLimitHit() {
+        return TalonSRXController.isForwardLimitHit(mElevator);
+    }
 
-	public boolean isLowerLimitHit() {
-		return TalonSRXController.isReverseLimitHit(mElevator);
-	}
+    public boolean isLowerLimitHit() {
+        return TalonSRXController.isReverseLimitHit(mElevator);
+    }
 
-	// TODO: Determine in upper value and lower value options are needed
-	public void resetLimits() {
-		TalonSRXController.resetLimits(mElevator, 1, 0);
-	}
-	
-	public double getWantedPosition() {
-		return mWantedPositon;
-	}
-	
-	public void setWantedPosition(double position) {
-		mWantedPositon = position;
+    // TODO: Determine in upper value and lower value options are needed
+    public void resetLimits() {
+        TalonSRXController.resetLimits(mElevator, 1, 0);
+    }
+
+    public double getWantedPosition() {
+        return mWantedPositon;
+    }
+
+    public void setWantedPosition(double position) {
+        mWantedPositon = position;
     }
 
     public void setWantedPosition(ElevatorPosition position) {
@@ -136,5 +136,5 @@ public class Elevator extends Subsystem implements Diagnosable {
     @Override
     protected void initDefaultCommand() {
     }
-    
+
 }

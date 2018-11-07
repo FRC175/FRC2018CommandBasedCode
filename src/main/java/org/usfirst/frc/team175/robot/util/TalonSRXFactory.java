@@ -12,6 +12,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  */
 public class TalonSRXFactory {
 
+    // Prevent TalonSRXFactory from being instantiated
+    private TalonSRXFactory() {
+    }
+
     private static void configSRX(TalonSRX srx) {
         srx.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, Constants.PID_LOOP_INDEX, Constants.TIMEOUT_MS);
         srx.configNominalOutputForward(0, Constants.TIMEOUT_MS);

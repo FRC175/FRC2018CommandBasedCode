@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
  */
 public class TalonSRXController {
 
+    // Prevent TalonSRXController from being instantiated
     private TalonSRXController() {
     }
 
@@ -46,10 +47,9 @@ public class TalonSRXController {
         return srx.getSensorCollection().isRevLimitSwitchClosed();
     }
 
-    // TODO: Possibly rename upper and lower to forward and reverse
-    public static void resetLimits(TalonSRX srx, int upperValue, int lowerValue) {
-        srx.configSetParameter(ParamEnum.eClearPositionOnLimitF, upperValue, 0, 0, 10);
-        srx.configSetParameter(ParamEnum.eClearPositionOnLimitR, lowerValue, 0, 0, 10);
+    public static void resetLimits(TalonSRX srx, int forwardValue, int reverseValue) {
+        srx.configSetParameter(ParamEnum.eClearPositionOnLimitF, forwardValue, 0, 0, 10);
+        srx.configSetParameter(ParamEnum.eClearPositionOnLimitR, reverseValue, 0, 0, 10);
     }
 
     public static void resetEncoder(TalonSRX srx) {

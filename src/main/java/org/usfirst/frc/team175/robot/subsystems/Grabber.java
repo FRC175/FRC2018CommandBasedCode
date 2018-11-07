@@ -32,9 +32,9 @@ public class Grabber extends Subsystem implements Diagnosable {
 
     // Enum
     public enum RollerState {
-        GRAB,
-        RETRACT_FAST,
-        RETRACT_SLOW,
+        GRAB, 
+        RETRACT_FAST, 
+        RETRACT_SLOW, 
         IDLE
     }
 
@@ -74,22 +74,22 @@ public class Grabber extends Subsystem implements Diagnosable {
         double speed;
 
         switch (rollerState) {
-            case GRAB:
-                speed = !mGrabberLimit.get() ? -1 : 0;
-                break;
-            case RETRACT_FAST:
-                speed = 1;
-                break;
-            case RETRACT_SLOW:
-                speed = 0.3;
-                break;
-            case IDLE:
-                // Default grabber bias
-                speed = -0.15;
-                break;
-            default:
-                speed = 0;
-                break;
+        case GRAB:
+            speed = !mGrabberLimit.get() ? -1 : 0;
+            break;
+        case RETRACT_FAST:
+            speed = 1;
+            break;
+        case RETRACT_SLOW:
+            speed = 0.3;
+            break;
+        case IDLE:
+            // Default grabber bias
+            speed = -0.15;
+            break;
+        default:
+            speed = 0;
+            break;
         }
 
         mGrabRollerL.set(speed);

@@ -57,7 +57,7 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     public void set(boolean enable) {
         mDeploy.set(enable);
     }
-    
+
     public boolean isEnabled() {
         return mDeploy.get();
     }
@@ -100,6 +100,5 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     protected void initDefaultCommand() {
         // setDefaultCommand();
     }
-
 
 }
