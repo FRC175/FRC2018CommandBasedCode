@@ -1,4 +1,4 @@
-package org.usfirst.frc.team175.robot.util.old;
+package org.usfirst.frc.team175.robot.util.deprecated;
 
 /**
  * This interface provides commonly used methods in a class that utilizes a

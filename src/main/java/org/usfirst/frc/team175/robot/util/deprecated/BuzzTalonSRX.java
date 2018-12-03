@@ -1,4 +1,4 @@
-package org.usfirst.frc.team175.robot.util.old;
+package org.usfirst.frc.team175.robot.util.deprecated;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;

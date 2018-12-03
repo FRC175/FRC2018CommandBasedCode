@@ -34,13 +34,13 @@ public class TalonSRXFactory {
         switch (type) {
             case CROSS_THE_ROAD:
                 srx = new TalonSRX(portNum);
-                configSRX(srx);
                 break;
             case WORCESTER:
                 srx = new WPI_TalonSRX(portNum);
-                configSRX(srx);
                 break;
         }
+
+        configSRX(srx);
 
         return srx;
     }

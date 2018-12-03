@@ -1,4 +1,4 @@
-package org.usfirst.frc.team175.robot.util.old;
+package org.usfirst.frc.team175.robot.util.deprecated;
 
 import org.usfirst.frc.team175.robot.util.Constants;
 import org.usfirst.frc.team175.robot.util.TwoButton;

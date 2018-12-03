@@ -5,5 +5,5 @@ package org.usfirst.frc.team175.robot.util;
  */
 public enum TalonSRXType {
     CROSS_THE_ROAD,
-    WORCESTER
+    WORCESTER;
 }

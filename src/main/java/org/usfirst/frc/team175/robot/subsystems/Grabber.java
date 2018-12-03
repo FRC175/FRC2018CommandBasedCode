@@ -35,7 +35,7 @@ public class Grabber extends Subsystem implements Diagnosable {
         GRAB, 
         RETRACT_FAST, 
         RETRACT_SLOW, 
-        IDLE
+        IDLE;
     }
 
     // Singleton Instance

@@ -32,13 +32,13 @@ public class Climber extends Subsystem implements Diagnosable {
     public enum ClimberPosition {
         EXTEND,
         RETRACT,
-        IDLE
+        IDLE;
     }
 
     public enum WinchPosition {
         WIND_UP,
         WIND_OUT,
-        IDLE
+        IDLE;
     }
 
     // Singleton Instance
