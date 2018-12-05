@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class PositionClimber extends Command {
 
-    private Climber.ClimberPosition mState;
+    private Climber.ClimberPosition mPosition;
 
-    public PositionClimber(Climber.ClimberPosition climberState) {
+    public PositionClimber(Climber.ClimberPosition position) {
         requires(Climber.getInstance());
-        mState = climberState;
+        mPosition = position;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class PositionClimber extends Command {
             Climber.getInstance().set(mClimberState);
         else
             Climber.getInstance().set(mClimberState);*/
-        Climber.getInstance().setPosition(mState);
+        Climber.getInstance().setPosition(mPosition);
     }
 
     @Override

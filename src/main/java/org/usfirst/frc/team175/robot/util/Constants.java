@@ -44,8 +44,30 @@ public class Constants {
     public static final int CLIMB_ALIGN_CHANNEL = 4;
 
     // Joystick Ports
-    public static final int LEFT_JOYSTICK_PORT = 0;
-    public static final int RIGHT_JOYSTICK_PORT = 1;
+    public static final int DRIVER_STICK_PORT = 0;
+    public static final int OPERATOR_STICK_PORT = 1;
+
+    // Driver Stick Buttons
+    public static final int TOGGLE_LATERAL_DRIVE_TRIGGER = 1;
+    public static final int WIND_UP_BUTTON = 11;
+    public static final int EXTEND_CLIMBER_BUTTON = 7;
+    public static final int RETRACT_CLIMBER_BUTTON = 8;
+    public static final int SHIFT_BUTTON = 2;
+    public static final int TOGGLE_CLIMBER_BUTTON = 9;
+    public static final int WIND_OUT_BUTTON_ONE = 3;
+    public static final int WIND_OUT_BUTTON_TWO = 4;
+
+    // Operator Stick Buttons
+    public static final int GRAB_CUBE_TRIGGER = 1;
+    public static final int SHOOT_CUBE_FAST_BUTTON = 3;
+    public static final int SHOOT_CUBE_SLOW_BUTTON = 4;
+    public static final int TOGGLE_GRABBER_BUTTON = 5;
+    public static final int ELEVATOR_POSITION_ONE_BUTTON = 2;
+    public static final int ELEVATOR_POSITION_TWO_BUTTON = 7;
+    public static final int ELEVATOR_POSITION_THREE_BUTTON = 8;
+    public static final int ELEVATOR_POSITION_FOUR_BUTTON = 9;
+    public static final int ELEVATOR_POSITION_FIVE_BUTTON = 10;
+    public static final int MANUAL_ELEVATOR_BUTTON = 12;
 
     // Relay Ports
     public static final int POWER_CUBE_LIGHT_PORT = 0;
@@ -53,30 +75,5 @@ public class Constants {
     // Other
     public static final double DRIVE_TO_INCHES = 176;
     public static final double LATERAL_DRIVE_TO_INCHES = 42.965;
-
-    /*// Drive
-	public static final int K_DRIVE_SLOT_INDEX = 0;
-	public static final int K_DRIVE_PID_LOOP_INDEX = 0;
-	public static final int K_DRIVE_TIMEOUT_MS = 10;
-	public static final int DRIVE_POSITION = 0;
-	public static final double DRIVE_IN_INCHES = 176;
-
-	// Lateral Drive
-	public static final int K_LATERAL_DRIVE_SLOT_INDEX = 0;
-	public static final int K_LATERAL_DRIVE_PID_LOOP_INDEX = 0;
-	public static final int K_LATERAL_DRIVE_TIMEOUT_MS = 10;
-	public static final int LATERAL_DRIVE_POSITION = 0;
-	public static final double LATERAL_DRIVE_IN_INCHES = 42.965;
-
-	// Elevator
-	public static final int K_ELEVATOR_SLOT_INDEX = 0;
-	public static final int K_ELEVATOR_PID_LOOP_INDEX = 0;
-	public static final int K_ELEVATOR_TIMEOUT_MS = 10;
-    public static final int ELEVATOR_POSITION = 0;
-    
-    // Driver Stick Buttons
-    public static final int TOGGLE_LATERAL_DRIVE = 0;
-    
-    // Operator Stick Buttons*/
 
 }

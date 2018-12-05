@@ -31,7 +31,7 @@ public class Grabber extends Subsystem implements Diagnosable {
     private Relay mPowerCubeLight;
 
     // Enum
-    public enum RollerState {
+    public enum RollerPosition {
         GRAB, 
         RETRACT_FAST, 
         RETRACT_SLOW, 
@@ -70,26 +70,26 @@ public class Grabber extends Subsystem implements Diagnosable {
         mPowerCubeLight = new Relay(Constants.POWER_CUBE_LIGHT_PORT);
     }
 
-    public void grab(RollerState rollerState) {
+    public void grab(RollerPosition rollerState) {
         double speed;
 
         switch (rollerState) {
-        case GRAB:
-            speed = !mGrabberLimit.get() ? -1 : 0;
-            break;
-        case RETRACT_FAST:
-            speed = 1;
-            break;
-        case RETRACT_SLOW:
-            speed = 0.3;
-            break;
-        case IDLE:
-            // Default grabber bias
-            speed = -0.15;
-            break;
-        default:
-            speed = 0;
-            break;
+            case GRAB:
+                speed = !mGrabberLimit.get() ? -1 : 0;
+                break;
+            case RETRACT_FAST:
+                speed = 1;
+                break;
+            case RETRACT_SLOW:
+                speed = 0.3;
+                break;
+            case IDLE:
+                // Default grabber bias
+                speed = -0.15;
+                break;
+            default:
+                speed = 0;
+                break;
         }
 
         mGrabRollerL.set(speed);

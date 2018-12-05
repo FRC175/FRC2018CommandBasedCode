@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
- * TODO: Add button numbers to Constants.
- *
  * @author Arvind
  */
 public class OI {
@@ -21,7 +19,7 @@ public class OI {
     private Button mExtendClimber;
     private Button mRetractClimber;
     private Button mShiftToHighGear;
-    private Button mToggleClimberAlign;
+    private Button mToggleClimber;
     private TwoButton mWindOut;
 
     // Operator Buttons
@@ -54,32 +52,32 @@ public class OI {
     private OI() {
         /* Joystick Instantiation */
         // Joystick(port : int)
-        mDriverStick = new Joystick(Constants.LEFT_JOYSTICK_PORT);
-        mOperatorStick = new Joystick(Constants.RIGHT_JOYSTICK_PORT);
+        mDriverStick = new Joystick(Constants.DRIVER_STICK_PORT);
+        mOperatorStick = new Joystick(Constants.OPERATOR_STICK_PORT);
 
         /* Button Instantiation */
         // Driver Stick
         // JoystickButton(joystick : GenericHID, buttonNumber : int)
-        mToggleLateralDrive = new JoystickButton(mDriverStick, 1); // 1 is the trigger button
-        mWindUp = new JoystickButton(mDriverStick, 11);
-        mExtendClimber = new JoystickButton(mDriverStick, 7);
-        mRetractClimber = new JoystickButton(mDriverStick, 8);
-        mShiftToHighGear = new JoystickButton(mDriverStick, 2);
-        mToggleClimberAlign = new JoystickButton(mDriverStick, 9);
+        mToggleLateralDrive = new JoystickButton(mDriverStick, Constants.TOGGLE_LATERAL_DRIVE_TRIGGER); // 1 is the trigger button
+        mWindUp = new JoystickButton(mDriverStick, Constants.WIND_UP_BUTTON);
+        mExtendClimber = new JoystickButton(mDriverStick, Constants.EXTEND_CLIMBER_BUTTON);
+        mRetractClimber = new JoystickButton(mDriverStick, Constants.RETRACT_CLIMBER_BUTTON);
+        mShiftToHighGear = new JoystickButton(mDriverStick, Constants.SHIFT_BUTTON);
+        mToggleClimber = new JoystickButton(mDriverStick, Constants.TOGGLE_CLIMBER_BUTTON);
         // TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
-        mWindOut = new TwoButton(mDriverStick, 3, 4);
+        mWindOut = new TwoButton(mDriverStick, Constants.WIND_OUT_BUTTON_ONE, Constants.WIND_OUT_BUTTON_TWO);
 
         // Operator Stick
-        mGrabCube = new JoystickButton(mOperatorStick, 1);
-        mShootCubeFast = new JoystickButton(mOperatorStick, 3);
-        mShootCubeSlow = new JoystickButton(mOperatorStick, 4);
-        mToggleGrabber = new JoystickButton(mOperatorStick, 5);
-        mCubeGrabbingElevatorPosition = new JoystickButton(mOperatorStick, 2);
-        mExchangeElevatorPosition = new JoystickButton(mOperatorStick, 7);
-        mSwitchElevatorPosition = new JoystickButton(mOperatorStick, 8);
-        mLowScaleElevatorPosition = new JoystickButton(mOperatorStick, 9);
-        mHighScaleElevatorPosition = new JoystickButton(mOperatorStick, 10);
-        mManualElevator = new JoystickButton(mOperatorStick, 12);
+        mGrabCube = new JoystickButton(mOperatorStick, Constants.GRAB_CUBE_TRIGGER);
+        mShootCubeFast = new JoystickButton(mOperatorStick, Constants.SHOOT_CUBE_FAST_BUTTON);
+        mShootCubeSlow = new JoystickButton(mOperatorStick, Constants.SHOOT_CUBE_SLOW_BUTTON);
+        mToggleGrabber = new JoystickButton(mOperatorStick, Constants.TOGGLE_GRABBER_BUTTON);
+        mCubeGrabbingElevatorPosition = new JoystickButton(mOperatorStick, Constants.ELEVATOR_POSITION_ONE_BUTTON);
+        mExchangeElevatorPosition = new JoystickButton(mOperatorStick, Constants.ELEVATOR_POSITION_TWO_BUTTON);
+        mSwitchElevatorPosition = new JoystickButton(mOperatorStick, Constants.ELEVATOR_POSITION_THREE_BUTTON);
+        mLowScaleElevatorPosition = new JoystickButton(mOperatorStick, Constants.ELEVATOR_POSITION_FOUR_BUTTON);
+        mHighScaleElevatorPosition = new JoystickButton(mOperatorStick, Constants.ELEVATOR_POSITION_FIVE_BUTTON);
+        mManualElevator = new JoystickButton(mOperatorStick, Constants.MANUAL_ELEVATOR_BUTTON);
     }
 
     public double getDriverStickX() {

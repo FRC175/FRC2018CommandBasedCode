@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * @author Arvind
  */
-public class JoystickLateralDrive extends Command {
+public class ManualLateralDrive extends Command {
 
-    public JoystickLateralDrive() {
+    public ManualLateralDrive() {
         requires(LateralDrive.getInstance());
     }
 

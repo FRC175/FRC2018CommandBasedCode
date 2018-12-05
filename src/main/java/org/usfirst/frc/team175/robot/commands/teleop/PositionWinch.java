@@ -1,24 +1,29 @@
 package org.usfirst.frc.team175.robot.commands.teleop;
 
+import org.usfirst.frc.team175.robot.Robot;
+import org.usfirst.frc.team175.robot.subsystems.Climber;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * @author Arvind
  */
-public class SampleCommand extends Command {
+public class PositionWinch extends Command {
 
-    public SampleCommand() {
+    private Climber.WinchPosition mPosition;
 
+    public PositionWinch(Climber.WinchPosition position) {
+        requires(Climber.getInstance());
+        mPosition = position;
     }
 
     @Override
     protected void initialize() {
-
     }
 
     @Override
     protected void execute() {
-
+        Climber.getInstance().winch(mPosition);
     }
 
     @Override
@@ -28,12 +33,11 @@ public class SampleCommand extends Command {
 
     @Override
     protected void end() {
-
     }
 
     @Override
     protected void interrupted() {
-
+        Climber.getInstance().winch(Climber.WinchPosition.IDLE);
     }
     
 }

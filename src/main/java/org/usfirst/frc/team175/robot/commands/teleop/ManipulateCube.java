@@ -10,13 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ManipulateCube extends Command {
 
-    private Grabber.RollerState mRollerState;
+    private Grabber.RollerPosition mPosition;
     private boolean mCanElevatorBeRaised;
 
-    public ManipulateCube(Grabber.RollerState rollerState) {
+    public ManipulateCube(Grabber.RollerPosition position) {
         requires(Elevator.getInstance());
         requires(Grabber.getInstance());
-        mRollerState = rollerState;
+        mPosition = position;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ManipulateCube extends Command {
 
     @Override
     protected void execute() {
-        Grabber.getInstance().grab(mRollerState);
+        Grabber.getInstance().grab(mPosition);
         Grabber.getInstance().setLight(Grabber.getInstance().isPowerCubeGrabbed());
 
         if (!Grabber.getInstance().isPowerCubeGrabbed())
@@ -45,7 +45,7 @@ public class ManipulateCube extends Command {
 
     @Override
     protected void end() {
-        Grabber.getInstance().grab(Grabber.RollerState.IDLE);
+        Grabber.getInstance().grab(Grabber.RollerPosition.IDLE);
     }
 
     @Override

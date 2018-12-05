@@ -8,11 +8,11 @@ import org.usfirst.frc.team175.robot.util.OI;
 /**
  * @author Arvind
  */
-public class JoystickArcadeDrive extends Command {
+public class ManualArcadeDrive extends Command {
 
     private boolean mShiftHigh;
 
-    public JoystickArcadeDrive(boolean shiftHigh) {
+    public ManualArcadeDrive(boolean shiftHigh) {
         mShiftHigh = shiftHigh;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

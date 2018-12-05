@@ -1,6 +1,6 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
-import org.usfirst.frc.team175.robot.commands.teleop.JoystickArcadeDrive;
+import org.usfirst.frc.team175.robot.commands.teleop.ManualArcadeDrive;
 import org.usfirst.frc.team175.robot.util.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -173,7 +173,7 @@ public class Drivetrain extends Subsystem implements Diagnosable {
 
     @Override
     protected void initDefaultCommand() {
-        setDefaultCommand(new JoystickArcadeDrive(false));
+        setDefaultCommand(new ManualArcadeDrive(false));
         // setDefaultCommand(new JoystickTankDrive());
     }
 
