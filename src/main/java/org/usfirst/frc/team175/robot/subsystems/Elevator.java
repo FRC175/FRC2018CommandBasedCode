@@ -137,4 +137,9 @@ public class Elevator extends Subsystem implements Diagnosable {
     protected void initDefaultCommand() {
     }
 
+    @Override
+    public void disable(boolean disable) {
+        
+    }
+
 }

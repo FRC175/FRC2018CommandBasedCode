@@ -155,4 +155,9 @@ public class Climber extends Subsystem implements Diagnosable {
         return false;
     }
 
+    @Override
+    public void disable(boolean disable) {
+        
+    }
+
 }

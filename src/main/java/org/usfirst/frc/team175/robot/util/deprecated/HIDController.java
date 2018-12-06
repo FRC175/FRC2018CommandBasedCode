@@ -53,8 +53,8 @@ public class HIDController {
     private HIDController() {
         /* Joystick Instantiation */
         // Joystick(port : int)
-        mDriverStick = new Joystick(Constants.LEFT_JOYSTICK_PORT);
-        mOperatorStick = new Joystick(Constants.RIGHT_JOYSTICK_PORT);
+        mDriverStick = new Joystick(Constants.DRIVER_STICK_PORT);
+        mOperatorStick = new Joystick(Constants.OPERATOR_STICK_PORT);
 
         /* Button Instantiation */
         // Driver Stick

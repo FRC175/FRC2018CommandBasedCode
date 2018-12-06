@@ -126,4 +126,9 @@ public class Grabber extends Subsystem implements Diagnosable {
         return false;
     }
 
+    @Override
+    public void disable(boolean disable) {
+        
+    }
+
 }

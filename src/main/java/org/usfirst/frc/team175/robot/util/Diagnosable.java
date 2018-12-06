@@ -8,5 +8,7 @@ public interface Diagnosable {
     boolean runSelfTest();
     
     void outputToSmartDashboard();
+
+    void disable(boolean disable);
     
 }

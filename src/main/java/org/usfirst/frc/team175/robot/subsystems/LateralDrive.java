@@ -11,7 +11,6 @@ import org.usfirst.frc.team175.robot.util.TalonSRXType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Arvind
@@ -99,6 +98,11 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     @Override
     protected void initDefaultCommand() {
         // setDefaultCommand();
+    }
+
+    @Override
+    public void disable(boolean disable) {
+        
     }
 
 }

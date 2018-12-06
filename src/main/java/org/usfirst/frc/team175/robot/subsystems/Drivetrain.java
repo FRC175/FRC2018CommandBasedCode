@@ -3,9 +3,6 @@ package org.usfirst.frc.team175.robot.subsystems;
 import org.usfirst.frc.team175.robot.commands.teleop.ManualArcadeDrive;
 import org.usfirst.frc.team175.robot.util.*;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -15,7 +12,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * @author Arvind
@@ -174,7 +170,11 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new ManualArcadeDrive(false));
-        // setDefaultCommand(new JoystickTankDrive());
+    }
+
+    @Override
+    public void disable(boolean disable) {
+        
     }
 
 }
