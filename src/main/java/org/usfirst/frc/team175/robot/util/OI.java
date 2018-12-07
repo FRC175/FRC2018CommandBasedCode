@@ -1,5 +1,9 @@
 package org.usfirst.frc.team175.robot.util;
 
+import org.usfirst.frc.team175.robot.commands.teleop.ManualLateralDrive;
+import org.usfirst.frc.team175.robot.commands.teleop.PositionWinch;
+import org.usfirst.frc.team175.robot.subsystems.Climber;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -78,6 +82,13 @@ public class OI {
         mLowScaleElevatorPosition = new JoystickButton(mOperatorStick, Constants.ELEVATOR_POSITION_FOUR_BUTTON);
         mHighScaleElevatorPosition = new JoystickButton(mOperatorStick, Constants.ELEVATOR_POSITION_FIVE_BUTTON);
         mManualElevator = new JoystickButton(mOperatorStick, Constants.MANUAL_ELEVATOR_BUTTON);
+
+        /* Button Configuration */
+        // Driver Strick
+        mToggleLateralDrive.whileActive(new ManualLateralDrive());
+        mWindUp.whileHeld(new PositionWinch(Climber.WinchPosition.WIND_UP));
+        mWindOut.whileHeld(new PositionWinch(Climber.WinchPosition.WIND_OUT));
+        
     }
 
     public double getDriverStickX() {
