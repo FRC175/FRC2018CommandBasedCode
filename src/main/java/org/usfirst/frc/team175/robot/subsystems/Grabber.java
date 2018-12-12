@@ -30,6 +30,9 @@ public class Grabber extends Subsystem implements Diagnosable {
     // Relay
     private Relay mPowerCubeLight;
 
+    // Boolean
+    private boolean mSubsystemState;
+
     // Enum
     public enum RollerPosition {
         GRAB, 
@@ -68,32 +71,36 @@ public class Grabber extends Subsystem implements Diagnosable {
 
         // Relay(io : int)
         mPowerCubeLight = new Relay(Constants.POWER_CUBE_LIGHT_PORT);
+
+        mSubsystemState = true;
     }
 
     public void grab(RollerPosition rollerState) {
-        double speed;
+        if (mSubsystemState) {
+            double speed;
 
-        switch (rollerState) {
-            case GRAB:
-                speed = !mGrabberLimit.get() ? -1 : 0;
-                break;
-            case RETRACT_FAST:
-                speed = 1;
-                break;
-            case RETRACT_SLOW:
-                speed = 0.3;
-                break;
-            case IDLE:
-                // Default grabber bias
-                speed = -0.15;
-                break;
-            default:
-                speed = 0;
-                break;
+            switch (rollerState) {
+                case GRAB:
+                    speed = !mGrabberLimit.get() ? -1 : 0;
+                    break;
+                case RETRACT_FAST:
+                    speed = 1;
+                    break;
+                case RETRACT_SLOW:
+                    speed = 0.3;
+                    break;
+                case IDLE:
+                    // Default grabber bias
+                    speed = -0.15;
+                    break;
+                default:
+                    speed = 0;
+                    break;
+            }
+
+            mGrabRollerL.set(speed);
+            mGrabRollerR.set(speed);
         }
-
-        mGrabRollerL.set(speed);
-        mGrabRollerR.set(speed);
     }
 
     public boolean isPowerCubeGrabbed() {
@@ -101,11 +108,15 @@ public class Grabber extends Subsystem implements Diagnosable {
     }
 
     public void setPosition(boolean retract) {
-        mGrabberRetract.set(retract);
+        if (mSubsystemState) {
+            mGrabberRetract.set(retract);
+        }
     }
 
     public void setLight(boolean on) {
-        mPowerCubeLight.set(on ? Relay.Value.kForward : Relay.Value.kOff);
+        if (mSubsystemState) {
+            mPowerCubeLight.set(on ? Relay.Value.kForward : Relay.Value.kOff);
+        }
     }
 
     @Override
@@ -127,8 +138,8 @@ public class Grabber extends Subsystem implements Diagnosable {
     }
 
     @Override
-    public void disable(boolean disable) {
-        
+    public void setState(boolean enable) {
+        mSubsystemState = enable;
     }
 
 }

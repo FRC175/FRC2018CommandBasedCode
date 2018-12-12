@@ -13,6 +13,7 @@ public class ManualLateralDrive extends Command {
 
     public ManualLateralDrive() {
         requires(LateralDrive.getInstance());
+        requires(Drivetrain.getInstance());
     }
 
     @Override

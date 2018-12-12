@@ -23,6 +23,9 @@ public class Elevator extends Subsystem implements Diagnosable {
     // Double
     private double mWantedPositon;
 
+    // Boolean
+    private boolean mSubsystemState;
+
     // Enum
     public enum ElevatorPosition {
         POWER_CUBE_PICKUP(-225),
@@ -62,6 +65,7 @@ public class Elevator extends Subsystem implements Diagnosable {
     private Elevator() {
         /* Instantiation */
         mElevator = TalonSRXFactory.getSRX(Constants.ELEVATOR_PORT, TalonSRXType.CROSS_THE_ROAD);
+        mSubsystemState = true;
 
         /* SRX Configuration */
         TalonSRXController.configCurrentLimiting(mElevator, 20, 30, 100, true);
@@ -71,7 +75,9 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setPower(double power) {
-        TalonSRXController.setPower(mElevator, power);
+        if (mSubsystemState) {
+            TalonSRXController.setPower(mElevator, power);
+        }
     }
 
     public void setPosition(ElevatorPosition position) {
@@ -79,7 +85,9 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setPosition(double position) {
-        TalonSRXController.setPosition(mElevator, position);
+        if (mSubsystemState) {
+            TalonSRXController.setPosition(mElevator, position);
+        }
     }
 
     public double getPosition() {
@@ -87,7 +95,9 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setBrakeMode(boolean enable) {
-        TalonSRXController.setBrakeMode(mElevator, enable);
+        if (mSubsystemState) {
+            TalonSRXController.setBrakeMode(mElevator, enable);
+        }
     }
 
     public void setPIDF(double kF, double kP, double kI, double kD) {
@@ -117,11 +127,15 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setWantedPosition(double position) {
-        mWantedPositon = position;
+        if (mSubsystemState) {
+            mWantedPositon = position;
+        }
     }
 
     public void setWantedPosition(ElevatorPosition position) {
-        mWantedPositon = position.toCounts();
+        if (mSubsystemState) {
+            mWantedPositon = position.toCounts();
+        }
     }
 
     @Override
@@ -138,8 +152,8 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     @Override
-    public void disable(boolean disable) {
-        
+    public void setState(boolean enable) {
+        mSubsystemState = enable;
     }
 
 }

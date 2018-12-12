@@ -28,6 +28,9 @@ public class Climber extends Subsystem implements Diagnosable {
     private DigitalInput mClimberUpLimit;
     private DigitalInput mClimberDownLimit;
 
+    // Boolean
+    private boolean mSubsystemState;
+
     // Enums
     public enum ClimberPosition {
         EXTEND,
@@ -70,31 +73,38 @@ public class Climber extends Subsystem implements Diagnosable {
         mClimberUpLimit = new DigitalInput(Constants.CLIMB_UP_LIMIT_PORT);
         mClimberDownLimit = new DigitalInput(Constants.CLIMB_DOWN_LIMIT_PORT);
 
+        // Boolean
+        mSubsystemState = true;
+
         // Set climber inwards
         mClimberAlign.set(false);
     }
 
     public void setPosition(Climber.ClimberPosition climberState) {
-        switch (climberState) {
-            case EXTEND:
-                mClimberExtend.set(!mClimberUpLimit.get() ? 1 : 0);
-                // mClimberExtend.set(mClimberDownLimit.get() ? 1 : 0);
-                // mClimberExtend.set(1);
-                break;
-            case RETRACT:
-                mClimberExtend.set(!mClimberDownLimit.get() ? -1 : 0);
-                // mClimberExtend.set(mClimberUpLimit.get() ? -1 : 0);
-                // mClimberExtend.set(-1);
-                break;
-            case IDLE:
-                mClimberExtend.set(0);
-                break;
+        if (mSubsystemState) {
+            switch (climberState) {
+                case EXTEND:
+                    mClimberExtend.set(!mClimberUpLimit.get() ? 1 : 0);
+                    // mClimberExtend.set(mClimberDownLimit.get() ? 1 : 0);
+                    // mClimberExtend.set(1);
+                    break;
+                case RETRACT:
+                    mClimberExtend.set(!mClimberDownLimit.get() ? -1 : 0);
+                    // mClimberExtend.set(mClimberUpLimit.get() ? -1 : 0);
+                    // mClimberExtend.set(-1);
+                    break;
+                case IDLE:
+                    mClimberExtend.set(0);
+                    break;
+            }
         }
     }
 
     @Deprecated
     public void setPower(double speed) {
-        mClimberExtend.set(speed);
+        if (mSubsystemState) {
+            mClimberExtend.set(speed);
+        }
     }
 
     public boolean isExtended() {
@@ -106,21 +116,25 @@ public class Climber extends Subsystem implements Diagnosable {
     }
 
     public void winch(Climber.WinchPosition winchState) {
-        switch (winchState) {
-            case WIND_UP:
-                mWinch.set(1);
-                break;
-            case WIND_OUT:
-                mWinch.set(-1);
-                break;
-            case IDLE:
-                mWinch.set(0);
-                break;
+        if (mSubsystemState) {
+            switch (winchState) {
+                case WIND_UP:
+                    mWinch.set(1);
+                    break;
+                case WIND_OUT:
+                    mWinch.set(-1);
+                    break;
+                case IDLE:
+                    mWinch.set(0);
+                    break;
+            }
         }
     }
 
     public void winchManual(double speed) {
-        mWinch.set(speed);
+        if (mSubsystemState) {
+            mWinch.set(speed);
+        }
     }
 
     // TODO: Determine whether this is necessary or not.
@@ -129,7 +143,9 @@ public class Climber extends Subsystem implements Diagnosable {
     }
 
     public void align(boolean align) {
-        mClimberAlign.set((mWinch.get() == 0) ? align : false);
+        if (mSubsystemState) {
+            mClimberAlign.set((mWinch.get() == 0) ? align : false);
+        }
     }
 
     public boolean isAligned() {
@@ -156,8 +172,8 @@ public class Climber extends Subsystem implements Diagnosable {
     }
 
     @Override
-    public void disable(boolean disable) {
-        
+    public void setState(boolean enable) {
+        mSubsystemState = enable;
     }
 
 }

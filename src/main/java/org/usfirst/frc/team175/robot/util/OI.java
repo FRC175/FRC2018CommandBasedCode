@@ -1,8 +1,9 @@
 package org.usfirst.frc.team175.robot.util;
 
-import org.usfirst.frc.team175.robot.commands.teleop.ManualLateralDrive;
-import org.usfirst.frc.team175.robot.commands.teleop.PositionWinch;
+import org.usfirst.frc.team175.robot.commands.teleop.*;
 import org.usfirst.frc.team175.robot.subsystems.Climber;
+import org.usfirst.frc.team175.robot.subsystems.Elevator;
+import org.usfirst.frc.team175.robot.subsystems.Grabber;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -22,7 +23,7 @@ public class OI {
     private Button mWindUp;
     private Button mExtendClimber;
     private Button mRetractClimber;
-    private Button mShiftToHighGear;
+    private Button mShifter;
     private Button mToggleClimber;
     private TwoButton mWindOut;
 
@@ -66,7 +67,7 @@ public class OI {
         mWindUp = new JoystickButton(mDriverStick, Constants.WIND_UP_BUTTON);
         mExtendClimber = new JoystickButton(mDriverStick, Constants.EXTEND_CLIMBER_BUTTON);
         mRetractClimber = new JoystickButton(mDriverStick, Constants.RETRACT_CLIMBER_BUTTON);
-        mShiftToHighGear = new JoystickButton(mDriverStick, Constants.SHIFT_BUTTON);
+        mShifter = new JoystickButton(mDriverStick, Constants.SHIFT_BUTTON);
         mToggleClimber = new JoystickButton(mDriverStick, Constants.TOGGLE_CLIMBER_BUTTON);
         // TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
         mWindOut = new TwoButton(mDriverStick, Constants.WIND_OUT_BUTTON_ONE, Constants.WIND_OUT_BUTTON_TWO);
@@ -88,7 +89,22 @@ public class OI {
         mToggleLateralDrive.whileActive(new ManualLateralDrive());
         mWindUp.whileHeld(new PositionWinch(Climber.WinchPosition.WIND_UP));
         mWindOut.whileHeld(new PositionWinch(Climber.WinchPosition.WIND_OUT));
-        
+        mExtendClimber.whileHeld(new PositionClimber(Climber.ClimberPosition.EXTEND));
+        mRetractClimber.whileHeld(new PositionClimber(Climber.ClimberPosition.RETRACT));
+        mShifter.whileHeld(new ManualArcadeDrive(true));
+        mToggleClimber.toggleWhenPressed(new ToggleClimber());
+
+        // Operater Stick
+        mGrabCube.whileActive(new ManipulateCube(Grabber.RollerPosition.GRAB));
+        mShootCubeFast.whileHeld(new ManipulateCube(Grabber.RollerPosition.RETRACT_FAST));
+        mShootCubeSlow.whileHeld(new ManipulateCube(Grabber.RollerPosition.RETRACT_SLOW));
+        mToggleGrabber.toggleWhenPressed(new ToggleGrabber());
+        mCubeGrabbingElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPosition.POWER_CUBE_PICKUP));
+        mExchangeElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPosition.EXCHANGE));
+        mSwitchElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPosition.SWITCH));
+        mLowScaleElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPosition.LOW_SCALE));
+        mHighScaleElevatorPosition.whenPressed(new PositionElevator(Elevator.ElevatorPosition.HIGH_SCALE));
+        mManualElevator.whileHeld(new ManualElevator());
     }
 
     public double getDriverStickX() {

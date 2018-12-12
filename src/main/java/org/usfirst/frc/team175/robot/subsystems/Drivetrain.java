@@ -30,6 +30,9 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     // Gyro
     private ADXRS450_Gyro mGyro;
 
+    // Boolean
+    private boolean mSubsystemState;
+
     // Other
     private DifferentialDrive mRobotDrive;
 
@@ -64,6 +67,9 @@ public class Drivetrain extends Subsystem implements Diagnosable {
         // Gyro
         mGyro = new ADXRS450_Gyro();
 
+        // Boolean
+        mSubsystemState = true;
+
         // DifferentialDrive(rightMotorController : SpeedController, leftMotorController : SpeedController)
         mRobotDrive = new DifferentialDrive((WPI_TalonSRX) mRightMaster, (WPI_TalonSRX) mLeftMaster);
 
@@ -86,7 +92,9 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     }
 
     public void setHighGear(boolean enable) {
-        mShifter.set(enable);
+        if (mSubsystemState) {
+            mShifter.set(enable);
+        }
     }
 
     public boolean isCurrentGearHigh() {
@@ -94,21 +102,29 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     }
 
     public void setPower(double leftPower, double rightPower) {
-        TalonSRXController.setPower(mLeftMaster, leftPower);
-        TalonSRXController.setPower(mRightMaster, rightPower);
+        if (mSubsystemState) {
+            TalonSRXController.setPower(mLeftMaster, leftPower);
+            TalonSRXController.setPower(mRightMaster, rightPower);
+        }
     }
 
     public void setPosition(double leftPosition, double rightPosition) {
-        TalonSRXController.setPosition(mLeftMaster, leftPosition);
-        TalonSRXController.setPosition(mRightMaster, rightPosition);
+        if (mSubsystemState) {
+            TalonSRXController.setPosition(mLeftMaster, leftPosition);
+            TalonSRXController.setPosition(mRightMaster, rightPosition);
+        }
     }
 
     public void arcadeDrive(double yAxis, double xAxis) {
-        mRobotDrive.arcadeDrive(yAxis, xAxis);
+        if (mSubsystemState) {
+            mRobotDrive.arcadeDrive(yAxis, xAxis);
+        }
     }
 
     public void tankDrive(double yAxis, double xAxis) {
-        mRobotDrive.tankDrive(yAxis, xAxis);
+        if (mSubsystemState) {
+            mRobotDrive.tankDrive(yAxis, xAxis);
+        }
     }
 
     public double getLeftPosition() {
@@ -120,8 +136,10 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     }
 
     public void setBrakeMode(boolean on) {
-        TalonSRXController.setBrakeMode(mLeftMaster, on);
-        TalonSRXController.setBrakeMode(mRightMaster, on);
+        if (mSubsystemState) {
+            TalonSRXController.setBrakeMode(mLeftMaster, on);
+            TalonSRXController.setBrakeMode(mRightMaster, on);
+        }
     }
 
     public void setLeftPIDF(double kF, double kP, double kI, double kD) {
@@ -173,8 +191,8 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     }
 
     @Override
-    public void disable(boolean disable) {
-        
+    public void setState(boolean enable) {
+        mSubsystemState = enable;
     }
 
 }

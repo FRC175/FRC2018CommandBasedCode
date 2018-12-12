@@ -26,6 +26,9 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     // Singleton Instance
     private static LateralDrive sInstance;
 
+    // Boolean
+    private boolean mSubsystemState;
+
     // Singleton Static Factory Method
     public static LateralDrive getInstance() {
         if (sInstance == null) {
@@ -47,6 +50,8 @@ public class LateralDrive extends Subsystem implements Diagnosable {
         // Solenoid(canID : int, channel : int)
         mDeploy = new Solenoid(Constants.LATERAL_DEPLOY_PORT, Constants.LATERAL_DEPLOY_CHANNEL);
 
+        mSubsystemState = true;
+
         /* SRX Configuration */
         mLateralDrive.setInverted(false);
         mLateralDrive.setSensorPhase(true);
@@ -54,7 +59,9 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     }
 
     public void set(boolean enable) {
-        mDeploy.set(enable);
+        if (mSubsystemState) {
+            mDeploy.set(enable);
+        }
     }
 
     public boolean isEnabled() {
@@ -62,11 +69,15 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     }
 
     public void setPower(double power) {
-        TalonSRXController.setPower(mLateralDrive, power);
+        if (mSubsystemState) {
+            TalonSRXController.setPower(mLateralDrive, power);
+        }
     }
 
     public void setPosition(double position) {
-        TalonSRXController.setPosition(mLateralDrive, position);
+        if (mSubsystemState) {
+            TalonSRXController.setPosition(mLateralDrive, position);
+        }
     }
 
     public double getPosition() {
@@ -75,7 +86,9 @@ public class LateralDrive extends Subsystem implements Diagnosable {
 
     // TODO: Determine if this necessary
     public void setBrakeMode(boolean on) {
-        TalonSRXController.setBrakeMode(mLateralDrive, on);
+        if (mSubsystemState) {
+            TalonSRXController.setBrakeMode(mLateralDrive, on);
+        }
     }
 
     public void setPIDF(double kF, double kP, double kI, double kD) {
@@ -101,8 +114,8 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     }
 
     @Override
-    public void disable(boolean disable) {
-        
+    public void setState(boolean enable) {
+        mSubsystemState = enable;
     }
 
 }

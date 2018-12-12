@@ -22,7 +22,8 @@ public class TalonSRXFactory {
         srx.configNominalOutputReverse(0, Constants.TIMEOUT_MS);
         srx.configPeakOutputForward(1, Constants.TIMEOUT_MS);
         srx.configPeakOutputReverse(-1, Constants.TIMEOUT_MS);
-        srx.configAllowableClosedloopError(0, Constants.SLOT_INDEX, Constants.TIMEOUT_MS);
+        // TODO: Determine what closed loop error was in Jamie's code
+        srx.configAllowableClosedloopError(Constants.SLOT_INDEX, 10, Constants.TIMEOUT_MS);
 
         srx.setSelectedSensorPosition(0, Constants.PID_LOOP_INDEX, Constants.TIMEOUT_MS);
         srx.setNeutralMode(NeutralMode.Brake);
