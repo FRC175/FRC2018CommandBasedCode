@@ -1,20 +1,18 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Solenoid;
-
-import org.usfirst.frc.team175.robot.util.Constants;
-import org.usfirst.frc.team175.robot.util.Diagnosable;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.usfirst.frc.team175.robot.util.Constants;
+import org.usfirst.frc.team175.robot.util.DiagnosableSubsystem;
 
 /**
  * @author Arvind
  */
-public class Climber extends Subsystem implements Diagnosable {
+public class Climber extends DiagnosableSubsystem {
 
     /* Declarations */
     // Talon SRs
@@ -27,9 +25,6 @@ public class Climber extends Subsystem implements Diagnosable {
     // Limit Switches
     private DigitalInput mClimberUpLimit;
     private DigitalInput mClimberDownLimit;
-
-    // Boolean
-    private boolean mSubsystemState;
 
     // Enums
     public enum ClimberPosition {
@@ -73,15 +68,12 @@ public class Climber extends Subsystem implements Diagnosable {
         mClimberUpLimit = new DigitalInput(Constants.CLIMB_UP_LIMIT_PORT);
         mClimberDownLimit = new DigitalInput(Constants.CLIMB_DOWN_LIMIT_PORT);
 
-        // Boolean
-        mSubsystemState = true;
-
         // Set climber inwards
         mClimberAlign.set(false);
     }
 
     public void setPosition(Climber.ClimberPosition climberState) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             switch (climberState) {
                 case EXTEND:
                     mClimberExtend.set(!mClimberUpLimit.get() ? 1 : 0);
@@ -102,7 +94,7 @@ public class Climber extends Subsystem implements Diagnosable {
 
     @Deprecated
     public void setPower(double speed) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mClimberExtend.set(speed);
         }
     }
@@ -116,7 +108,7 @@ public class Climber extends Subsystem implements Diagnosable {
     }
 
     public void winch(Climber.WinchPosition winchState) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             switch (winchState) {
                 case WIND_UP:
                     mWinch.set(1);
@@ -132,7 +124,7 @@ public class Climber extends Subsystem implements Diagnosable {
     }
 
     public void winchManual(double speed) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mWinch.set(speed);
         }
     }
@@ -143,7 +135,7 @@ public class Climber extends Subsystem implements Diagnosable {
     }
 
     public void align(boolean align) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mClimberAlign.set((mWinch.get() == 0) ? align : false);
         }
     }
@@ -169,11 +161,6 @@ public class Climber extends Subsystem implements Diagnosable {
     @Override
     public boolean runSelfTest() {
         return false;
-    }
-
-    @Override
-    public void setState(boolean enable) {
-        mSubsystemState = enable;
     }
 
 }

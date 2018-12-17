@@ -2,20 +2,19 @@ package org.usfirst.frc.team175.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Solenoid;
+
 import org.usfirst.frc.team175.robot.util.Constants;
-import org.usfirst.frc.team175.robot.util.Diagnosable;
+import org.usfirst.frc.team175.robot.util.DiagnosableSubsystem;
 import org.usfirst.frc.team175.robot.util.TalonSRXController;
 import org.usfirst.frc.team175.robot.util.TalonSRXFactory;
 import org.usfirst.frc.team175.robot.util.TalonSRXType;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Subsystem;
-
 /**
  * @author Arvind
  */
-public class LateralDrive extends Subsystem implements Diagnosable {
+public class LateralDrive extends DiagnosableSubsystem {
 
     // Talon SRX
     private TalonSRX mLateralDrive;
@@ -25,9 +24,6 @@ public class LateralDrive extends Subsystem implements Diagnosable {
 
     // Singleton Instance
     private static LateralDrive sInstance;
-
-    // Boolean
-    private boolean mSubsystemState;
 
     // Singleton Static Factory Method
     public static LateralDrive getInstance() {
@@ -50,8 +46,6 @@ public class LateralDrive extends Subsystem implements Diagnosable {
         // Solenoid(canID : int, channel : int)
         mDeploy = new Solenoid(Constants.LATERAL_DEPLOY_PORT, Constants.LATERAL_DEPLOY_CHANNEL);
 
-        mSubsystemState = true;
-
         /* SRX Configuration */
         mLateralDrive.setInverted(false);
         mLateralDrive.setSensorPhase(true);
@@ -59,7 +53,7 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     }
 
     public void set(boolean enable) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mDeploy.set(enable);
         }
     }
@@ -69,13 +63,13 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     }
 
     public void setPower(double power) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setPower(mLateralDrive, power);
         }
     }
 
     public void setPosition(double position) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setPosition(mLateralDrive, position);
         }
     }
@@ -86,7 +80,7 @@ public class LateralDrive extends Subsystem implements Diagnosable {
 
     // TODO: Determine if this necessary
     public void setBrakeMode(boolean on) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setBrakeMode(mLateralDrive, on);
         }
     }
@@ -111,11 +105,6 @@ public class LateralDrive extends Subsystem implements Diagnosable {
     @Override
     protected void initDefaultCommand() {
         // setDefaultCommand();
-    }
-
-    @Override
-    public void setState(boolean enable) {
-        mSubsystemState = enable;
     }
 
 }

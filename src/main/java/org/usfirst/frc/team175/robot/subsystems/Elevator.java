@@ -3,7 +3,7 @@ package org.usfirst.frc.team175.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import org.usfirst.frc.team175.robot.util.Constants;
-import org.usfirst.frc.team175.robot.util.Diagnosable;
+import org.usfirst.frc.team175.robot.util.DiagnosableSubsystem;
 import org.usfirst.frc.team175.robot.util.TalonSRXController;
 import org.usfirst.frc.team175.robot.util.TalonSRXFactory;
 import org.usfirst.frc.team175.robot.util.TalonSRXType;
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * @author Arvind
  */
-public class Elevator extends Subsystem implements Diagnosable {
+public class Elevator extends DiagnosableSubsystem {
 
     /* Declarations */
     // Talon SRX
@@ -22,9 +22,6 @@ public class Elevator extends Subsystem implements Diagnosable {
 
     // Double
     private double mWantedPositon;
-
-    // Boolean
-    private boolean mSubsystemState;
 
     // Enum
     public enum ElevatorPosition {
@@ -65,7 +62,6 @@ public class Elevator extends Subsystem implements Diagnosable {
     private Elevator() {
         /* Instantiation */
         mElevator = TalonSRXFactory.getSRX(Constants.ELEVATOR_PORT, TalonSRXType.CROSS_THE_ROAD);
-        mSubsystemState = true;
 
         /* SRX Configuration */
         TalonSRXController.configCurrentLimiting(mElevator, 20, 30, 100, true);
@@ -75,7 +71,7 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setPower(double power) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setPower(mElevator, power);
         }
     }
@@ -85,7 +81,7 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setPosition(double position) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setPosition(mElevator, position);
         }
     }
@@ -95,7 +91,7 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setBrakeMode(boolean enable) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setBrakeMode(mElevator, enable);
         }
     }
@@ -127,13 +123,13 @@ public class Elevator extends Subsystem implements Diagnosable {
     }
 
     public void setWantedPosition(double position) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mWantedPositon = position;
         }
     }
 
     public void setWantedPosition(ElevatorPosition position) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mWantedPositon = position.toCounts();
         }
     }
@@ -149,11 +145,6 @@ public class Elevator extends Subsystem implements Diagnosable {
 
     @Override
     protected void initDefaultCommand() {
-    }
-
-    @Override
-    public void setState(boolean enable) {
-        mSubsystemState = enable;
     }
 
 }

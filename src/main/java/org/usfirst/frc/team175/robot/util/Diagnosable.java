@@ -9,6 +9,8 @@ public interface Diagnosable {
     
     void outputToSmartDashboard();
 
-    void setState(boolean enable);
+    // void outputToLog();
+
+    // void outputToConsole();
     
 }

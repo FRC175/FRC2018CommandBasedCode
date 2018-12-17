@@ -1,8 +1,5 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
-import org.usfirst.frc.team175.robot.commands.teleop.ManualArcadeDrive;
-import org.usfirst.frc.team175.robot.util.*;
-
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -13,10 +10,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team175.robot.commands.teleop.ManualArcadeDrive;
+import org.usfirst.frc.team175.robot.util.Constants;
+import org.usfirst.frc.team175.robot.util.DiagnosableSubsystem;
+import org.usfirst.frc.team175.robot.util.TalonSRXController;
+import org.usfirst.frc.team175.robot.util.TalonSRXFactory;
+import org.usfirst.frc.team175.robot.util.TalonSRXType;
+
 /**
  * @author Arvind
  */
-public class Drivetrain extends Subsystem implements Diagnosable {
+public class Drivetrain extends DiagnosableSubsystem {
 
     // Talon SRXs
     private TalonSRX mLeftMaster;
@@ -29,9 +33,6 @@ public class Drivetrain extends Subsystem implements Diagnosable {
 
     // Gyro
     private ADXRS450_Gyro mGyro;
-
-    // Boolean
-    private boolean mSubsystemState;
 
     // Other
     private DifferentialDrive mRobotDrive;
@@ -67,9 +68,6 @@ public class Drivetrain extends Subsystem implements Diagnosable {
         // Gyro
         mGyro = new ADXRS450_Gyro();
 
-        // Boolean
-        mSubsystemState = true;
-
         // DifferentialDrive(rightMotorController : SpeedController, leftMotorController : SpeedController)
         mRobotDrive = new DifferentialDrive((WPI_TalonSRX) mRightMaster, (WPI_TalonSRX) mLeftMaster);
 
@@ -92,7 +90,7 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     }
 
     public void setHighGear(boolean enable) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mShifter.set(enable);
         }
     }
@@ -102,27 +100,27 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     }
 
     public void setPower(double leftPower, double rightPower) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setPower(mLeftMaster, leftPower);
             TalonSRXController.setPower(mRightMaster, rightPower);
         }
     }
 
     public void setPosition(double leftPosition, double rightPosition) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setPosition(mLeftMaster, leftPosition);
             TalonSRXController.setPosition(mRightMaster, rightPosition);
         }
     }
 
     public void arcadeDrive(double yAxis, double xAxis) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mRobotDrive.arcadeDrive(yAxis, xAxis);
         }
     }
 
     public void tankDrive(double yAxis, double xAxis) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mRobotDrive.tankDrive(yAxis, xAxis);
         }
     }
@@ -136,7 +134,7 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     }
 
     public void setBrakeMode(boolean on) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             TalonSRXController.setBrakeMode(mLeftMaster, on);
             TalonSRXController.setBrakeMode(mRightMaster, on);
         }
@@ -188,11 +186,6 @@ public class Drivetrain extends Subsystem implements Diagnosable {
     @Override
     protected void initDefaultCommand() {
         setDefaultCommand(new ManualArcadeDrive(false));
-    }
-
-    @Override
-    public void setState(boolean enable) {
-        mSubsystemState = enable;
     }
 
 }

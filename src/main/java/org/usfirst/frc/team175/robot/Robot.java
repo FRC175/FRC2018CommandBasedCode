@@ -7,11 +7,7 @@
 
 package org.usfirst.frc.team175.robot;
 
-import org.usfirst.frc.team175.robot.subsystems.Climber;
-import org.usfirst.frc.team175.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team175.robot.subsystems.Elevator;
-import org.usfirst.frc.team175.robot.subsystems.Grabber;
-import org.usfirst.frc.team175.robot.subsystems.LateralDrive;
+import org.usfirst.frc.team175.robot.subsystems.*;
 import org.usfirst.frc.team175.robot.util.OI;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -63,6 +59,9 @@ public class Robot extends TimedRobot {
         mElevator = Elevator.getInstance();
         mLateralDrive = LateralDrive.getInstance();
         mOI = OI.getInstance();
+
+        // Disable Grabber Subsystem
+        mGrabber.setSubsystemState(false);
     }
 
     /**
@@ -131,7 +130,6 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) {
             autonomousCommand.cancel();
         }
-        mGrabber.setState(false);
     }
 
     /**

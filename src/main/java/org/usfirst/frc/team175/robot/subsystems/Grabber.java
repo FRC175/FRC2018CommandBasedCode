@@ -5,16 +5,15 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team175.robot.util.Constants;
-import org.usfirst.frc.team175.robot.util.Diagnosable;
+import org.usfirst.frc.team175.robot.util.DiagnosableSubsystem;;
 
 /**
  * @author Arvind
  */
-public class Grabber extends Subsystem implements Diagnosable {
+public class Grabber extends DiagnosableSubsystem {
 
     /* Declarations */
     // Talon SRs
@@ -29,9 +28,6 @@ public class Grabber extends Subsystem implements Diagnosable {
 
     // Relay
     private Relay mPowerCubeLight;
-
-    // Boolean
-    private boolean mSubsystemState;
 
     // Enum
     public enum RollerPosition {
@@ -71,12 +67,10 @@ public class Grabber extends Subsystem implements Diagnosable {
 
         // Relay(io : int)
         mPowerCubeLight = new Relay(Constants.POWER_CUBE_LIGHT_PORT);
-
-        mSubsystemState = true;
     }
 
     public void grab(RollerPosition rollerState) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             double speed;
 
             switch (rollerState) {
@@ -108,13 +102,13 @@ public class Grabber extends Subsystem implements Diagnosable {
     }
 
     public void setPosition(boolean retract) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mGrabberRetract.set(retract);
         }
     }
 
     public void setLight(boolean on) {
-        if (mSubsystemState) {
+        if (super.getSubsystemState()) {
             mPowerCubeLight.set(on ? Relay.Value.kForward : Relay.Value.kOff);
         }
     }
@@ -135,11 +129,6 @@ public class Grabber extends Subsystem implements Diagnosable {
     @Override
     public boolean runSelfTest() {
         return false;
-    }
-
-    @Override
-    public void setState(boolean enable) {
-        mSubsystemState = enable;
     }
 
 }
