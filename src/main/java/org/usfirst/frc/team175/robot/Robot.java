@@ -10,6 +10,8 @@ package org.usfirst.frc.team175.robot;
 import org.usfirst.frc.team175.robot.subsystems.*;
 import org.usfirst.frc.team175.robot.util.OI;
 
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -61,7 +63,14 @@ public class Robot extends TimedRobot {
         mOI = OI.getInstance();
 
         // Disable Grabber Subsystem
-        mGrabber.setSubsystemState(false);
+        mElevator.setSubsystemState(false);
+
+        // new Thread(() -> {
+        //     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        //     camera.setResolution(640, 480);
+        // }).start();
+
+        // CameraServer.getInstance().startAutomaticCapture();
     }
 
     /**
