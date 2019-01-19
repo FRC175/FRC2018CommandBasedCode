@@ -23,9 +23,9 @@ public class Camera extends Subsystem implements Runnable {
     }
 
     private Camera() {
-        camera = CameraServer.getInstance().startAutomaticCapture();
-        camera.setResolution(640, 480);
-        camera.setFPS(60);
+        // camera = CameraServer.getInstance().startAutomaticCapture();
+        // camera.setResolution(640, 480);
+        // camera.setFPS(60);
     }
 
     public void setExposure(int value) {

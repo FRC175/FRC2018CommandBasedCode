@@ -28,7 +28,7 @@ public class Constants {
     public static final int CLIMB_EXTEND_PORT = 4;
     public static final int WINCH_PORT = 0;
 
-    // Limit Switch Ports
+    // Digital Input Ports
     public static final int GRABBER_LIMIT_PORT = 9;
     public static final int CLIMB_UP_LIMIT_PORT = 4;
     public static final int CLIMB_DOWN_LIMIT_PORT = 3;
@@ -75,5 +75,14 @@ public class Constants {
     // Other
     public static final double DRIVE_TO_INCHES = 176;
     public static final double LATERAL_DRIVE_TO_INCHES = 42.965;
+
+    // 2019 Test Stuff
+    public static final int kLeftTwoSensorPort = 0;
+    public static final int kLeftOneSensorPort = 1;
+    public static final int kCenterSensorPort = 2;
+    public static final int kRightOneSensorPort = 5;
+    public static final int kRightTwoSensorPort = 6;
+    
+    public static final int kLineAlignButton = 12;
 
 }

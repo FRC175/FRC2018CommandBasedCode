@@ -1,7 +1,11 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -21,6 +25,34 @@ public class LateralDrive extends DiagnosableSubsystem {
 
     // Solenoid
     private Solenoid mDeploy;
+
+    // Digital Inputs
+    private Map<String, DigitalInput> mLineSensors;
+
+    // Enum
+    public enum LineSensorPosition {
+        /* Political Spectrum */
+        EXTREME_LEFT(75),
+        LEFTIST(-75),
+        LEFT(-50),
+        CENTER_LEFT(-25),
+        CENTER(0),
+        CENTER_RIGHT(25),
+        RIGHT(50),
+        RIGHTIST(75),
+        EXTREME_RIGHT(100),
+        ERROR(0);
+
+        private final int POSITION;
+
+        private LineSensorPosition(int position) {
+            POSITION = position;
+        }
+
+        public int positionToMove() {
+            return POSITION;
+        }
+    }
 
     // Singleton Instance
     private static LateralDrive sInstance;
@@ -45,6 +77,17 @@ public class LateralDrive extends DiagnosableSubsystem {
 
         // Solenoid(canID : int, channel : int)
         mDeploy = new Solenoid(Constants.LATERAL_DEPLOY_PORT, Constants.LATERAL_DEPLOY_CHANNEL);
+
+        // Digital Inputs
+        mLineSensors = new HashMap<String, DigitalInput>() {
+            {
+                put("LeftTwo", new DigitalInput(Constants.kLeftTwoSensorPort));
+                put("LeftOne", new DigitalInput(Constants.kLeftOneSensorPort));
+                put("Center", new DigitalInput(Constants.kCenterSensorPort));
+                put("RightOne", new DigitalInput(Constants.kRightOneSensorPort));
+                put("RightTwo", new DigitalInput(Constants.kRightTwoSensorPort));
+            }
+        };
 
         /* SRX Configuration */
         mLateralDrive.setInverted(false);
@@ -93,8 +136,54 @@ public class LateralDrive extends DiagnosableSubsystem {
         TalonSRXController.resetEncoder(mLateralDrive);
     }
 
+    private String getLineSensorArray() {
+        String binarySensorArray = "";
+        binarySensorArray += mLineSensors.get("LeftTwo").get() ? "1" : "0";
+        binarySensorArray += mLineSensors.get("LeftOne").get() ? "1" : "0";
+        binarySensorArray += mLineSensors.get("Center").get() ? "1" : "0";
+        binarySensorArray += mLineSensors.get("RightOne").get() ? "1" : "0";
+        binarySensorArray += mLineSensors.get("RightTwo").get() ? "1" : "0";
+
+        return binarySensorArray;
+    }
+
+    public LineSensorPosition getLineSensorPosition() {
+        switch (getLineSensorArray()) {
+            case "10000":
+                return LineSensorPosition.EXTREME_LEFT;
+            case "11000":
+                return LineSensorPosition.LEFTIST;
+            case "01000":
+                return LineSensorPosition.LEFT;
+            case "01100":
+                return LineSensorPosition.CENTER_LEFT;
+            case "00100":
+                return LineSensorPosition.CENTER;
+            case "00110":
+                return LineSensorPosition.CENTER_RIGHT;
+            case "00010":
+                return LineSensorPosition.RIGHT;
+            case "00011":
+                return LineSensorPosition.RIGHTIST;
+            case "00001":
+                return LineSensorPosition.EXTREME_RIGHT;
+            default:
+                // Robot orientation wrong
+                System.out.println("ERROR - ROBOT NOT IN RIGHT POSITION TO ALIGN!");
+                return LineSensorPosition.ERROR;
+        }
+    }
+
     @Override
     public void outputToSmartDashboard() {
+
+    }
+
+    public void outputToConsole() {
+        System.out.println("INFO - Lateral Drive Position: " + getPosition());
+        System.out.println("INFO - Line Sensor Array: " + getLineSensorArray());
+        mLineSensors.forEach((str, sensor) -> { System.out.printf("INFO - %s State: %s\n", str, sensor.get()); } );
+        System.out.println();
     }
 
     @Override

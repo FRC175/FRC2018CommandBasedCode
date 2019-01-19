@@ -26,6 +26,7 @@ public class OI {
     private Button mShifter;
     private Button mToggleClimber;
     private TwoButton mWindOut;
+    private Button mLineAlign;
 
     // Operator Buttons
     private Button mGrabCube;
@@ -71,6 +72,7 @@ public class OI {
         mToggleClimber = new JoystickButton(mDriverStick, Constants.TOGGLE_CLIMBER_BUTTON);
         // TwoButton(joystick : GenericHID, firstButtonNumber : int, secondButtonNumber : int)
         mWindOut = new TwoButton(mDriverStick, Constants.WIND_OUT_BUTTON_ONE, Constants.WIND_OUT_BUTTON_TWO);
+        mLineAlign = new JoystickButton(mDriverStick, Constants.kLineAlignButton);
 
         // Operator Stick
         mGrabCube = new JoystickButton(mOperatorStick, Constants.GRAB_CUBE_TRIGGER);
@@ -93,6 +95,7 @@ public class OI {
         mRetractClimber.whileHeld(new PositionClimber(Climber.ClimberPosition.RETRACT));
         mShifter.whileHeld(new ManualArcadeDrive(true));
         mToggleClimber.toggleWhenPressed(new ToggleClimber());
+        mLineAlign.whenPressed(new LineAlignment());
 
         // Operater Stick
         mGrabCube.whileActive(new ManipulateCube(Grabber.RollerPosition.GRAB));

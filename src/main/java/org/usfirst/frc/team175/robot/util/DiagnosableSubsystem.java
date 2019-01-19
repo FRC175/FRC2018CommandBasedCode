@@ -1,5 +1,8 @@
 package org.usfirst.frc.team175.robot.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -9,6 +12,13 @@ public abstract class DiagnosableSubsystem extends Subsystem implements Diagnosa
 
     // Double
     private boolean mSubsystemState;
+
+    // Logger
+    // protected Logger mLogger;
+    
+    // {
+    //     mLogger = LoggerFactory.getLogger(getClass());
+    // }
 
     public DiagnosableSubsystem() {
         mSubsystemState = true;
