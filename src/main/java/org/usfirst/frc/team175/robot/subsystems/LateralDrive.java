@@ -29,6 +29,9 @@ public class LateralDrive extends DiagnosableSubsystem {
     // Digital Inputs
     private Map<String, DigitalInput> mLineSensors;
 
+    // Double
+    private double mWantedPosition;
+
     // Enum
     public enum LineSensorPosition {
         /* Political Spectrum */
@@ -117,8 +120,16 @@ public class LateralDrive extends DiagnosableSubsystem {
         }
     }
 
+    public void setWantedPosition(double wantedPosition) {
+        mWantedPosition = wantedPosition;
+    }
+
     public double getPosition() {
         return TalonSRXController.getPosition(mLateralDrive);
+    }
+
+    public boolean isAtWantedPosition() {
+        return Math.abs(mWantedPosition - getPosition()) <= Constants.kLateralDrivePositionThreshold;
     }
 
     // TODO: Determine if this necessary
@@ -182,7 +193,7 @@ public class LateralDrive extends DiagnosableSubsystem {
     public void outputToConsole() {
         System.out.println("INFO - Lateral Drive Position: " + getPosition());
         System.out.println("INFO - Line Sensor Array: " + getLineSensorArray());
-        mLineSensors.forEach((str, sensor) -> { System.out.printf("INFO - %s State: %s\n", str, sensor.get()); } );
+        // mLineSensors.forEach((str, sensor) -> { System.out.printf("INFO - %s State: %s\n", str, sensor.get()); } );
         System.out.println();
     }
 

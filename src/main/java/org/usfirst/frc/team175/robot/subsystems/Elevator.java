@@ -118,8 +118,8 @@ public class Elevator extends DiagnosableSubsystem {
         TalonSRXController.resetLimits(mElevator, 1, 0);
     }
 
-    public double getWantedPosition() {
-        return mWantedPositon;
+    public boolean isAtWantedPosition() {
+        return Math.abs(mWantedPositon - getPosition()) <= Constants.kElevatorPositionThreshold;
     }
 
     public void setWantedPosition(double position) {
@@ -132,6 +132,10 @@ public class Elevator extends DiagnosableSubsystem {
         if (super.getSubsystemState()) {
             mWantedPositon = position.toCounts();
         }
+    }
+
+    public double getWantedPosition() {
+        return mWantedPositon;
     }
 
     @Override

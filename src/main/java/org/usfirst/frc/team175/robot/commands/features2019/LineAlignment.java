@@ -1,4 +1,4 @@
-package org.usfirst.frc.team175.robot.commands.teleop;
+package org.usfirst.frc.team175.robot.commands.features2019;
 
 import org.usfirst.frc.team175.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team175.robot.subsystems.LateralDrive;
@@ -10,9 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LineAlignment extends Command {
 
+    private double mPosition;
+
     public LineAlignment() {
         requires(LateralDrive.getInstance());
         requires(Drivetrain.getInstance());
+
+        mPosition = 0;
     }
 
     // Called just before this Command runs the first time
@@ -21,18 +25,22 @@ public class LineAlignment extends Command {
         LateralDrive.getInstance().set(true);
         LateralDrive.getInstance().resetEncoder();
         Drivetrain.getInstance().setPower(0, 0);
+
+        mPosition = LateralDrive.getInstance().getLineSensorPosition().positionToMove();
+
+        LateralDrive.getInstance().setWantedPosition(mPosition);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        LateralDrive.getInstance().setPosition(LateralDrive.getInstance().getLineSensorPosition().positionToMove());
+        LateralDrive.getInstance().setPosition(mPosition);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return false;
+        return LateralDrive.getInstance().isAtWantedPosition();
     }
 
     // Called once after isFinished returns true

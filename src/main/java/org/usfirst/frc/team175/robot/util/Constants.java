@@ -76,7 +76,7 @@ public class Constants {
     public static final double DRIVE_TO_INCHES = 176;
     public static final double LATERAL_DRIVE_TO_INCHES = 42.965;
 
-    // 2019 Test Stuff
+    // 2019 Features Stuff
     public static final int kLeftTwoSensorPort = 0;
     public static final int kLeftOneSensorPort = 1;
     public static final int kCenterSensorPort = 2;
@@ -84,5 +84,8 @@ public class Constants {
     public static final int kRightTwoSensorPort = 6;
     
     public static final int kLineAlignButton = 12;
+
+    public static final int kLateralDrivePositionThreshold = 10;
+    public static final int kElevatorPositionThreshold = 15;
 
 }

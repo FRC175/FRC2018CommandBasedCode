@@ -30,7 +30,7 @@ public class PositionElevator extends Command {
 
     @Override
     protected boolean isFinished() {
-        return false;
+        return Elevator.getInstance().isAtWantedPosition();
     }
 
     @Override

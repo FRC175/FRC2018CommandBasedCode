@@ -1,10 +1,11 @@
-package org.usfirst.frc.team175.robot.util;
+package org.usfirst.frc.team175.robot.util.deprecated;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * @author Arvind
  */
+@Deprecated
 public class Logger {
 
     // Prevent Logger from being instantiated

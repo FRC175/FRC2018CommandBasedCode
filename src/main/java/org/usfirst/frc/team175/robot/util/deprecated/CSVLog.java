@@ -1,8 +1,9 @@
-package org.usfirst.frc.team175.robot.util;
+package org.usfirst.frc.team175.robot.util.deprecated;
 
 /**
  * @author Arvind
  */
+@Deprecated
 public class CSVLog {
 
     private final String NAME;
