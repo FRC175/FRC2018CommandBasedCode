@@ -34,7 +34,7 @@ public class ManualArcadeDrive extends Command {
     @Override
     protected void execute() {
         if (!LateralDrive.getInstance().isEnabled())
-            Drivetrain.getInstance().arcadeDrive(OI.getInstance().getDriverStickY(), OI.getInstance().getDriverStickX());
+            Drivetrain.getInstance().arcadeDrive(-OI.getInstance().getDriverStickY(), -OI.getInstance().getDriverStickX());
     }
 
     // Make this return true when this Command no longer needs to run execute()

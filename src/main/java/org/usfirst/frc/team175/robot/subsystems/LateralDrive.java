@@ -30,20 +30,20 @@ public class LateralDrive extends DiagnosableSubsystem {
     private Map<String, DigitalInput> mLineSensors;
 
     // Double
-    private double mWantedPosition;
+    private int mWantedPosition;
 
     // Enum
     public enum LineSensorPosition {
         /* Political Spectrum */
-        EXTREME_LEFT(75),
-        LEFTIST(-75),
-        LEFT(-50),
-        CENTER_LEFT(-25),
+        EXTREME_LEFT(-180),
+        LEFTIST(-135),
+        LEFT(-90),
+        CENTER_LEFT(-45),
         CENTER(0),
-        CENTER_RIGHT(25),
-        RIGHT(50),
-        RIGHTIST(75),
-        EXTREME_RIGHT(100),
+        CENTER_RIGHT(45),
+        RIGHT(90),
+        RIGHTIST(135),
+        EXTREME_RIGHT(180),
         ERROR(0);
 
         private final int POSITION;
@@ -94,8 +94,8 @@ public class LateralDrive extends DiagnosableSubsystem {
 
         /* SRX Configuration */
         mLateralDrive.setInverted(false);
-        mLateralDrive.setSensorPhase(true);
-        TalonSRXController.setPIDF(mLateralDrive, 0, 10, 0, 2);
+        mLateralDrive.setSensorPhase(false);
+        // TalonSRXController.setPIDF(mLateralDrive, 0, 0, 0, 0); // 0, 10, 0, 2
     }
 
     public void set(boolean enable) {
@@ -114,13 +114,13 @@ public class LateralDrive extends DiagnosableSubsystem {
         }
     }
 
-    public void setPosition(double position) {
+    public void setPosition(int position) {
         if (super.getSubsystemState()) {
             TalonSRXController.setPosition(mLateralDrive, position);
         }
     }
 
-    public void setWantedPosition(double wantedPosition) {
+    public void setWantedPosition(int wantedPosition) {
         mWantedPosition = wantedPosition;
     }
 
@@ -193,6 +193,8 @@ public class LateralDrive extends DiagnosableSubsystem {
     public void outputToConsole() {
         System.out.println("INFO - Lateral Drive Position: " + getPosition());
         System.out.println("INFO - Line Sensor Array: " + getLineSensorArray());
+        System.out.println("INFO - Is At Position? " + isAtWantedPosition());
+        System.out.println("INFO - Wanted Position: " + mWantedPosition);
         // mLineSensors.forEach((str, sensor) -> { System.out.printf("INFO - %s State: %s\n", str, sensor.get()); } );
         System.out.println();
     }

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team175.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team175.robot.commands.features2019.BetterManualArcadeDrive;
 import org.usfirst.frc.team175.robot.commands.teleop.ManualArcadeDrive;
 import org.usfirst.frc.team175.robot.util.Constants;
 import org.usfirst.frc.team175.robot.util.DiagnosableSubsystem;
@@ -76,11 +79,6 @@ public class Drivetrain extends DiagnosableSubsystem {
         mLeftFollower.follow(mLeftMaster);
         mRightFollower.follow(mRightMaster);
 
-        mLeftMaster.setInverted(false);
-        mRightMaster.setInverted(false);
-        mLeftFollower.setInverted(false);
-        mRightFollower.setInverted(false);
-
         /* Left Master Configuration */
         mLeftMaster.setSensorPhase(true);
         TalonSRXController.setPIDF(mLeftMaster, 0, 0.12, 0, 0.0012);
@@ -118,6 +116,11 @@ public class Drivetrain extends DiagnosableSubsystem {
         if (super.getSubsystemState()) {
             mRobotDrive.arcadeDrive(yAxis, xAxis);
         }
+    }
+
+    public void betterArcadeDrive(double x, double y) {
+        mLeftMaster.set(ControlMode.PercentOutput, y, DemandType.ArbitraryFeedForward, x);
+        mRightMaster.set(ControlMode.PercentOutput, y, DemandType.ArbitraryFeedForward, x);
     }
 
     public void tankDrive(double yAxis, double xAxis) {

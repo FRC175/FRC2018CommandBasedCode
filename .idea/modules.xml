@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FRC2018Offseason.iml" filepath="$PROJECT_DIR$/FRC2018Offseason.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FRC2018Offseason.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FRC2018Offseason.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FRC2018Offseason.test.iml" filepath="$PROJECT_DIR$/.idea/modules/FRC2018Offseason.test.iml" />
     </modules>
   </component>
 </project>

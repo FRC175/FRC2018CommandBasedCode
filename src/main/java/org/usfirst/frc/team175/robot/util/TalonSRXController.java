@@ -36,7 +36,7 @@ public class TalonSRXController {
     }
 
     public static int getPosition(TalonSRX srx) {
-        return srx.getSelectedSensorPosition(Constants.PID_LOOP_INDEX);
+        return srx.getSelectedSensorPosition(0);
     }
 
     public static boolean isForwardLimitHit(TalonSRX srx) {

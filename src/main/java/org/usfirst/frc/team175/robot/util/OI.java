@@ -119,6 +119,10 @@ public class OI {
         return mDriverStick.getY();
     }
 
+    public double getDriverStickTwist() {
+        return mDriverStick.getTwist();
+    }
+
     public double getOperatorStickX() {
         return mOperatorStick.getX();
     }

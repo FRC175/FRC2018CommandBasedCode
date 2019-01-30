@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class LineAlignment extends Command {
 
-    private double mPosition;
+    private int mPosition;
 
     public LineAlignment() {
         requires(LateralDrive.getInstance());
@@ -23,18 +23,24 @@ public class LineAlignment extends Command {
     @Override
     protected void initialize() {
         LateralDrive.getInstance().set(true);
-        LateralDrive.getInstance().resetEncoder();
         Drivetrain.getInstance().setPower(0, 0);
+        LateralDrive.getInstance().resetEncoder();
 
         mPosition = LateralDrive.getInstance().getLineSensorPosition().positionToMove();
 
         LateralDrive.getInstance().setWantedPosition(mPosition);
+
+        System.out.println("INFO - LineAlignment command initialized successfully!");
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
-        LateralDrive.getInstance().setPosition(mPosition);
+        // LateralDrive.getInstance().setPosition(mPosition);   
+        if (mPosition >= 0)
+            LateralDrive.getInstance().setPower(0.25);
+        else
+            LateralDrive.getInstance().setPower(-0.25);
     }
 
     // Make this return true when this Command no longer needs to run execute()

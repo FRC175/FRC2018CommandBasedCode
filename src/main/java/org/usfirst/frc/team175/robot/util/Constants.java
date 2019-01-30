@@ -83,7 +83,7 @@ public class Constants {
     public static final int kRightOneSensorPort = 5;
     public static final int kRightTwoSensorPort = 6;
     
-    public static final int kLineAlignButton = 12;
+    public static final int kLineAlignButton = 5;
 
     public static final int kLateralDrivePositionThreshold = 10;
     public static final int kElevatorPositionThreshold = 15;

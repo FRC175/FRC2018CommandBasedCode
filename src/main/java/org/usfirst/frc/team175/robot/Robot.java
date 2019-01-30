@@ -65,12 +65,12 @@ public class Robot extends TimedRobot {
         // Disable Grabber Subsystem
         mElevator.setSubsystemState(false);
 
-        // new Thread(() -> {
-        //     UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-        //     camera.setResolution(640, 480);
-        // }).start();
+         /*new Thread(() -> {
+             UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+             camera.setResolution(640, 480);
+         }).start();*/
 
-        // CameraServer.getInstance().startAutomaticCapture();
+         CameraServer.getInstance().startAutomaticCapture();
     }
 
     /**
@@ -80,7 +80,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-
+        mLateralDrive.resetEncoder();
     }
 
     @Override
@@ -148,6 +148,8 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         mLateralDrive.outputToConsole();
+        /*System.out.println("Left: " + mDrivetrain.getLeftPosition());
+        System.out.println("Right: " + mDrivetrain.getRightPosition());*/
     }
 
     /**
